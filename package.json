@@ -1,0 +1,24 @@
+{
+  "name": "cit-490-ice",
+  "version": "1.0.0",
+  "description": "A app to manage ice deliveries, sales, and routing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./app.js",
+    "build": "cd project && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iVen608/CIT-490-Ice.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iVen608/CIT-490-Ice/issues"
+  },
+  "homepage": "https://github.com/iVen608/CIT-490-Ice#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
