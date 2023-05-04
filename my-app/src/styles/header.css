@@ -1,0 +1,109 @@
+
+
+.header {
+    background-color: darkblue;
+    display: grid;
+    grid-template-columns: 6fr 2fr;
+    height: 100px;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.header-nav {
+    position: absolute;
+    display: grid;
+    width: 150px;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    right: -150px;
+    top: 100px;
+    overflow: hidden;
+    background-color: darkblue;
+}
+
+.header-path {
+    height: 24px;
+    font-size: 24px;
+    padding: 10px;
+    text-decoration: none;
+    color: white;
+}
+
+.header-name {
+    color: white;
+    text-align: center;
+}
+
+.header-expand-icon {
+    width: 100%;
+    height: 100px;
+    fill: none;
+}
+
+.expand-icon-bar{
+    fill: white;
+}
+
+.header-expand-button {
+    background-color: transparent;
+    color: transparent;
+    border: none;
+    height: 100px;
+}
+
+.minimized-nav {
+    animation-name: expand;
+    animation-duration: 2s;
+    animation-direction: reverse;
+    animation-fill-mode: backwards;
+    animation-delay: .5s;
+}
+
+.expanded-nav {
+    animation-name: expand;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-delay: .5s;
+}
+
+@keyframes expand {
+    0%{
+        right: -150px;
+    }
+    100%{
+        right: 0;
+    }
+    
+}
+
+@media screen and (min-width: 500px){
+    .header{
+        height: 75px;
+        grid-template-columns: 3fr 6fr 3fr;
+    }
+    .header-nav {
+        background-color: transparent;
+        width: 100%;
+        display: grid;
+        position: inherit;
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .header-path {
+        text-decoration: none;
+        color: white;
+        font-size: 16px;
+        line-height: 80px;
+        height: 100%;
+        padding: 0;
+        transition: background-color 1s;
+        text-align: center;
+    }
+    
+    .header-path:hover{
+        background-color: rgba(255,255,255,.5);
+    }
+    .expand-icon-bar{
+        fill: transparent;
+    }
+}
+
