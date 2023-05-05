@@ -14,7 +14,7 @@ function Header(){
     });
     return(
         <header className='header'>
-            <h1 className='header-name'>Company</h1>
+            <h1 className='header-name'>The Ice Wagon</h1>
             <nav className='header-nav'>
                 <a className='header-path' href="/">Customers</a>
                 <a className='header-path' href="/">Routes</a>

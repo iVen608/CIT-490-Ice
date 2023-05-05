@@ -1,10 +1,22 @@
 /*import logo from './logo.svg';*/
 import './App.css';
+/*import BrowserRouter from 'react-router-dom';*/
 import Header from './components/header';
+import Footer from './components/footer';
+import SearchBar from './components/searchBar';
+import InvoiceCalculator from './components/invoiceCalculator';
 
 function App() {
   return (
-    <Header/>
+    <>
+      <Header/>
+      <div id="content">
+        <SearchBar/>
+        <InvoiceCalculator/>
+      </div>
+      <Footer/>
+    </>
+    
     /*<div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />

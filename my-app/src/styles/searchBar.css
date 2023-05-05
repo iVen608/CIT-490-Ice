@@ -1,0 +1,26 @@
+#search-bar-container{
+    background-color: white;
+    max-width: 70%;
+    min-width: 100px;
+    margin-top: 15px;
+    margin-left: 15%;
+}
+
+#search-bar-input{
+    border: none;
+    border-bottom: 2px solid darkblue;
+    color: darkgray;
+    width: 80%;
+}
+#search-bar-input:focus{
+    outline: none;
+    border-bottom: 2px solid darkblue;
+}
+#search-bar-submit{
+    background-color: darkblue;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 25px;
+}

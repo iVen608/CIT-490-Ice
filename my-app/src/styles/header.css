@@ -14,8 +14,8 @@
     display: grid;
     width: 150px;
     grid-template-rows: 1fr 1fr 1fr 1fr;
-    right: -150px;
-    top: 100px;
+    right: 0px;
+    top: -175px;
     overflow: hidden;
     background-color: darkblue;
 }
@@ -67,10 +67,10 @@
 
 @keyframes expand {
     0%{
-        right: -150px;
+        top: -150px;
     }
     100%{
-        right: 0;
+        top: 100px;
     }
     
 }
@@ -78,7 +78,7 @@
 @media screen and (min-width: 500px){
     .header{
         height: 75px;
-        grid-template-columns: 3fr 6fr 3fr;
+        grid-template-columns: 5fr 6fr 1fr;
     }
     .header-nav {
         background-color: transparent;
