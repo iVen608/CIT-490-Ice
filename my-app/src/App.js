@@ -1,10 +1,12 @@
 /*import logo from './logo.svg';*/
 import './App.css';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import Header from './components/header';
 import Footer from './components/footer';
 import SearchBar from './components/searchBar';
 import InvoiceCalculator from './components/invoiceCalculator';
+import CustomerRouter from './components/customerRouter';
+import InvoiceRouter from './components/invoiceRouter';
 
 function App() {
   return (
@@ -12,13 +14,15 @@ function App() {
       <Header/>
       <div id="content">
         <SearchBar/>
-        <InvoiceCalculator/>
+        <Routes>
+          <Route path="/" element={<Footer/>}/>
+          <Route path="/calculator" element={<InvoiceCalculator/>}/>
+          <Route path="/customer/*" element={<CustomerRouter/>}/>
+          <Route path="/invoices/*" element={<InvoiceRouter/>}/>
+        </Routes>
       </div>
       <Footer/>
-      <Routes>
-        <Route path="/" element={<Footer/>}/>
-        <Route path="/search" element={<SearchBar/>}/>
-      </Routes>
+      
     </>
   );
 }

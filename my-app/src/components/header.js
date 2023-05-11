@@ -1,4 +1,5 @@
 import {React, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/header.css';
 function Header(){
     const [bool, setBool] = useState(null);
@@ -14,12 +15,13 @@ function Header(){
     });
     return(
         <header className='header'>
-            <h1 className='header-name'>The Ice Wagon</h1>
+            <Link className="header-name" to="/">The Ice Wagon</Link>
             <nav className='header-nav'>
-                <a className='header-path' href="/">Customers</a>
-                <a className='header-path' href="/">Routes</a>
-                <a className='header-path' href="/">Call Ins</a> 
-                <a className='header-path' href="/">Check In</a>      
+                <Link className='header-path' to="/calculator/">Calculator</Link>
+                <Link className='header-path' to="/customer/">Customers</Link>
+                <Link className='header-path' to="/">Routes</Link>
+                <Link className='header-path' to="/">Call Ins</Link> 
+                <Link className='header-path' to="/">Check In</Link>      
             </nav>
             <button className='header-expand-button' onClick={() => setBool(bool !== null ? !bool : false )} href="/">
                 <svg className='header-expand-icon'>

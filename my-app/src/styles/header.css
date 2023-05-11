@@ -31,6 +31,9 @@
 .header-name {
     color: white;
     text-align: center;
+    text-decoration: none;
+    font-size: 32px;
+    line-height: 100px;
 }
 
 .header-expand-icon {
@@ -51,18 +54,20 @@
 }
 
 .minimized-nav {
-    animation-name: expand;
+    /*animation-name: expand;
     animation-duration: 2s;
     animation-direction: reverse;
     animation-fill-mode: backwards;
-    animation-delay: .5s;
+    animation-delay: .5s;*/
+    top: -250px;
 }
 
 .expanded-nav {
-    animation-name: expand;
+    /*animation-name: expand;
     animation-duration: 2s;
     animation-fill-mode: forwards;
-    animation-delay: .5s;
+    animation-delay: .5s;*/
+    top: 100px;
 }
 
 @keyframes expand {
@@ -78,7 +83,7 @@
 @media screen and (min-width: 500px){
     .header{
         height: 75px;
-        grid-template-columns: 5fr 6fr 1fr;
+        grid-template-columns: 3fr 6fr 1fr;
     }
     .header-nav {
         background-color: transparent;
@@ -104,6 +109,9 @@
     }
     .expand-icon-bar{
         fill: transparent;
+    }
+    .header-name{
+        line-height: 75px;
     }
 }
 
