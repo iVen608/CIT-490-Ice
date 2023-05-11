@@ -15,6 +15,9 @@ function RoutesRouter(){
         <Route path="/add/" element={<h1>Route Add View</h1>}/>
         <Route path="/delete/:id" element={<h1>Route Delete View</h1>}/>
         <Route path="/edit/:id" element={<h1>Route Edit View</h1>}/>
+
+        <Route path="/checkin/" element={<h1>Route Checkin View</h1>}/>
+
     </Routes>
     )
 }

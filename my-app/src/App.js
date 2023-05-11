@@ -4,9 +4,11 @@ import {Routes, Route} from 'react-router-dom';
 import Header from './components/header';
 import Footer from './components/footer';
 import SearchBar from './components/searchBar';
-import InvoiceCalculator from './components/invoiceCalculator';
-import CustomerRouter from './components/customerRouter';
-import InvoiceRouter from './components/invoiceRouter';
+import InvoiceCalculator from './pages/invoiceCalculator';
+import CustomerRouter from './pages/customerRouter';
+import InvoiceRouter from './pages/invoiceRouter';
+import RoutesRouter from './pages/routesRouter';
+import CallInRouter from './pages/callInRouter';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/calculator" element={<InvoiceCalculator/>}/>
           <Route path="/customer/*" element={<CustomerRouter/>}/>
           <Route path="/invoices/*" element={<InvoiceRouter/>}/>
+          <Route path="/callin/*" element={<CallInRouter/>}/>
+          <Route path="/routes/*" element={<RoutesRouter/>}/>
         </Routes>
       </div>
       <Footer/>
