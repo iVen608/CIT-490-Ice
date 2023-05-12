@@ -9,7 +9,7 @@ import CustomerRouter from './pages/customerRouter';
 import InvoiceRouter from './pages/invoiceRouter';
 import RoutesRouter from './pages/routesRouter';
 import CallInRouter from './pages/callInRouter';
-
+import HomeGrid from './pages/homeGrid';
 function App() {
   return (
     <>
@@ -17,7 +17,7 @@ function App() {
       <div id="content">
         <SearchBar/>
         <Routes>
-          <Route path="/" element={<Footer/>}/>
+          <Route path="/" element={<HomeGrid/>}/>
           <Route path="/calculator" element={<InvoiceCalculator/>}/>
           <Route path="/customer/*" element={<CustomerRouter/>}/>
           <Route path="/invoices/*" element={<InvoiceRouter/>}/>
