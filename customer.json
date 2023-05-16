@@ -1,0 +1,44 @@
+{
+    "c1": {
+        "name": "Customer 1",
+        "address": "3959 N 29th St",
+        "ice1": 7,
+        "ice2": 0,
+        "price1": 1.5,
+        "price2": 0,
+        "tax": true,
+        "delivery": true,
+        "po": "X02912",
+        "job": "X02912",
+        "rami": "1029384",
+        "equipment": "M100"
+    },
+    "c2": {
+        "name": "Customer 2",
+        "address": "394304 S 58th St",
+        "ice1": 7,
+        "ice2": 16,
+        "price1": 1.5,
+        "price2": 2.5,
+        "tax": false,
+        "delivery": true,
+        "po": "",
+        "job": "",
+        "rami": "",
+        "equipment": ""
+    },
+    "c3": {
+        "name": "Customer 3",
+        "address": "21 N South St",
+        "ice1": 40,
+        "ice2": 0,
+        "price1": 12,
+        "price2": 0,
+        "tax": false,
+        "delivery": true,
+        "po": "X02912",
+        "job": "",
+        "rami": "1029384",
+        "equipment": "M100"
+    }
+}
