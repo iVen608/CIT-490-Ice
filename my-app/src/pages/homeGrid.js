@@ -5,7 +5,7 @@ import "../styles/homeGrid.css";
 
 function HomeGrid(){
     //fetch("http://localhost:4000/api-docs").then(response => response.json()).then(rep => console.log(rep));
-    fetch("https://cit-490-ice.onrender.com/api-docs").then(response => response.json()).then(rep => console.log(rep));
+    //fetch("https://cit-490-ice.onrender.com/api-docs").then(response => response.json()).then(rep => console.log(rep));
     return(
         <div class="nav-grid">
             <Link class="nav-grid-link" to="/calculator/">

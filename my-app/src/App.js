@@ -1,4 +1,5 @@
 /*import logo from './logo.svg';*/
+import React from 'react';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
 import Header from './components/header';
@@ -10,6 +11,7 @@ import InvoiceRouter from './pages/invoiceRouter';
 import RoutesRouter from './pages/routesRouter';
 import CallInRouter from './pages/callInRouter';
 import HomeGrid from './pages/homeGrid';
+import MyTableView from './components/tableView';
 function App() {
   return (
     <>
@@ -18,6 +20,7 @@ function App() {
         <SearchBar/>
         <Routes>
           <Route path="/" element={<HomeGrid/>}/>
+          <Route path="/grid" element={<MyTableView/>}/>
           <Route path="/calculator" element={<InvoiceCalculator/>}/>
           <Route path="/customer/*" element={<CustomerRouter/>}/>
           <Route path="/invoices/*" element={<InvoiceRouter/>}/>
