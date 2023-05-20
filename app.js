@@ -19,6 +19,14 @@ app.get("/api-docs", async (req, res) => {
     res.status(200).json(result);
   });
 
+  app.get("/customer/:id", async (req, res) => {
+    //res.set("Access-Control-Allow-Origin", "http://localhost:3000")
+    const _db = await mongo.connect().db('ice').collection("customers").find();
+    const result = await _db.toArray();
+    const filtered = result.filter(customer => customer._id.toString() == req.params.id);
+    res.status(200).json(filtered);
+  });
+
 app.get('home', (req, res) => {
 res.sendFile(path.resolve(__dirname, './project/public', 'index.html'));
 });

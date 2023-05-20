@@ -1,5 +1,5 @@
 import React, { useEffect, useState }  from 'react';
-
+import Customer from '../models/tableViewCustomers';
 function MyTableView(){
     const [data, setData] = useState({});
     useEffect(() => {
@@ -9,54 +9,21 @@ function MyTableView(){
         }
         
     });
-    function populateData(){
-        let list = [];
-        for (const i in data){
-            for(const v in data[i]){
-                if(typeof(data[i][v]) !== "object"){
-                    list.push(<td>{data[i][v]}</td>)
-                };
-                
-            }
-        }
-        console.log(data[2]["equipment"]);
-        return list;
-    }
-
-    function val(i,v){
-        console.log(i, v);
-        try{
-            if(typeof(data[i][v]) !== "object"){
-                console.log(data[i][v])
-                return data[i][v];
-            }else{
-                return '0';
-            }
-        }catch(e){
-            console.log(e);
-        }
-        
-        
-    }
     
     if(data[1]){
-        //Object.keys(data).forEach((key) => {console.log(data[key].name)});
-        //Object.entries(data).map((i,v) => console.log(Object.keys(i[1])));
-        const keys = Object.keys(data[2]);
-        const key1 = Object.keys(data);
-        Object.values(data[2]).forEach((v) => {console.log(v)})
         return (<table>
             <tr>
-            {Object.keys(data[2]).map((key) => {return <th>{key}</th>})}
-            </tr>
-            <tr>
-            {Object.keys(data).forEach((v) => 
-                {return <h1>Text</h1>})}
+                <th>Name</th>
+                <th>Address</th>
+                <th>Ice</th>
+                <th>Price</th>
+                <th>Tax</th>
+                <th>Delivery</th>
+                <th>PO</th>
+                <th>Job</th>
             </tr>
             {Object.keys(data).map((v) => 
-                {return <tr>{Object.keys(data[v]).map((i) => 
-                    {return <td>{val(v, i)}</td>})}
-                </tr>})}
+                {return <Customer _data={data[v]}/>})}
             </table>)
     }
 }
