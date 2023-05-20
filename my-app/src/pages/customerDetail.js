@@ -1,15 +1,15 @@
 import React, { useEffect, useState }  from 'react';
 import Customer from '../models/tableViewCustomers';
-function MyTableView(){
+function CustomerDetail(props){
     const [data, setData] = useState({});
     useEffect(() => {
-        if(!data[1]){
-            fetch("https://cit-490-ice.onrender.com/api-docs").then(response => response.json()).then(rep => setData(rep));
+        if(!data[0]){
+            fetch("https://cit-490-ice.onrender.com/customer/" + props._id).then(response => response.json()).then(rep => setData(rep));
             console.log(data);
         } 
     });
     
-    if(data[1]){
+    if(data[0]){
         return (<table>
             <tr>
                 <th>Name</th>
@@ -21,10 +21,9 @@ function MyTableView(){
                 <th>PO</th>
                 <th>Job</th>
             </tr>
-            {Object.keys(data).map((v) => 
-                {return <Customer _data={data[v]}/>})}
+            <Customer _data={data[0]}/>
             </table>)
     }
 }
 
-export default MyTableView;
+export default CustomerDetail;

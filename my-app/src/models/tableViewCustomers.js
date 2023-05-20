@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Customer(props){
-    const link = `/customer/?user_id=${props._data._id}`;
+    const link = `/customer/${props._data._id}`;
     return (<tr>
             <Link to={link}>{props._data.name}</Link>
             <td>{props._data.address}</td>

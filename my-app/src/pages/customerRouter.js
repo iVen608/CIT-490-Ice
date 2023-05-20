@@ -1,12 +1,15 @@
 import React from "react";
 import {Routes, Route, Link, useParams} from 'react-router-dom';
+import CustomerDetail from "./customerDetail";
 
 function CustomerRouter(){
     const parameters = useParams();
     console.log(parameters);
     return (
     <Routes>
-        <Route path="/:id" element={<h1>Customer ID View: {parameters['*']}</h1>}/>
+        <Route path="/:id" element={<div><h1>Customer ID View:</h1>
+         <CustomerDetail _id={parameters['*']}/>
+         </div>}/>
         <Route path="/" element={
         <>
             <h1>Customer All View</h1>
