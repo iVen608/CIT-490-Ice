@@ -31,6 +31,22 @@
     margin-bottom: 10%;
 }
 
+.nav-grid-svg-icon {
+    height: 75px;
+    width: 75px;
+    margin-right: 25%;
+    margin-left: 25%;
+    margin-bottom: 20%;
+}
+
+.nav-grid-customer-icon-circle, .nav-grid-route-icon-circle, .nav-grid-route-icon-polygon, .nav-grid-call-icon-rect {
+    fill: var(--accent-light);
+}
+.nav-grid-route-icon-polygon-road, .nav-grid-call-icon-polygon {
+    fill: transparent;
+    stroke: var(--accent-light);
+    stroke-width: 5px;
+}
 @media screen and (min-width: 600px){
     .nav-grid {
         grid-template-columns: repeat(3, 1fr);
