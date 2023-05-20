@@ -13,11 +13,30 @@ function MyTableView(){
         let list = [];
         for (const i in data){
             for(const v in data[i]){
-                list.push(<td>{data[i][v]}</td>)
+                if(typeof(data[i][v]) !== "object"){
+                    list.push(<td>{data[i][v]}</td>)
+                };
+                
             }
         }
-        console.log(list);
+        console.log(data[2]["equipment"]);
         return list;
+    }
+
+    function val(i,v){
+        console.log(i, v);
+        try{
+            if(typeof(data[i][v]) !== "object"){
+                console.log(data[i][v])
+                return data[i][v];
+            }else{
+                return '0';
+            }
+        }catch(e){
+            console.log(e);
+        }
+        
+        
     }
     
     if(data[1]){
@@ -30,16 +49,16 @@ function MyTableView(){
             <tr>
             {Object.keys(data[2]).map((key) => {return <th>{key}</th>})}
             </tr>
-            <tr>{populateData()}</tr>
+            <tr>
             {Object.keys(data).forEach((v) => 
-                {<tr>{Object.values(data[v]).forEach((i) => 
-                    {return <td>{i}</td>})}
+                {return <h1>Text</h1>})}
+            </tr>
+            {Object.keys(data).map((v) => 
+                {return <tr>{Object.keys(data[v]).map((i) => 
+                    {return <td>{val(v, i)}</td>})}
                 </tr>})}
             </table>)
     }
-    
-    
-    
 }
 
 export default MyTableView;
