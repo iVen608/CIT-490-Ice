@@ -14,7 +14,7 @@ app.use(cors(
 
 app.get("/api-docs", async (req, res) => {
     //res.set("Access-Control-Allow-Origin", "http://localhost:3000")
-    const _db = await mongo.connect().db().collection("customers").find();
+    const _db = await mongo.connect().db('ice').collection("customers").find();
     const result = await _db.toArray();
     res.status(200).json(result);
   });
