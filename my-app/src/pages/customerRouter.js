@@ -1,5 +1,6 @@
 import React from "react";
 import {Routes, Route, Link, useParams} from 'react-router-dom';
+import MyTableView from "../components/tableView";
 import CustomerDetail from "./customerDetail";
 
 function CustomerRouter(){
@@ -16,6 +17,7 @@ function CustomerRouter(){
             <Link to="./add/">Add Customer</Link>
             <Link to="./delete/8">Delete Customer</Link>
             <Link to="./edit/8">Edit Customer</Link>
+            <MyTableView/>
         </>}/>
         <Route path="/add/" element={<h1>Customer Add View</h1>}/>
         <Route path="/delete/:id" element={<h1>Customer Delete View: {parameters['*'].split("/")[1]}</h1>}/>

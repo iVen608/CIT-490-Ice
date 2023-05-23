@@ -11,15 +11,15 @@ function CustomerDetail(props){
     
     if(data[0]){
         return (<table>
-            <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Ice</th>
-                <th>Price</th>
-                <th>Tax</th>
-                <th>Delivery</th>
-                <th>PO</th>
-                <th>Job</th>
+            <tr key="headerRow">
+                <th key="header-name">Name</th>
+                <th key="header-address">Address</th>
+                <th key="header-ice">Ice</th>
+                <th key="header-price">Price</th>
+                <th key="header-tax">Tax</th>
+                <th key="header-del">Delivery</th>
+                <th key="header-po">PO</th>
+                <th key="header-job">Job</th>
             </tr>
             <Customer _data={data[0]}/>
             </table>)

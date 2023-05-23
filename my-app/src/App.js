@@ -20,7 +20,7 @@ function App() {
         <SearchBar/>
         <Routes>
           <Route path="/" element={<HomeGrid/>}/>
-          <Route path="/grid" element={<MyTableView/>}/>
+          <Route path="/grid" element={<MyTableView key="1234"/>}/>
           <Route path="/calculator" element={<InvoiceCalculator/>}/>
           <Route path="/customer/*" element={<CustomerRouter/>}/>
           <Route path="/invoices/*" element={<InvoiceRouter/>}/>
