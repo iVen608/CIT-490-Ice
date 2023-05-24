@@ -1,0 +1,18 @@
+###
+POST http://localhost:4000/customer/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Test 1",
+    "address": "Blank St",
+    "ice1": 5,
+    "ice2": 0,
+    "price1": 1.5,
+    "price2": 0,
+    "tax": true,
+    "delivery": true,
+    "po": "12345679",
+    "job": "ABCD",
+    "rami": "01",
+    "equipment": "M100"
+}

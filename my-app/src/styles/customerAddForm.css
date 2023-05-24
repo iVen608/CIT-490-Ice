@@ -1,0 +1,14 @@
+@import './root.css';
+
+.customer-form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 80%;
+    column-gap: 15px;
+    row-gap: 25px;
+    margin-left: 10%;
+}
+
+.customer-form-text-input {
+    width: 80%;
+}
