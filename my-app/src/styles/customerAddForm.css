@@ -1,14 +1,41 @@
 @import './root.css';
 
 .customer-form{
+    width: 50vw;
+    margin-left: 25vw;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    width: 80%;
-    column-gap: 15px;
-    row-gap: 25px;
-    margin-left: 10%;
+    column-gap: 35px;
+    row-gap: 15px;
 }
 
 .customer-form-text-input {
-    width: 80%;
+    border: none;
+    border-bottom: 2px solid var(--primary);
+}
+
+.customer-form > * {
+    width: 95%;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 5px;
+    animation: rise;
+    animation-duration: .5s;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+
+.customer-form-button-submit {
+    background-color: var(--primary);
+    color: var(--accent-light);
+    border: none;
+}
+
+@keyframes rise {
+    0%{
+        margin-bottom: 0px;
+    }
+    100%{
+        margin-bottom: 25px;
+    }
 }
