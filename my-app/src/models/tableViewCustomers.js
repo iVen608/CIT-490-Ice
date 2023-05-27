@@ -5,7 +5,7 @@ function Customer(props){
     if(typeof(props._data._id) == "object"){
         return <></>
     }
-    const link = `/customer/${props._data._id}`;
+    const link = `/customer/edit/${props._data._id}`;
     return (<tr key={props._data._id} className='customer-table-data-row'>
             <td key={props._data._id+props._data.name} className='customer-table-data-cell'><Link to={link} className='customer-table-data-link'>{props._data.name}</Link></td>
             <td key={props._data._id+"address"} className='customer-table-data-cell'>{props._data.address}</td>

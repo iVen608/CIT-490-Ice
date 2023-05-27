@@ -31,6 +31,10 @@
     border: none;
 }
 
+input:read-only {
+    background-color: var(--accent-medium);
+}
+
 @keyframes rise {
     0%{
         margin-bottom: 0px;

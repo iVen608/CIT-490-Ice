@@ -5,7 +5,7 @@ Content-Type: application/json
 {
     "name": "Test 1",
     "address": "Blank St",
-    "ice1": 5,
+    "ice1": 7,
     "ice2": 0,
     "price1": 0,
     "price2": 0,
@@ -25,7 +25,7 @@ Content-Type: application/json
 {
     "name": "Test 1",
     "address": "Blank St",
-    "ice1": 5,
+    "ice1": 7,
     "ice2": 0,
     "price1": 1.5,
     "price2": 0,
