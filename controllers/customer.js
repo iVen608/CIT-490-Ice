@@ -3,32 +3,43 @@ const mongodb = require("mongodb");
 const lib = require("../library/library");
 
 async function getAllCustomers(req, res){
-    const _db = await mongo.connect().db('ice').collection("customers").find();
-    const result = await _db.toArray();
-    res.status(200).json(result);
+    try{
+        const _db = await mongo.connect().db('ice').collection("customers").find();
+        const result = await _db.toArray();
+        res.status(200).json(result);
+    }catch(err){
+        res.sendStatus(404);
+    }
 };
 
 async function getSingleCustomer(req, res){
-    const _db = await mongo.connect().db('ice').collection("customers").find();
-    const result = await _db.toArray();
-    const filtered = result.filter(customer => customer._id.toString() == req.params.id);
-    res.status(200).json(filtered);
+    try{
+        const _db = await mongo.connect().db('ice').collection("customers").find();
+        const result = await _db.toArray();
+        const filtered = result.filter(customer => customer._id.toString() == req.params.id);
+        res.status(200).json(filtered);
+    }catch(err){
+        res.sendStatus(404);
+    }
 }
 
 async function postCustomer(req, res) {
     try{
-      const checkEmptyResponse = lib.checkEmpty(req.body, ["ice2", "price2", "rami", "equipment", "job", "po"]);
-      if(checkEmptyResponse === false){
-        console.log("err");
-        throw Error("Empty response");
-        
-      }
-      //res.sendStatus(200);
-      const _db = await mongo.connect().db('ice').collection("customers");
-      _db.insertOne(req.body).then(result => res.sendStatus(204)).catch(err => res.sendStatus(404));
+        const checkEmptyResponse = lib.checkEmpty(req.body, ["ice2", "price2", "rami", "equipment", "job", "po"]);
+        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"]);
+        const validateFloatResponse = lib.validateFloat(req.body, ["ice1", "ice2", "price1", "price2"]);
+        if(checkEmptyResponse === false){
+            throw Error("Empty response");
+            
+        }else if(checkKeysResponse === false){
+            throw Error("Missing keys");
+        }else if(validateFloatResponse === false){
+            throw Error("Incorrect data type for float fields");
+        }
+        const _db = await mongo.connect().db('ice').collection("customers");
+        _db.insertOne(req.body).then(result => res.sendStatus(204)).catch(err => res.sendStatus(404));
     }catch(err){
-      console.log(err)
-      res.sendStatus(404);
+        res.sendStatus(404);
     } 
 }
 
@@ -36,12 +47,16 @@ async function updateCustomer(req, res) {
     try{
         const object_id = new mongodb.ObjectId(req.params.id);
         const checkEmptyResponse = lib.checkEmpty(req.body, ["ice2", "price2", "rami", "equipment", "job", "po"]);
+        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"]);
+        const validateFloatResponse = lib.validateFloat(req.body, ["ice1", "ice2", "price1", "price2"]);
         if(checkEmptyResponse === false){
-            console.log("err");
             throw Error("Empty response");
             
+        }else if(checkKeysResponse === false){
+            throw Error("Missing keys");
+        }else if(validateFloatResponse === false){
+            throw Error("Incorrect data type for float fields");
         }
-        //res.sendStatus(200);
         const _db = await mongo.connect().db('ice').collection("customers");
         _db.updateOne({_id: object_id}, {$set: {
             name: req.body.name,
@@ -72,7 +87,6 @@ async function deleteCustomer(req, res) {
             throw Error("Empty response");
             
         }
-        //res.sendStatus(200);
         const _db = await mongo.connect().db('ice').collection("customers");
         _db.deleteOne({_id: object_id}).then(result => res.sendStatus(204)).catch(err => res.sendStatus(404));
     }catch(err){
