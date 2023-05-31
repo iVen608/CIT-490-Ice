@@ -13,9 +13,15 @@ function MyTableView(props){
         if(!data[0]){
             console.log(`${props.api}?search=${query}`)
             
-            fetch(query === null ? props.api : `${props.api}?search=${query}`).then(response => response.json()).then(rep => setData(rep));
-            console.log(data)
-        } 
+            fetch(query === null ? props.api : `${props.api}?search=${query}`).then(response => {
+                if(response.ok){
+                    setData(response.json());
+                }else{
+                    console.log(response);
+                    setData({});
+                }})
+
+            }
     }, []);
     return (<>
         <div id="search-bar-container">
