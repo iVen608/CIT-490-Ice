@@ -7,6 +7,7 @@ async function getAllCustomers(req, res){
         const searchQuery = req.query.search;
         const _db = await mongo.connect().db('ice').collection("customers").find();
         const result = await _db.toArray();
+        console.log(searchQuery);
         if(searchQuery){
             const filter = result.filter(v =>  {
             if(v['name']){
