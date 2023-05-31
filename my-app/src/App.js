@@ -17,7 +17,6 @@ function App() {
     <>
       <Header/>
       <div id="content">
-        <SearchBar/>
         <Routes>
           <Route path="/" element={<HomeGrid/>}/>
           <Route path="/grid" element={<MyTableView key="1234"/>}/>

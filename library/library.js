@@ -9,13 +9,17 @@ const checkEmpty = function(obj, optionalKeys){
     return ret;
   }
   
-  const checkKeys = function(obj, keys){
+  const checkKeys = function(obj, keys, i){
     const keyArray = Object.keys(obj);
-    if(keyArray.length() !== keys.length()){
+    console.log(keyArray);
+    console.log(keys);
+    if(keyArray.length !== keys.length + i){
+      console.log("missing keys length");
       return false;
     }
     keys.forEach(key => {
       if(!keyArray.includes(key)){
+        console.log("Missing key:" + key)
         return false;
       }
     });

@@ -3,6 +3,7 @@ import {Routes, Route, Link, useParams, useNavigate} from 'react-router-dom';
 import MyTableView from "../components/tableView";
 import CustomerForm from "./customerAddForm";
 import CustomerUpdateForm from './customerUpdateForm';
+import Customer from '../models/tableViewCustomers';
 import CustomerDetail from "./customerDetail";
 
 function CustomerRouter(){
@@ -39,7 +40,10 @@ function CustomerRouter(){
         <>
             <h1>Customer All View</h1>
             <Link to="./add/">Add Customer</Link>
-            <MyTableView/>
+            <MyTableView 
+                header_keys={["Name", "Address", "Ice", "Price", "Tax", "Del", "PO/Job"]}
+                api={"http://localhost:4000/customer/"}
+                model="customer"/>
         </>}/>
         <Route path="/add/" element={<CustomerForm/>}/>
         <Route path="/delete/:id" element={<h1>Customer Delete View: {parameters['*'].split("/")[1]}</h1>}/>

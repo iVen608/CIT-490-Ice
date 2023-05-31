@@ -1,33 +1,42 @@
 import React, { useEffect, useState }  from 'react';
-import {useParams, searchParams, useSearchParams} from 'react-router-dom';
+import {useParams, searchParams, useSearchParams, useNavigate} from 'react-router-dom';
 import Customer from '../models/tableViewCustomers';
-import "../styles/customerTable.css"
-function MyTableView(){
+import "../styles/customerTable.css";
+import '../styles/searchBar.css';
+function MyTableView(props){
     const [data, setData] = useState({});
-    const [search, setSearch] = useState({});
+    const [search, setSearch] = useState('');
     const [parameters, setParameters] = useSearchParams()
     const query = parameters.get("search");
-    console.log(query);
+    const nav = useNavigate();
     useEffect(() => {
-        if(!data[1]){
-            fetch("https://cit-490-ice.onrender.com/api-docs").then(response => response.json()).then(rep => setData(rep));
+        if(!data[0]){
+            console.log(`${props.api}?search=${query}`)
+            
+            fetch(query === null ? props.api : `${props.api}?search=${query}`).then(response => response.json()).then(rep => setData(rep));
+            console.log(data)
         } 
-    });
-    if(data[1]){
-        return (<table key="customer-table" className='customer-table'>
-            <tr key="header-table-row" className='customer-table-header-row'>
-                <th key="header-name" className='customer-table-header-cell'>Name</th>
-                <th key="header-address" className='customer-table-header-cell'>Address</th>
-                <th key="header-ice" className='customer-table-header-cell'>Ice</th>
-                <th key="header-price" className='customer-table-header-cell'>Price</th>
-                <th key="header-tax" className='customer-table-header-cell'>Tax</th>
-                <th key="header-del" className='customer-table-header-cell'>Delivery</th>
-                <th key="header-po" className='customer-table-header-cell'>PO/Job</th>
-            </tr>
-            {Object.keys(data).map((v) => 
-                {return <Customer key={data[v]._id} _data={data[v]}/>})}
-            </table>)
-    }
+    }, []);
+    return (<>
+        <div id="search-bar-container">
+                <input id="search-bar-input" type="text" placeholder={`Search for ${props.model}..`} onChange={e => setSearch(e.target.value)}/>
+                <button id="search-bar-submit" type="button" onClick={e=>{nav(`?search=${search}`); window.location.reload(false)}}>S</button>
+        </div>
+        {(data[0]) && <table key="customer-table" className='customer-table'>
+                <tr key="header-table-row" className='customer-table-header-row'>
+                    {props.header_keys.map(v => {
+                        return <th key={`header-${v}`} className='customer-table-header-cell'>{v}</th>
+                    })}
+                </tr>
+                {Object.keys(data).map((v) => 
+                    {
+                        if(props.model === "customer"){
+                            return <Customer key={data[v]._id} _data={data[v]}/>
+                        }
+                })}
+            </table>}
+        {!data[0] && <h1>Failed to find customer</h1>}
+    </>);
 }
 
 export default MyTableView;

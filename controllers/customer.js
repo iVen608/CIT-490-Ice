@@ -4,10 +4,24 @@ const lib = require("../library/library");
 
 async function getAllCustomers(req, res){
     try{
+        const searchQuery = req.query.search;
         const _db = await mongo.connect().db('ice').collection("customers").find();
         const result = await _db.toArray();
-        res.status(200).json(result);
+        if(searchQuery){
+            const filter = result.filter(v =>  {
+            if(v['name']){
+                return v['name'].toString().toLowerCase().includes(searchQuery);
+            }else{
+                return false;
+            }
+            });
+            res.status(200).json(filter);
+        }else{
+            console.log(result);
+            res.status(200).json(result);
+        }
     }catch(err){
+        console.log(err);
         res.sendStatus(404);
     }
 };
@@ -26,7 +40,7 @@ async function getSingleCustomer(req, res){
 async function postCustomer(req, res) {
     try{
         const checkEmptyResponse = lib.checkEmpty(req.body, ["ice2", "price2", "rami", "equipment", "job", "po"]);
-        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"]);
+        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"], 0);
         const validateFloatResponse = lib.validateFloat(req.body, ["ice1", "ice2", "price1", "price2"]);
         if(checkEmptyResponse === false){
             throw Error("Empty response");
@@ -39,6 +53,7 @@ async function postCustomer(req, res) {
         const _db = await mongo.connect().db('ice').collection("customers");
         _db.insertOne(req.body).then(result => res.sendStatus(204)).catch(err => res.sendStatus(404));
     }catch(err){
+        console.log(err);
         res.sendStatus(404);
     } 
 }
@@ -47,7 +62,7 @@ async function updateCustomer(req, res) {
     try{
         const object_id = new mongodb.ObjectId(req.params.id);
         const checkEmptyResponse = lib.checkEmpty(req.body, ["ice2", "price2", "rami", "equipment", "job", "po"]);
-        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"]);
+        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"], 1);
         const validateFloatResponse = lib.validateFloat(req.body, ["ice1", "ice2", "price1", "price2"]);
         if(checkEmptyResponse === false){
             throw Error("Empty response");

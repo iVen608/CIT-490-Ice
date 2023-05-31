@@ -43,16 +43,16 @@ function CustomerForm(props){
         {rep === false && <h1>Failed to add customer, please try again</h1>}
         <form className='customer-form' onSubmit={handleSubmit}>
            
-            <input type="text" className='customer-form-text-input' name="name" placeholder='Customer Name' value={data.name || ""} readOnly={props._edit} onChange={e => setData({...data, ["name"] : e.target.value})} />
-            <input type="text" className='customer-form-text-input' name="address" placeholder='Full Address'  value={data.address || ""} readOnly={props._edit} onChange={e => setData({...data, ["address"] : e.target.value})}/>
-            <select name="ice1" className='customer-form-select-input' value={data.ice1 || "0"} disabled={props._edit} onChange={e => setData({...data, ["ice1"] : e.target.value})}>
+            <input type="text" required className='customer-form-text-input' name="name" placeholder='Customer Name' value={data.name || ""} readOnly={props._edit} onChange={e => setData({...data, ["name"] : e.target.value})} />
+            <input type="text" required className='customer-form-text-input' name="address" placeholder='Full Address'  value={data.address || ""} readOnly={props._edit} onChange={e => setData({...data, ["address"] : e.target.value})}/>
+            <select name="ice1" required className='customer-form-select-input' value={data.ice1 || "0"} disabled={props._edit} onChange={e => setData({...data, ["ice1"] : e.target.value})}>
                 {(data.ice1 === 0 ? <option value="0" selected></option> : <option value="0"></option>)}
                 {(data.ice1 === 7 ? <option value="7" selected>7R</option> : <option value="7">7R</option>)}
                 {(data.ice1 === 10 ? <option value="10" selected>10lb block</option> : <option value="10">10lb block</option>)}
                 {(data.ice1 === 16 ? <option value="16" selected>16rR</option> : <option value="16">16R</option>)}
                 {(data.ice1 === 40 ? <option value="40" selected>40</option> : <option value="40">40R</option>)}
             </select>
-            <input type="number" className='customer-form-text-input' name="price1" placeholder='Ice Price' step=".01" readOnly={props._edit} value={data.price1 || ""} onChange={e => setData({...data, ["price1"] : e.target.value})}/>
+            <input type="number" required className='customer-form-text-input' name="price1" placeholder='Ice Price' step=".01" readOnly={props._edit} value={data.price1 || ""} onChange={e => setData({...data, ["price1"] : e.target.value})}/>
             <select name="ice2" className='customer-form-select-input' disabled={props._edit} onChange={e => setData({...data, ["ice2"] : e.target.value})}>
                 {(data.ice2 === 0 ? <option value="0" selected></option> : <option value="0"></option>)}
                 {(data.ice2 === 7 ? <option value="7" selected>7R</option> : <option value="7">7R</option>)}
