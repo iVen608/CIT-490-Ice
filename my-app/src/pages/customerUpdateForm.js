@@ -35,13 +35,13 @@ function CustomerForm(props){
         e.preventDefault();  
         updateData();
     }
-    if(data.name === ""){
+    if(data.name == ""){
         fetch("http://localhost:4000/customer/" + props._id).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
     }    
     return (<>
         {rep === true && <h1>Successfully updated customer</h1>}
         {rep === false && <h1>Failed to add customer, please try again</h1>}
-        <p>Customer name: {data.name}</p>
+        <p>Customer name: {props._id}</p>
         <form className='customer-form' onSubmit={handleSubmit}>
            
             <input type="text" required className='customer-form-text-input' name="name" placeholder='Customer Name' value={data.name || ""} readOnly={props._edit} onChange={e => setData({...data, ["name"] : e.target.value})} />
