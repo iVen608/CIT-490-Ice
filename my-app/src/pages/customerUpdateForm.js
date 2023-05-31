@@ -1,8 +1,9 @@
 import React, {useState} from 'react'
-import { Form } from 'react-router-dom';
+import { Form, useParams } from 'react-router-dom';
 import '../styles/customerAddForm.css';
 
 function CustomerForm(props){
+    const parameters = useParams();
     const [data, setData] = useState({
         'name': '', 
         'address': '',
@@ -41,7 +42,7 @@ function CustomerForm(props){
     return (<>
         {rep === true && <h1>Successfully updated customer</h1>}
         {rep === false && <h1>Failed to add customer, please try again</h1>}
-        <p>Customer name: {props._id}</p>
+        <p>Customer name: {parameters['*'].split("/")[1]}</p>
         <form className='customer-form' onSubmit={handleSubmit}>
            
             <input type="text" required className='customer-form-text-input' name="name" placeholder='Customer Name' value={data.name || ""} readOnly={props._edit} onChange={e => setData({...data, ["name"] : e.target.value})} />
