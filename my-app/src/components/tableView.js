@@ -11,15 +11,15 @@ function MyTableView(props){
     const nav = useNavigate();
     useEffect(() => {
         if(!data[0]){
-            console.log(`${props.api}?search=${query}`)
             
-            fetch(query === null ? props.api : `${props.api}?search=${query}`).then(response => {
+            fetch(query === null ? props.api : `${props.api}?search=${query}`).then(response => response.json()).then(_data => setData(_data)).catch(err => console.log("err"))
+            /*{
                 if(response.ok){
-                    setData(response.json());
+                    
                 }else{
                     console.log(response);
                     setData({});
-                }})
+                }})*/
 
             }
     }, []);
