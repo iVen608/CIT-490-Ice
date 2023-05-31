@@ -42,7 +42,7 @@ function CustomerRouter(){
             <Link to="./add/">Add Customer</Link>
             <MyTableView 
                 header_keys={["Name", "Address", "Ice", "Price", "Tax", "Del", "PO/Job"]}
-                api={"http://localhost:4000/customer/"}
+                api={"https://cit-490-ice.onrender.com/"}
                 model="customer"/>
         </>}/>
         <Route path="/add/" element={<CustomerForm/>}/>
