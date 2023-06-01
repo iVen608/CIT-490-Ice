@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Form, useParams } from 'react-router-dom';
 import '../styles/customerAddForm.css';
 
@@ -36,9 +36,12 @@ function CustomerForm(props){
         e.preventDefault();  
         updateData();
     }
-    if(data.name == ""){
-        fetch("http://localhost:4000/customer/" + parameters['*'].split("/")[1]).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
-    }    
+    useEffect(() => {
+        if(data.name == ""){
+            fetch("http://localhost:4000/customer/" + parameters['*'].split("/")[1]).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
+        } 
+    }, [])
+       
     return (<>
         {rep === true && <h1>Successfully updated customer</h1>}
         {rep === false && <h1>Failed to add customer, please try again</h1>}
