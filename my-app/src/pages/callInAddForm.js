@@ -13,17 +13,9 @@ function CallInForm(props){
     const [selectedAddress, setSelectedAddress] = useState("");
     const [selectedId, setSelectedId] = useState("");
     async function updateData(){
-        console.log({
-            "name": selected,
-            "address": selectedAddress,
-            "customer_id": selectedId,
-            "callDate": data.callDate,
-            "serviceDate": data.serviceDate,
-            "instructions": data.instructions || ""
-        });
         var link = "http://localhost:4000/callin/";
         if(props._id){
-            link += parameters['*'].split("/")[1];
+            link += props._id;
         }
         await fetch(link, {
             method: props.method,
@@ -33,7 +25,8 @@ function CallInForm(props){
                 "customer_id": selectedId,
                 "callDate": data.callDate,
                 "serviceDate": data.serviceDate,
-                "instructions": data.instructions
+                "instructions": data.instructions || "",
+                "completed": data.completed || false,
             }),
             headers: {'Content-type': "application/json"}
         }).then(response => {
@@ -55,7 +48,14 @@ function CallInForm(props){
     }
     useEffect(() => {
         if(props._id){
-            fetch("http://localhost:4000/callin/" + parameters['*'].split("/")[1]).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
+            fetch("http://localhost:4000/callin/" + props._id)
+            .then(response => response.json())
+            .then(obj => {
+                setData(obj[0]); 
+                setSelected(obj[0].name)
+                setSelectedAddress(obj[0].address);
+                setSelectedId(props._id);
+            });
         }
     }, [])
 
@@ -63,8 +63,8 @@ function CallInForm(props){
         fetch("http://localhost:4000/customer/?search=" + e.target.value).then(response => response.json()).then(obj => {setSearch(obj)})
     }
     return (<>
-        {rep === true && <h1>Successfully updated customer</h1>}
-        {rep === false && <h1>Failed to add customer, please try again</h1>}
+        {rep === true && <h1>Successfully updated call-in</h1>}
+        {rep === false && <h1>Failed to add call-in, please try again</h1>}
         <form className='customer-form' onSubmit={handleSubmit}>
             <label htmlFor='name'>Customer name:</label>
             <input type="text" required className='customer-form-text-input' name="name" placeholder='name' readOnly={props._edit} value={selected || data.name || ""}  onChange={e => {updateBox(e); setSelected(""); setData({...data, ['name'] : e.target.value})}}/>
@@ -81,6 +81,7 @@ function CallInForm(props){
                         }}/>
                     })}
             </div>}
+            {props._id && <><label htmlFor='delCheck'>Delivered?</label><input type="checkbox" className='customer-form-check-input' name="delCheck" checked={data.completed || false} disabled={props._edit} onChange={e => setData({...data, ["completed"] : e.target.checked})}/></>}
             <label htmlFor='callDate'>Called in:</label>
             <input type="date" required className='customer-form-text-input' name="callDate" placeholder='callDate' readOnly={props._edit} value={data.callDate || ""}  onChange={e => setData({...data, ["callDate"] : e.target.value})}/>
             <label htmlFor='serviceDate'>Estimated Delivery:</label>

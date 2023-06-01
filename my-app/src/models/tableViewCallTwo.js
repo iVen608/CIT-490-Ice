@@ -11,6 +11,7 @@ function CallInTwo(props){
             <td key={props._data._id+"address"} className='customer-table-data-cell'>{props._data.address}</td>
             <td key={props._data._id+"callDate"} className='customer-table-data-cell'>{props._data.callDate}</td>
             <td key={props._data._id+"serviceDate"} className='customer-table-data-cell'>{props._data.serviceDate}</td>
+            <td key={props._data._id+"del"} className='customer-table-data-cell'>{props._data.completed === false ? '' : 'DONE'}</td>
             <td key={props._data._id+"instructions"} className='customer-table-data-cell'>{props._data.instructions}</td>
 
         </tr>);

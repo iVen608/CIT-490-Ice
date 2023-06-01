@@ -69,10 +69,10 @@ async function postCallIn(req, res) {
 
 async function updateCallIn(req, res) {
     try{
+        console.log(req.body.instructions);
         const object_id = new mongodb.ObjectId(req.params.id);
         const checkEmptyResponse = lib.checkEmpty(req.body, ["instructions"]);
-        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","customer_id","callDate","serviceDate","instructions"], 0);
-        const validateFloatResponse = lib.validateFloat(req.body, ["instructions"]);
+        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","customer_id","callDate","serviceDate","instructions", "completed"], 0);
         if(checkEmptyResponse === false){
             throw Error("Empty response");
             
@@ -86,7 +86,8 @@ async function updateCallIn(req, res) {
             customer_id: req.body.customer_id,
             callDate: req.body.callDate,
             serviceDate: req.body.serviceDate,
-            instructions: req.body.instruction
+            instructions: req.body.instructions,
+            completed: req.body.completed
         }}).then(result => res.sendStatus(201)).catch(err => res.sendStatus(404));
     }catch(err){
       console.log(err)

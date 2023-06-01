@@ -21,6 +21,7 @@ function CallInRouter(){
             method: 'DELETE'}
         ).then(response => {
             if(response.ok){
+                setConfirm(false);
                 nav("/callin/");
             }else{
                 console.log("failed");
@@ -35,7 +36,7 @@ function CallInRouter(){
         <h1>Call In All View</h1>
         <Link to="./add/">Add Customer</Link>
         <MyTableView 
-            header_keys={["Name", "Address", "Call Date", "Service Date", "Special Instructions"]}
+            header_keys={["Name", "Address", "Call Date", "Service Date", "Delivered" , "Special Instructions"]}
             api={"http://localhost:4000/callin/"}
             model="callin"/>
     </>}/>
