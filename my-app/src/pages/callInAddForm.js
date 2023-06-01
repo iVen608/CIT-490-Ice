@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import { Form, useParams } from 'react-router-dom';
+import { Form, useParams, useNavigate } from 'react-router-dom';
 import '../styles/customerAddForm.css';
 import CallIn from '../models/tableViewCallIn';
 
 function CallInForm(props){
     const parameters = useParams();
+    const nav = useNavigate();
     const [data, setData] = useState({})
     const [search, setSearch] = useState([]);
     const [rep, setRep] = useState(null);
@@ -38,7 +39,10 @@ function CallInForm(props){
         }).then(response => {
             if(response.ok){
                 setRep(true);
-                window.location.reload(true);
+                if(props._id){
+                    window.location.reload(true);
+                }
+                
             }else{
                 console.log(response);
                 setRep(false);

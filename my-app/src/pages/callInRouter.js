@@ -21,8 +21,7 @@ function CallInRouter(){
             method: 'DELETE'}
         ).then(response => {
             if(response.ok){
-                
-                nav("/customer/");
+                nav("/callin/");
             }else{
                 console.log("failed");
             }
