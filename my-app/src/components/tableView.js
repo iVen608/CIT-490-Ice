@@ -1,6 +1,7 @@
 import React, { useEffect, useState }  from 'react';
 import {useParams, searchParams, useSearchParams, useNavigate} from 'react-router-dom';
 import Customer from '../models/tableViewCustomers';
+import CallIn from '../models/tableViewCallTwo';
 import "../styles/customerTable.css";
 import '../styles/searchBar.css';
 function MyTableView(props){
@@ -13,13 +14,6 @@ function MyTableView(props){
         if(!data[0]){
             
             fetch(query === null ? props.api : `${props.api}?search=${query}`).then(response => response.json()).then(_data => setData(_data)).catch(err => console.log("err"))
-            /*{
-                if(response.ok){
-                    
-                }else{
-                    console.log(response);
-                    setData({});
-                }})*/
 
             }
     }, []);
@@ -38,6 +32,8 @@ function MyTableView(props){
                     {
                         if(props.model === "customer"){
                             return <Customer key={data[v]._id} _data={data[v]}/>
+                        }else if(props.model === "callin"){
+                            return <CallIn key={data[v]._id} _data={data[v]}/>
                         }
                 })}
             </table>}
