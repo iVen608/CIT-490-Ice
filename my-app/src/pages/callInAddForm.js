@@ -20,8 +20,12 @@ function CallInForm(props){
             "serviceDate": data.serviceDate,
             "instructions": data.instructions || ""
         });
-        await fetch("http://localhost:4000/callin/", {
-            method: 'POST',
+        var link = "http://localhost:4000/callin/";
+        if(props._id){
+            link += parameters['*'].split("/")[1];
+        }
+        await fetch(link, {
+            method: props.method,
             body: JSON.stringify({
                 "name": selected,
                 "address": selectedAddress,
@@ -34,6 +38,7 @@ function CallInForm(props){
         }).then(response => {
             if(response.ok){
                 setRep(true);
+                window.location.reload(true);
             }else{
                 console.log(response);
                 setRep(false);
@@ -45,9 +50,8 @@ function CallInForm(props){
         updateData();
     }
     useEffect(() => {
-        console.log(data);
-        if(data[0]){
-            //fetch("http://localhost:4000/customer/" + parameters['*'].split("/")[1]).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
+        if(props._id){
+            fetch("http://localhost:4000/callin/" + parameters['*'].split("/")[1]).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
         }
     }, [])
 
@@ -62,7 +66,7 @@ function CallInForm(props){
             <input type="text" required className='customer-form-text-input' name="name" placeholder='name' readOnly={props._edit} value={selected || data.name || ""}  onChange={e => {updateBox(e); setSelected(""); setData({...data, ['name'] : e.target.value})}}/>
             <label htmlFor='address'>Address:</label>
             <input type="text" required className='customer-form-text-input' name="address" placeholder='address' readOnly={props._edit} value={selectedAddress || data.address || ""}  onChange={e => {setSelected(""); setData({...data, ['address'] : e.target.value})}}/>
-            {selected === "" && <label htmlFor='autofill'>Customers:</label> && <div className='search-box-results'>
+            {selected === "" && !props._edit && <label htmlFor='autofill'>Customers:</label> && <div className='search-box-results'>
                 {Object.keys(search).map((v) => 
                         {
                         return <CallIn key={search._id} _data={search[v]} click={() => {
