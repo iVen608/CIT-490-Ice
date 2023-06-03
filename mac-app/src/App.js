@@ -1,10 +1,8 @@
-/*import logo from './logo.svg';*/
 import React from 'react';
 import './App.css';
 import {Routes, Route} from 'react-router-dom';
 import Header from './components/header';
 import Footer from './components/footer';
-import SearchBar from './components/searchBar';
 import InvoiceCalculator from './pages/invoiceCalculator';
 import CustomerRouter from './pages/customerRouter';
 import InvoiceRouter from './pages/invoiceRouter';

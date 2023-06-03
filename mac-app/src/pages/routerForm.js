@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react'
 import { Form, useParams, useNavigate } from 'react-router-dom';
-import '../styles/customerAddForm.css';
+import '../styles/form.css';
 import CustomerSmall from '../models/searchViewSmallCustomer';
+import MyTableView from '../components/tableView';
 
 function RouterForm(props){
-    const parameters = useParams();
     const nav = useNavigate();
     const [data, setData] = useState({});
     const [search, setSearch] = useState([]);
@@ -13,15 +13,12 @@ function RouterForm(props){
     const [selectedAddress, setSelectedAddress] = useState("");
     const [selectedId, setSelectedId] = useState("");
     const [stops, setStops] = useState([]);
+    const [loading, setLoading] = useState(false);
     async function updateData(){
         var link = "https://cit-490-ice.onrender.com/routes/";
         if(props._id){
             link += props._id;
         }
-        console.log({
-            "name": data.name,
-            "stops": stops.map(i => i.id)
-        })
         await fetch(link, {
             method: props.method,
             body: JSON.stringify({
@@ -32,8 +29,10 @@ function RouterForm(props){
         }).then(response => {
             if(response.ok){
                 setRep(true);
-                if(props._id){
+                if(props._id){//PUT
                     window.location.reload(true);
+                }else{//POST
+                    nav("/routes/")
                 }
                 
             }else{
@@ -69,6 +68,7 @@ function RouterForm(props){
             if(data.stops){
                 const filtered = customers.filter(i => data.stops.includes(i._id))
                 setStops(filtered.map(cus => {return {'id': cus._id, 'name': cus.name, 'address': cus.address}})); 
+                setLoading(true);
                 }
             }).catch(err => console.log(err));
             
@@ -82,11 +82,11 @@ function RouterForm(props){
     return (<>
         {rep === true && <h1>Successfully updated call-in</h1>}
         {rep === false && <h1>Failed to add call-in, please try again</h1>}
-        <form className='customer-form' onSubmit={handleSubmit}>
+        <form className='form' onSubmit={handleSubmit}>
             <label htmlFor='name'>Route name:</label>
-            <input type="text" required className='customer-form-text-input' name="name" placeholder='Route Name' readOnly={props._edit} value={data.name || ""}  onChange={e => {setData({...data, ['name'] : e.target.value})}}/>
+            <input type="text" required className='form-text-input' name="name" placeholder='Route Name' readOnly={props._edit} value={data.name || ""}  onChange={e => {setData({...data, ['name'] : e.target.value})}}/>
             {!props._edit && <><label htmlFor='name'>Add Customer:</label>
-            <input type="text" className='customer-form-text-input' name="customerName" placeholder='Add customer here' readOnly={props._edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
+            <input type="text" className='form-text-input' name="customerName" placeholder='Add customer here' readOnly={props._edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
             <h3>Customers:</h3>
             <div className='search-box-results'>
                 {Object.keys(search).map((v) => 
@@ -102,20 +102,18 @@ function RouterForm(props){
                         }}/>
                     })}
             </div></>}
-            <h3>Stops:</h3>
-             <div className='search-box-results'>
-                {stops.map((v) => 
-                        {
-                        return <CustomerSmall key={v.id} _data={v} click={() => {
-                            const arr = stops.filter(i => i.id !== v.id);
-                            setStops(arr);
-                        }}/>
-                    })}
-            </div>
-            <input type="hidden" value={selectedId || data.customer_id || ""} name="_id"/>
-            {!props._edit && <button type="submit" className='customer-form-button-submit'>Submit</button>}
+            
+            {!props._edit && <button type="submit" className='form-button-submit'>Submit</button>}
         </form>
-        
+        {loading === true && <MyTableView 
+            header_keys={["Name", "Address"]}
+            data={stops}
+            api=""
+            funct={(arr) => {
+                setStops(arr);
+            }}
+            model="routes"/>}
+            
     </>)
 }
 
