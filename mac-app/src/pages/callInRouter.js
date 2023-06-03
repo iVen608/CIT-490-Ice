@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {Routes, Route, Link, useParams, useNavigate} from 'react-router-dom';
-import CallInForm from "./callInAddForm";
+import CallInForm from "./callInForm";
 import MyTableView from "../components/tableView";
 
 function CallInRouter(){

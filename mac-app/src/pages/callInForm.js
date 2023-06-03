@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Form, useParams, useNavigate } from 'react-router-dom';
-import '../styles/customerAddForm.css';
+import '../styles/form.css';
 import CallIn from '../models/searchViewSmallCustomer';
 
 function CallInForm(props){
@@ -34,6 +34,8 @@ function CallInForm(props){
                 setRep(true);
                 if(props._id){
                     window.location.reload(true);
+                }else{
+                    nav("/callin/")
                 }
                 
             }else{
@@ -65,11 +67,11 @@ function CallInForm(props){
     return (<>
         {rep === true && <h1>Successfully updated call-in</h1>}
         {rep === false && <h1>Failed to add call-in, please try again</h1>}
-        <form className='customer-form' onSubmit={handleSubmit}>
+        <form className='form' onSubmit={handleSubmit}>
             <label htmlFor='name'>Customer name:</label>
-            <input type="text" required className='customer-form-text-input' name="name" placeholder='name' readOnly={props._edit} value={selected || data.name || ""}  onChange={e => {updateBox(e); setSelected(""); setData({...data, ['name'] : e.target.value})}}/>
+            <input type="text" required className='form-text-input' name="name" placeholder='name' readOnly={props._edit} value={selected || data.name || ""}  onChange={e => {updateBox(e); setSelected(""); setData({...data, ['name'] : e.target.value})}}/>
             <label htmlFor='address'>Address:</label>
-            <input type="text" required className='customer-form-text-input' name="address" placeholder='address' readOnly={props._edit} value={selectedAddress || data.address || ""}  onChange={e => {setSelected(""); setData({...data, ['address'] : e.target.value})}}/>
+            <input type="text" required className='form-text-input' name="address" placeholder='address' readOnly={props._edit} value={selectedAddress || data.address || ""}  onChange={e => {setSelected(""); setData({...data, ['address'] : e.target.value})}}/>
             {selected === "" && !props._edit && <label htmlFor='autofill'>Customers:</label> && <div className='search-box-results'>
                 {Object.keys(search).map((v) => 
                         {
@@ -81,15 +83,15 @@ function CallInForm(props){
                         }}/>
                     })}
             </div>}
-            {props._id && <><label htmlFor='delCheck'>Delivered?</label><input type="checkbox" className='customer-form-check-input' name="delCheck" checked={data.completed || false} disabled={props._edit} onChange={e => setData({...data, ["completed"] : e.target.checked})}/></>}
+            {props._id && <><label htmlFor='delCheck'>Delivered?</label><input type="checkbox" className='form-check-input' name="delCheck" checked={data.completed || false} disabled={props._edit} onChange={e => setData({...data, ["completed"] : e.target.checked})}/></>}
             <label htmlFor='callDate'>Called in:</label>
-            <input type="date" required className='customer-form-text-input' name="callDate" placeholder='callDate' readOnly={props._edit} value={data.callDate || ""}  onChange={e => setData({...data, ["callDate"] : e.target.value})}/>
+            <input type="date" required className='form-text-input' name="callDate" placeholder='callDate' readOnly={props._edit} value={data.callDate || ""}  onChange={e => setData({...data, ["callDate"] : e.target.value})}/>
             <label htmlFor='serviceDate'>Estimated Delivery:</label>
-            <input type="date" required className='customer-form-text-input' name="serviceDate" placeholder='serviceDate' readOnly={props._edit} value={data.serviceDate || ""}  onChange={e => setData({...data, ["serviceDate"] : e.target.value})}/>
+            <input type="date" required className='form-text-input' name="serviceDate" placeholder='serviceDate' readOnly={props._edit} value={data.serviceDate || ""}  onChange={e => setData({...data, ["serviceDate"] : e.target.value})}/>
             <label htmlFor='instructions'>Special Inustrictions:</label>
-            <input type="text" className='customer-form-text-input' name="instructions" placeholder='instructions' readOnly={props._edit} value={data.instructions || ""}   onChange={e => setData({...data, ["instructions"] : e.target.value})}/>
+            <input type="text" className='form-text-input' name="instructions" placeholder='instructions' readOnly={props._edit} value={data.instructions || ""}   onChange={e => setData({...data, ["instructions"] : e.target.value})}/>
             <input type="hidden" value={selectedId || data.customer_id || ""} name="_id"/>
-            {!props._edit && <button type="submit" className='customer-form-button-submit'>Submit</button>}
+            {!props._edit && <button type="submit" className='form-button-submit'>Submit</button>}
         </form>
         
     </>)

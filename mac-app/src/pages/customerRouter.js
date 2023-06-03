@@ -1,10 +1,7 @@
 import React, {useState} from "react";
 import {Routes, Route, Link, useParams, useNavigate} from 'react-router-dom';
 import MyTableView from "../components/tableView";
-import CustomerForm from "./customerAddForm";
-import CustomerUpdateForm from './customerUpdateForm';
-import Customer from '../models/tableViewCustomers';
-import CustomerDetail from "./customerDetail";
+import CustomerForm from './customerForm';
 
 function CustomerRouter(){
     const parameters = useParams();
@@ -33,9 +30,7 @@ function CustomerRouter(){
     }
     return (
     <Routes>
-        <Route path="/:id" element={<div><h1>Customer ID View:</h1>
-         <CustomerDetail _id={parameters['*']}/>
-         </div>}/>
+        
         <Route path="/" element={
         <>
             <h1>Customer All View</h1>
@@ -45,7 +40,7 @@ function CustomerRouter(){
                 api={"https://cit-490-ice.onrender.com/customer/"}
                 model="customer"/>
         </>}/>
-        <Route path="/add/" element={<CustomerForm/>}/>
+        <Route path="/add/" element={<CustomerForm method={"POST"} edit={true}/>}/>
         <Route path="/delete/:id" element={<h1>Customer Delete View: {parameters['*'].split("/")[1]}</h1>}/>
         <Route path="/edit/:id" element={
             <>
@@ -57,7 +52,7 @@ function CustomerRouter(){
                 <button onClick={deleteCustomer}>Yes</button>
                 <button onClick={e => setConfirm(false)}>No</button>
                 </div>}
-            <CustomerUpdateForm _id={parameters['*'].split("/")[1]} _edit={edit}/></>
+            <CustomerForm _id={parameters['*'].split("/")[1]} _edit={edit} method="PUT"/></>
         }/>
     </Routes>
     )
