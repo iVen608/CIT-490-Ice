@@ -36,7 +36,7 @@ function RoutesRouter(){
         <h1>Routes</h1>
         <Link to="./add/">Add Customer</Link>
         <MyTableView 
-            header_keys={["Name", "Address", "Call Date", "Service Date", "Delivered" , "Special Instructions"]}
+            header_keys={["Name"]}
             api={"http://localhost:4000/routes/"}
             model="routes"/>
     </>}/>

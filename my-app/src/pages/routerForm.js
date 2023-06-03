@@ -3,10 +3,10 @@ import { Form, useParams, useNavigate } from 'react-router-dom';
 import '../styles/customerAddForm.css';
 import CustomerSmall from '../models/searchViewSmallCustomer';
 
-function CallInForm(props){
+function RouterForm(props){
     const parameters = useParams();
     const nav = useNavigate();
-    const [data, setData] = useState({name: ''});
+    const [data, setData] = useState({});
     const [search, setSearch] = useState([]);
     const [rep, setRep] = useState(null);
     const [selected, setSelected] = useState("");
@@ -47,10 +47,10 @@ function CallInForm(props){
         updateData();
     }
     useEffect(() => {
-        if(!data.stops){
+        if(!data.stops && props._edit){
             getApis(); 
         }
-        if(stops.length === 0){
+        if(stops.length === 0 && props._edit){
             getCustomers();
         }
     })
@@ -85,10 +85,10 @@ function CallInForm(props){
         <form className='customer-form' onSubmit={handleSubmit}>
             <label htmlFor='name'>Route name:</label>
             <input type="text" required className='customer-form-text-input' name="name" placeholder='Route Name' readOnly={props._edit} value={data.name || ""}  onChange={e => {setData({...data, ['name'] : e.target.value})}}/>
-            <label htmlFor='name'>Add Customer:</label>
+            {!props._edit && <><label htmlFor='name'>Add Customer:</label>
             <input type="text" className='customer-form-text-input' name="customerName" placeholder='Add customer here' readOnly={props._edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
-            {!props._edit && <h3>Customers:</h3>}
-            {!props._edit && <div className='search-box-results'>
+            <h3>Customers:</h3>
+            <div className='search-box-results'>
                 {Object.keys(search).map((v) => 
                         {
                         return <CustomerSmall key={search._id} _data={search[v]} click={() => {
@@ -101,8 +101,8 @@ function CallInForm(props){
                             }
                         }}/>
                     })}
-            </div>}
-            <h3>Added Stops:</h3>
+            </div></>}
+            <h3>Stops:</h3>
              <div className='search-box-results'>
                 {stops.map((v) => 
                         {
@@ -119,4 +119,4 @@ function CallInForm(props){
     </>)
 }
 
-export default CallInForm;
+export default RouterForm;
