@@ -2,6 +2,7 @@ import React, { useEffect, useState }  from 'react';
 import {useParams, searchParams, useSearchParams, useNavigate} from 'react-router-dom';
 import Customer from '../models/tableViewCustomers';
 import CallIn from '../models/tableViewCallTwo';
+import RoutesModel from '../models/tableViewRoutes';
 import "../styles/customerTable.css";
 import '../styles/searchBar.css';
 function MyTableView(props){
@@ -12,9 +13,9 @@ function MyTableView(props){
     const nav = useNavigate();
     useEffect(() => {
         if(!data[0]){
-            
-            fetch(query === null ? props.api : `${props.api}?search=${query}`).then(response => response.json()).then(_data => setData(_data)).catch(err => console.log("err"))
-
+            console.log(props.api);
+            fetch(query === null ? props.api : `${props.api}?search=${query}`).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log("err"))
+            console.log(data)
             }
     }, []);
     return (<>
@@ -34,6 +35,8 @@ function MyTableView(props){
                             return <Customer key={data[v]._id} _data={data[v]}/>
                         }else if(props.model === "callin"){
                             return <CallIn key={data[v]._id} _data={data[v]}/>
+                        }else if(props.model === "routes"){
+                            return <RoutesModel key={data[v]._id} _data={data[v]}/>
                         }
                 })}
             </table>}

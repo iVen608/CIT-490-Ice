@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { Form, useParams, useNavigate } from 'react-router-dom';
 import '../styles/customerAddForm.css';
-import CallIn from '../models/tableViewCallIn';
+import CallIn from '../models/searchViewSmallCustomer';
 
 function CallInForm(props){
     const parameters = useParams();
@@ -13,7 +13,7 @@ function CallInForm(props){
     const [selectedAddress, setSelectedAddress] = useState("");
     const [selectedId, setSelectedId] = useState("");
     async function updateData(){
-        var link = "http://localhost:4000/callin/";
+        var link = "http://localhost:4000/routes/";
         if(props._id){
             link += props._id;
         }
