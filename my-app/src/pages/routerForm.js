@@ -14,7 +14,7 @@ function RouterForm(props){
     const [selectedId, setSelectedId] = useState("");
     const [stops, setStops] = useState([]);
     async function updateData(){
-        var link = "http://localhost:4000/routes/";
+        var link = "https://cit-490-ice.onrender.com/routes/";
         if(props._id){
             link += props._id;
         }
@@ -58,14 +58,14 @@ function RouterForm(props){
         await getRoute();
     }
     async function getRoute(){
-        await fetch("http://localhost:4000/routes/"+props._id)
+        await fetch("https://cit-490-ice.onrender.com/routes/"+props._id)
             .then(response => response.json())
             .then(obj => {
                 setData(obj[0]);
             });
     }
     async function getCustomers(){
-        await fetch("http://localhost:4000/customer/").then(response => response.json()).then(customers => {
+        await fetch("https://cit-490-ice.onrender.com/customer/").then(response => response.json()).then(customers => {
             if(data.stops){
                 const filtered = customers.filter(i => data.stops.includes(i._id))
                 setStops(filtered.map(cus => {return {'id': cus._id, 'name': cus.name, 'address': cus.address}})); 

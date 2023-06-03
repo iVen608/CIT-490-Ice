@@ -20,7 +20,7 @@ function CustomerRouter(){
     }
 
     async function deleteCustomer(){
-        await fetch("http://localhost:4000/customer/" + parameters['*'].split("/")[1], {
+        await fetch("https://cit-490-ice.onrender.com/customer/" + parameters['*'].split("/")[1], {
             method: 'DELETE'}
         ).then(response => {
             if(response.ok){

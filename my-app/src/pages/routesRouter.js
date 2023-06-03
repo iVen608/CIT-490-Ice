@@ -17,7 +17,7 @@ function RoutesRouter(){
     }
 
     async function deleteCustomer(){
-        await fetch("http://localhost:4000/routes/" + parameters['*'].split("/")[1], {
+        await fetch("https://cit-490-ice.onrender.com/routes/" + parameters['*'].split("/")[1], {
             method: 'DELETE'}
         ).then(response => {
             if(response.ok){
@@ -37,7 +37,7 @@ function RoutesRouter(){
         <Link to="./add/">Add Customer</Link>
         <MyTableView 
             header_keys={["Name"]}
-            api={"http://localhost:4000/routes/"}
+            api={"https://cit-490-ice.onrender.com/routes/"}
             model="routes"/>
     </>}/>
         <Route path="/add/" element={<RouterForm method={"POST"} edit={true}/>}/>
