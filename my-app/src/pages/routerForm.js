@@ -77,7 +77,7 @@ function RouterForm(props){
         console.log(stops.map(i => {
             return i.id
         }))
-        fetch("http://localhost:4000/customer/?search=" + e.target.value).then(response => response.json()).then(obj => {setSearch(obj); console.log(obj)})
+        fetch("https://cit-490-ice.onrender.com/customer/?search=" + e.target.value).then(response => response.json()).then(obj => {setSearch(obj); console.log(obj)})
     }
     return (<>
         {rep === true && <h1>Successfully updated call-in</h1>}

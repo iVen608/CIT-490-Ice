@@ -19,7 +19,7 @@ function CustomerForm(){
     })
     const [rep, setRep] = useState(null);
     async function postData(){
-        await fetch("http://localhost:4000/customer/", {
+        await fetch("https://https://cit-490-ice.onrender.com/customer/", {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {'Content-type': "application/json"}

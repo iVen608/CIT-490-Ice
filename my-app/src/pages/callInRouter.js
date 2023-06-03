@@ -17,7 +17,7 @@ function CallInRouter(){
     }
 
     async function deleteCustomer(){
-        await fetch("http://localhost:4000/callin/" + parameters['*'].split("/")[1], {
+        await fetch("https://cit-490-ice.onrender.com/callin/" + parameters['*'].split("/")[1], {
             method: 'DELETE'}
         ).then(response => {
             if(response.ok){
@@ -37,7 +37,7 @@ function CallInRouter(){
         <Link to="./add/">Add Customer</Link>
         <MyTableView 
             header_keys={["Name", "Address", "Call Date", "Service Date", "Delivered" , "Special Instructions"]}
-            api={"http://localhost:4000/callin/"}
+            api={"https://cit-490-ice.onrender.com/callin/"}
             model="callin"/>
     </>}/>
         <Route path="/add/" element={<CallInForm method={"POST"} edit={true}/>}/>

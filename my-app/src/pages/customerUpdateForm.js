@@ -20,7 +20,7 @@ function CustomerForm(props){
     })
     const [rep, setRep] = useState(null);
     async function updateData(){
-        await fetch("http://localhost:4000/customer/" + parameters['*'].split("/")[1], {
+        await fetch("https://cit-490-ice.onrender.com/customer/" + parameters['*'].split("/")[1], {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {'Content-type': "application/json"}
@@ -38,7 +38,7 @@ function CustomerForm(props){
     }
     useEffect(() => {
         if(data.name == ""){
-            fetch("http://localhost:4000/customer/" + parameters['*'].split("/")[1]).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
+            fetch("https://cit-490-ice.onrender.com/customer/" + parameters['*'].split("/")[1]).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
         } 
     }, [])
        
