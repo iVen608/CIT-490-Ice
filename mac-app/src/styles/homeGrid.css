@@ -1,0 +1,62 @@
+@import "./root.css";
+.nav-grid {
+    width: 80%;
+    margin-left: 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 15px;
+    padding-top: 25px;
+    row-gap: 15px;
+}
+
+.nav-grid-link {
+    text-decoration: none;
+    color: var(--accent-light);
+}
+
+.nav-grid-box {
+    display: block;
+    border-radius: 5px;
+    font-size: 25px;
+    width: 100%;
+    height: 200px;
+    text-align: center;
+    background-color: var(--primary);
+}
+
+.nav-grid-icon {
+    padding-top: 10%;
+    max-width: 75px;
+    max-height: 75px;
+    margin-bottom: 10%;
+}
+
+.nav-grid-svg-icon {
+    height: 75px;
+    width: 75px;
+    margin-right: 25%;
+    margin-left: 25%;
+    margin-bottom: 20%;
+}
+
+.nav-grid-customer-icon-circle, .nav-grid-route-icon-circle, .nav-grid-route-icon-polygon, .nav-grid-call-icon-rect {
+    fill: var(--accent-light);
+}
+.nav-grid-route-icon-polygon-road, .nav-grid-call-icon-polygon {
+    fill: transparent;
+    stroke: var(--accent-light);
+    stroke-width: 5px;
+}
+@media screen and (min-width: 600px){
+    .nav-grid {
+        grid-template-columns: repeat(3, 1fr);
+        padding-top: 75px;
+    }
+}
+
+@media screen and (min-width: 1000px){
+    .nav-grid {
+        grid-template-columns: repeat(5, 1fr);
+        padding-top: calc(25vh);
+    }
+}

@@ -1,0 +1,37 @@
+@import "./root.css";
+
+.customer-table {
+    width: 80%;
+}
+.customer-table-header-cell {
+    background-color: var(--accent-light);
+    font-size: 14px;
+}
+
+.customer-table-data-row {
+    border-bottom: 2px solid black;
+}
+
+.customer-table-data-cell {
+    color: var(--primary);
+    border-bottom: 2px solid var(--accent-dark);
+    border-radius: 2px;
+    padding-top: 15px;
+    padding-left: 5px;
+    font-size: 14px;
+}
+
+.customer-table-data-link {
+    text-decoration: none;
+    color: var(--secondary);
+}
+
+@media screen and (min-width: 600px){
+    .customer-table{
+        margin-left: 10%;
+    }
+
+    .customer-table-data-cell{
+        font-size: 16px;
+    }
+}
