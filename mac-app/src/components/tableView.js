@@ -14,8 +14,10 @@ function MyTableView(props){
     const nav = useNavigate();
     useEffect(() => {
         if(!props.data){
-            fetch(query === null ? props.api : `${props.api}?search=${query}`).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log("err"))
-            }
+            fetch(query === null ? props.api : `${props.api}?search=${query}`, {method: 'GET', credentials: 'include'}).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log("err"))
+            //fetch("http://localhost:4000/customer/", {credentials: 'include'}).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log(err))
+               
+        }
     }, []);
     return (<>
         {!props.data && <div id="search-bar-container">

@@ -10,6 +10,7 @@ import RoutesRouter from './pages/routesRouter';
 import CallInRouter from './pages/callInRouter';
 import HomeGrid from './pages/homeGrid';
 import MyTableView from './components/tableView';
+import Login from './pages/login';
 function App() {
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
       <div id="content">
         <Routes>
           <Route path="/" element={<HomeGrid/>}/>
+          <Route path="/login" element={<Login/>}/>
           <Route path="/grid" element={<MyTableView key="1234"/>}/>
           <Route path="/calculator" element={<InvoiceCalculator/>}/>
           <Route path="/customer/*" element={<CustomerRouter/>}/>

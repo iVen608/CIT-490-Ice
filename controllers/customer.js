@@ -1,9 +1,26 @@
 const mongo = require("../connect");
 const mongodb = require("mongodb");
 const lib = require("../library/library");
+const jwt = require("jsonwebtoken");
+require('dotenv').config();
+
+const verifyToken = (token) => {
+    try{
+        console.log(token);
+        jwt.verify(token, process.env.SECRETKEY);
+        return true;
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
 
 async function getAllCustomers(req, res){
     try{
+        const verification = verifyToken(req.cookies.Name);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const searchQuery = req.query.search;
         const _db = await mongo.connect().db('ice').collection("customers").find();
         const result = await _db.toArray();
@@ -16,7 +33,7 @@ async function getAllCustomers(req, res){
                 return false;
             }
             });
-            res.status(200).json(filter);
+            res.header("Access-Control-Allow-Credentials", true).status(200).json(filter);
         }else{
             //console.log(result);
             res.status(200).json(result);
