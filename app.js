@@ -12,7 +12,7 @@ const app = express();
 app.listen(port, () => {console.log(`Listening on ${port}`)});
 
 app.use(cors(
-  {origin: ["http://localhost:3000", "https://cit490front.onrender.com"], credentials: true, }
+  {origin: ["http://localhost:3000", "https://cit490front.onrender.com", "https://testing-server-fxdw.onrender.com"], credentials: true }
 ));
 app.use(cookieParser());
 app.use(bodyParser.json());
