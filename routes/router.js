@@ -40,7 +40,8 @@ router.post("/login/", (req, res) => {
         path: '/',
         expires: new Date(2023, 6, 6, 1),
         httpOnly: true,
-        secure: true
+        secure: true,
+        domain: "https://cit490front.onrender.com"
     }).send("creating cookie");
 })
 

@@ -5,10 +5,10 @@ function Login(){
     const handleSubmit = (e) => {
         e.preventDefault();
         //fetch("http://localhost:4000/logout/").then(rep => rep.json()).then(obj => console.log(obj));
-        fetch("http://localhost:4000/logout/",
-        {method: 'GET',
-            //body: JSON.stringify(data),
-            //headers: {'Content-type': "application/json"},
+        fetch("http://localhost:4000/login/",
+        {method: 'POST',
+            body: JSON.stringify(data),
+            headers: {'Content-type': "application/json"},
             credentials: 'include'
             }
         ).then(response => response.json()).then(_data => console.log(_data)).catch(err => console.log(err));
