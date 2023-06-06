@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function Login(){
     const [data, setData] = useState({})
     const handleSubmit = (e) => {
         e.preventDefault();
+        axios.post("https://cit-490-ice.onrender.com/login/", {withCredentials: true});
         //fetch("http://localhost:4000/logout/").then(rep => rep.json()).then(obj => console.log(obj));
         fetch("https://cit-490-ice.onrender.com/login/",
         {method: 'POST',
