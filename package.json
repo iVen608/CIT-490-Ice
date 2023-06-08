@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./app.js",
-    "build": "node ./app.js && cd project && npm install && npm run build"
+    "build": "node ./app.js && cd mac-app && npm run build"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/iVen608/CIT-490-Ice#readme",
   "dependencies": {
     "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

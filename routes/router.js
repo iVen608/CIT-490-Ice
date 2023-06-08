@@ -3,7 +3,9 @@ const router = express.Router();
 const customerController = require("../controllers/customer");
 const callinController = require("../controllers/callin");
 const routesController = require("../controllers/routes");
+const userController = require("../controllers/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 require('dotenv').config();
 
 //Customer Routes
@@ -28,26 +30,9 @@ router.put("/routes/:id", routesController.updateRoutes);
 router.delete("/routes/:id", routesController.deleteRoutes);
 
 //Login Routes
-router.post("/login/", (req, res) => {
-    console.log(req.body);
-    console.log(req.cookies);
-    const token = jwt.sign({
-        name: req.body.name, pass: req.body.pass 
-    }, process.env.SECRETKEY, {expiresIn: "24h"});
-    console.log(token);
-    res.status(200).cookie('Name', token, {
-        sameSite: 'strict',
-        path: '/',
-        expires: new Date(2023, 6, 6, 1),
-        httpOnly: true,
-        secure: true,
-        domain: "https://cit490front.onrender.com"
-    }).send("creating cookie");
-})
+router.post("/login/", userController.login);
 
-router.get("/logout/", (req, res) => {
-    console.log(req.cookies);
-    console.log(jwt.verify(req.cookies.Name, process.env.SECRETKEY))
-    res.sendStatus(200);
-})
+router.get("/logout/", userController.logout);
+router.post("/signup/", userController.signup);
+
 module.exports = router;

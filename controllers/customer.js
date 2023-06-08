@@ -17,7 +17,9 @@ const verifyToken = (token) => {
 
 async function getAllCustomers(req, res){
     try{
-        const verification = verifyToken(req.cookies.Name);
+        const token = req.headers.authorization.split(' ')[1];
+        //const verification = verifyToken(req.cookies.Name);
+        const verification = verifyToken(token);
         if(!verification){
             throw Error("Verification failed");
         }
