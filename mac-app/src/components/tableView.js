@@ -4,6 +4,7 @@ import Customer from '../models/tableViewCustomers';
 import CallIn from '../models/tableViewCallTwo';
 import RoutesModel from '../models/tableViewRoutes';
 import RoutesSmall from '../models/tableViewRoutesEdit';
+import RoutesCheckModel from '../models/tableViewCheckRoute';
 import "../styles/customerTable.css";
 import '../styles/searchBar.css';
 function MyTableView(props){
@@ -15,8 +16,8 @@ function MyTableView(props){
     useEffect(() => {
         if(!props.data){
             const token = window.localStorage.getItem("token");
-            //fetch(query === null ? props.api : `${props.api}?search=${query}`, {method: 'GET', credentials: 'include', headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log("err"))
-            fetch("http://localhost:4000/customer/", {credentials: 'include', headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log(err))
+            fetch(query === null ? props.api : `${props.api}?search=${query}`, {method: 'GET', credentials: 'include', headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log("err"))
+            //fetch("http://localhost:4000/customer/", {credentials: 'include', headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log(err))
                
         }
     }, []);
@@ -39,6 +40,8 @@ function MyTableView(props){
                             return <CallIn key={data[v]._id} _data={data[v]}/>
                         }else if(props.model === "routes"){
                             return <RoutesModel key={data[v]._id} _data={data[v]}/>
+                        }else if(props.model === "routesCheck"){
+                            return <RoutesCheckModel key={data[v]._id} _data={data[v]}/>
                         }
                 })}
                 {props.data && props.data.map((v) => 

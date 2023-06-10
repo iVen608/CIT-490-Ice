@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Routes, Route, Link, useParams, useNavigate} from 'react-router-dom';
 import RouterForm from "./routerForm";
 import MyTableView from "../components/tableView";
+import CheckInForm from "./checkInRouteForm";
 
 function RoutesRouter(){
     const parameters = useParams();
@@ -36,7 +37,7 @@ function RoutesRouter(){
         <Link to="./add/">Create Route</Link>
         <MyTableView 
             header_keys={["Name"]}
-            api={"https://cit-490-ice.onrender.com/routes/"}
+            api={"http://localhost:4000/routes/"}
             model="routes"/>
     </>}/>
         <Route path="/add/" element={<RouterForm method={"POST"} edit={true}/>}/>
@@ -50,6 +51,21 @@ function RoutesRouter(){
                 <button className="form-button-edit" onClick={e => setConfirm(false)}>No</button>
                 </div>}
             <RouterForm _id={parameters['*'].split("/")[1]} method={"PUT"} _edit={edit}/></>}/>
+        <Route path="/checkin/" element={<>
+            <h1>Check In Routes</h1>
+            <MyTableView
+                header_keys={["Name"]}
+                api={"http://localhost:4000/routes/"}
+                model="routesCheck"
+            />
+        </>}/>
+        <Route path="/checkin/:id" element={
+        <CheckInForm
+        header_keys={["Selected","Name", "Address", "Ice", "Price", "Delivered"]}
+        api={"http://localhost:4000/routes/"}
+        api2={"http://localhost:4000/customer/"}
+        _id = {parameters['*'].split("/")[1]}
+        />}/>
     </Routes>
     )
 }
