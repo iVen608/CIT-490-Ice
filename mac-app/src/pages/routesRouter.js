@@ -62,6 +62,7 @@ function RoutesRouter(){
         <Route path="/checkin/:id" element={
         <CheckInForm
         header_keys={["Selected","Name", "Address", "Ice", "Price", "Delivered"]}
+        method="POST"
         api={"http://localhost:4000/routes/"}
         api2={"http://localhost:4000/customer/"}
         api3={"http://localhost:4000/callin/"}

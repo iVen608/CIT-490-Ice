@@ -57,6 +57,28 @@ async function postRoutes(req, res) {
     } 
 }
 
+async function postCheckin(req, res){
+    try{
+        const object_id = new mongodb.ObjectId(req.params.id);
+        console.log(req.body)
+        const _routeDel = await mongo.connect().db('ice').collection("route_deliveries");
+        const _deliveries = await mongo.connect().db('ice').collection("deliveries");
+        const res1 =  await _routeDel.insertOne(req.body);
+        req.body.delivered.forEach(element => {
+            _deliveries.insertOne({customer_id: element._id, delivered: element.delivered, delivered2: element.delivered2});
+        });
+        /*const checkKeysResponse = lib.checkKeys(callIn, ["name","stops"], 0);
+        if(checkKeysResponse === false){
+            throw Error("Missing keys");
+        }
+        const _db = await mongo.connect().db('ice').collection("routes");
+        _db.insertOne(callIn).then(result => res.sendStatus(204)).catch(err => {res.sendStatus(404); console.log(err)});*/
+    }catch(err){
+        console.log(err);
+        res.sendStatus(404);
+    }  
+}
+
 async function updateRoutes(req, res) {
     try{
         console.log(req.body);
@@ -88,4 +110,4 @@ async function deleteRoutes(req, res) {
     } 
 }
 
-module.exports = {getAllRoutes, getSingleRoutes, postRoutes, updateRoutes, deleteRoutes}
+module.exports = {getAllRoutes, getSingleRoutes, postRoutes, updateRoutes, deleteRoutes, postCheckin}

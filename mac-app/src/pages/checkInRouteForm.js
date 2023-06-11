@@ -11,6 +11,68 @@ function CheckInForm(props){
     const [selected, setSelected] = useState("");
     const [customers, setCustomers] = useState([]);
     const [loaded, setLoaded] = useState(false);
+
+    async function updateData(){
+        var link = "http://localhost:4000/routes/checkin/";
+        if(props._id){
+            link += props._id;
+        }
+        console.log({
+            "delivered": [...customers, ...addedSearch]
+            .filter(customer => customer.completed)
+            .map(i => {return {
+                _id: i._id,
+                delivered: i.delivered || '',
+                delivered2: i.delivered2 || ''
+                }}),
+            "callins": callins.filter(call => call.completed)
+            .map(call => {
+                return {
+                    _id: call._id,
+                    delivered: call.delivered || '',
+                    delivered2: call.delivered2 || '' 
+                }
+            }) 
+        });
+        await fetch(link, {
+            method: props.method,
+            body: JSON.stringify({
+                "delivered": [...customers, ...addedSearch]
+                .filter(customer => customer.completed)
+                .map(i => {return {
+                    _id: i._id,
+                    delivered: i.delivered || '',
+                    delivered2: i.delivered2 || ''
+                    }}),
+                "callins": callins.filter(call => call.completed)
+                .map(call => {
+                    return {
+                        _id: call._id,
+                        delivered: call.delivered || '',
+                        delivered2: call.delivered2 || '' 
+                    }
+                })}),
+            headers: {'Content-type': "application/json"}
+        }).then(response => {
+            if(response.ok){
+                //setRep(true);
+                if(props._id){//PUT
+                    window.location.reload(true);
+                }else{//POST
+                    //nav("/routes/")
+                }
+                
+            }else{
+                console.log(response);
+                //setRep(false);
+            }
+        }).catch(err => {console.log(err);}); //setRep(false);});
+    }
+    function handleSubmit(e){
+        e.preventDefault();  
+        updateData();
+    }
+
     useEffect(() => {
         if(!data.name){
             const token = window.localStorage.getItem("token");
@@ -129,7 +191,7 @@ function CheckInForm(props){
                         />
                 })}
             </table>
-            <button onClick={e => {console.log(addedSearch)}}>Click</button>
+            <button onClick={handleSubmit}>Click</button>
         {(!data[0] && !props) && <h1>Failed to load route</h1>}
     </>);
 }
