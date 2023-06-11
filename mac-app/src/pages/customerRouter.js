@@ -37,10 +37,10 @@ function CustomerRouter(){
             <Link to="./add/">Add Customer</Link>
             <MyTableView 
                 header_keys={["Name", "Address", "Ice", "Price", "Tax", "Del", "PO/Job"]}
-                api={"https://cit-490-ice.onrender.com/customer/"}
+                api={"http://localhost:4000/customer/"}
                 model="customer"/>
         </>}/>
-        <Route path="/add/" element={<CustomerForm method={"POST"} edit={true}/>}/>
+        <Route path="/add/" element={<CustomerForm method={"POST"} edit={true} api="http://localhost:4000/customer/"/>}/>
         <Route path="/delete/:id" element={<h1>Customer Delete View: {parameters['*'].split("/")[1]}</h1>}/>
         <Route path="/edit/:id" element={
             <>
@@ -52,7 +52,7 @@ function CustomerRouter(){
                 <button onClick={deleteCustomer}>Yes</button>
                 <button onClick={e => setConfirm(false)}>No</button>
                 </div>}
-            <CustomerForm _id={parameters['*'].split("/")[1]} _edit={edit} method="PUT"/></>
+            <CustomerForm _id={parameters['*'].split("/")[1]} _edit={edit} method="PUT" api="http://localhost:4000/customer/"/></>
         }/>
     </Routes>
     )

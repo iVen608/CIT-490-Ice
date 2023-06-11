@@ -21,7 +21,7 @@ function CustomerForm(props){
     })
     const [rep, setRep] = useState(null);
     async function updateData(){
-        var link = "https://cit-490-ice.onrender.com/customer/";
+        var link = props.api;
         if(props._id){
             link += props._id;
         }
@@ -49,7 +49,7 @@ function CustomerForm(props){
     }
     useEffect(() => {
         if(props._id && data.name === ""){
-            fetch("https://cit-490-ice.onrender.com/customer/" + props._id).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
+            fetch(props.api + props._id).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
         } 
     }, [])
        
