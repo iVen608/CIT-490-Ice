@@ -61,13 +61,33 @@ function RoutesRouter(){
         </>}/>
         <Route path="/checkin/:id" element={
         <CheckInForm
-        header_keys={["Selected","Name", "Address", "Ice", "Price", "Delivered"]}
-        method="POST"
-        api={"http://localhost:4000/routes/"}
-        api2={"http://localhost:4000/customer/"}
-        api3={"http://localhost:4000/callin/"}
-        _id = {parameters['*'].split("/")[1]}
+            header_keys={["Selected","Name", "Address", "Ice", "Price", "Delivered"]}
+            method="POST"
+            api={"http://localhost:4000/routes/"}
+            api2={"http://localhost:4000/customer/"}
+            api3={"http://localhost:4000/callin/"}
+            _id = {parameters['*'].split("/")[1]}
         />}/>
+        <Route path="/delivered/" element={
+            <>
+            <h1>D</h1>
+            <MyTableView
+                header_keys={["Name"]}
+                api={"http://localhost:4000/routes/delivered"}
+                model="deliveredRoute"
+            />
+        </>}/>
+        <Route path="/delivered/edit/:id" element={
+            <>
+            <CheckInForm
+            header_keys={["Selected","Name", "Address", "Ice", "Price", "Delivered"]}
+            method="PUT"
+            api={"http://localhost:4000/routes/"}
+            api2={"http://localhost:4000/customer/"}
+            api3={"http://localhost:4000/callin/"}
+            api4={"http://localhost:4000/routes/delivered/"}
+            _id = {parameters['*'].split("/")[2]}/>
+        </>}/>
     </Routes>
     )
 }

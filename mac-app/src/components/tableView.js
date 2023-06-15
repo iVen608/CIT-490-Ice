@@ -5,6 +5,7 @@ import CallIn from '../models/tableViewCallTwo';
 import RoutesModel from '../models/tableViewRoutes';
 import RoutesSmall from '../models/tableViewRoutesEdit';
 import RoutesCheckModel from '../models/tableViewCheckRoute';
+import DeliveredRoute from '../models/tableViewDeliveredRoute';
 import "../styles/customerTable.css";
 import '../styles/searchBar.css';
 function MyTableView(props){
@@ -42,6 +43,8 @@ function MyTableView(props){
                             return <RoutesModel key={data[v]._id} _data={data[v]}/>
                         }else if(props.model === "routesCheck"){
                             return <RoutesCheckModel key={data[v]._id} _data={data[v]}/>
+                        }else {
+                            return <DeliveredRoute key={data[v]._id} _data={data[v]}/>
                         }
                 })}
                 {props.data && props.data.map((v) => 

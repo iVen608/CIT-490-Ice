@@ -24,6 +24,8 @@ router.delete("/callin/:id", callinController.deleteCallIn);
 
 //Routes Routes
 router.get("/routes/", routesController.getAllRoutes);
+router.get("/routes/delivered", routesController.getDeliveredRoutes);
+router.get("/routes/delivered/:id", routesController.getSingleDeliveredRoutes);
 router.get("/routes/:id", routesController.getSingleRoutes);
 router.post("/routes/", routesController.postRoutes);
 router.post("/routes/checkin/:id", routesController.postCheckin);

@@ -27,9 +27,46 @@ async function getAllRoutes(req, res){
     }
 };
 
+async function getDeliveredRoutes(req, res){
+    try{
+        const searchQuery = req.query.search;
+        const _db = await mongo.connect().db('ice').collection("route_deliveries").find();
+        const result = await _db.toArray();
+        console.log(result);
+        console.log(searchQuery);
+        if(searchQuery){
+            const filter = result.filter(v =>  {
+            if(v['name']){
+                return v['name'].toString().toLowerCase().includes(searchQuery);
+            }else{
+                return false;
+            }
+            });
+            res.status(200).json(filter);
+        }else{
+            console.log(result);
+            res.status(200).json(result);
+        }
+    }catch(err){
+        console.log(err);
+        res.sendStatus(404);
+    }
+};
+
 async function getSingleRoutes(req, res){
     try{
         const _db = await mongo.connect().db('ice').collection("routes").find();
+        const result = await _db.toArray();
+        const filtered = result.filter(route => route._id.toString() == req.params.id);
+        res.status(200).json(filtered);
+    }catch(err){
+        res.sendStatus(404);
+    }
+}
+
+async function getSingleDeliveredRoutes(req, res){
+    try{
+        const _db = await mongo.connect().db('ice').collection("route_deliveries").find();
         const result = await _db.toArray();
         const filtered = result.filter(route => route._id.toString() == req.params.id);
         res.status(200).json(filtered);
@@ -59,20 +96,36 @@ async function postRoutes(req, res) {
 
 async function postCheckin(req, res){
     try{
-        const object_id = new mongodb.ObjectId(req.params.id);
-        console.log(req.body)
-        const _routeDel = await mongo.connect().db('ice').collection("route_deliveries");
-        const _deliveries = await mongo.connect().db('ice').collection("deliveries");
-        const res1 =  await _routeDel.insertOne(req.body);
-        req.body.delivered.forEach(element => {
-            _deliveries.insertOne({customer_id: element._id, delivered: element.delivered, delivered2: element.delivered2});
-        });
-        /*const checkKeysResponse = lib.checkKeys(callIn, ["name","stops"], 0);
-        if(checkKeysResponse === false){
-            throw Error("Missing keys");
+        const _date = new Date()
+        var checkIn = {
+            name: req.body.name,
+            date: _date,
+            route_id: req.body.route_id,
+            delivered: req.body.delivered,
+            callins: req.body.callins
         }
-        const _db = await mongo.connect().db('ice').collection("routes");
-        _db.insertOne(callIn).then(result => res.sendStatus(204)).catch(err => {res.sendStatus(404); console.log(err)});*/
+        console.log(checkIn);
+        const object_id = new mongodb.ObjectId(req.params.id);
+        const _db = await mongo.connect().db('ice');
+        const _routeDel = _db.collection("route_deliveries");
+        const _deliveries = _db.collection("deliveries");
+        
+        for(var stop of checkIn.delivered){
+            const response = await _deliveries.insertOne({customer_id: stop._id, date: _date, delivered: stop.delivered, delivered2: stop.delivered2});
+            if(response.acknowledged){
+                stop.invoice_id = response.insertedId.toString();
+            }
+        }
+        const _callinDB = _db.collection("callin");
+        for (var call of checkIn.callins){
+            const call_id = new mongodb.ObjectId(call._id);
+            await _callinDB.updateOne({_id: call_id}, {$set: {completed: true}});
+            const response = await _deliveries.insertOne({customer_id: call.customer_id, delivered: call.delivered, delivered2: call.delivered2});
+            if(response.acknowledged){
+                call.invoice_id = response.insertedId.toString();
+            }
+        }
+        await _routeDel.insertOne(checkIn);
     }catch(err){
         console.log(err);
         res.sendStatus(404);
@@ -110,4 +163,4 @@ async function deleteRoutes(req, res) {
     } 
 }
 
-module.exports = {getAllRoutes, getSingleRoutes, postRoutes, updateRoutes, deleteRoutes, postCheckin}
+module.exports = {getAllRoutes, getDeliveredRoutes, getSingleRoutes, getSingleDeliveredRoutes, postRoutes, updateRoutes, deleteRoutes, postCheckin}

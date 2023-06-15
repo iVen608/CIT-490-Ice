@@ -7,7 +7,13 @@ function CustomerRouter(){
     const parameters = useParams();
     const nav = useNavigate();
     const [edit, setEdit] = useState(true);
+    const [response, setResponse] = useState("");
     const [confirm, setConfirm] = useState(false);
+
+    function handleResponse(message){
+        setResponse(message);
+        setTimeout(()=>{setResponse("")}, 1000);
+    }
     const toggle = () => {
         if(edit){
             setEdit(false);
@@ -35,24 +41,25 @@ function CustomerRouter(){
         <>
             <h1>Customer All View</h1>
             <Link to="./add/">Add Customer</Link>
+            {response !== "" && <p className='form-status-message'>{response}</p>}
             <MyTableView 
                 header_keys={["Name", "Address", "Ice", "Price", "Tax", "Del", "PO/Job"]}
                 api={"http://localhost:4000/customer/"}
                 model="customer"/>
         </>}/>
-        <Route path="/add/" element={<CustomerForm method={"POST"} edit={true} api="http://localhost:4000/customer/"/>}/>
+        <Route path="/add/" element={<CustomerForm method={"POST"} edit={true} api="http://localhost:4000/customer/" response={handleResponse}/>}/>
         <Route path="/delete/:id" element={<h1>Customer Delete View: {parameters['*'].split("/")[1]}</h1>}/>
         <Route path="/edit/:id" element={
             <>
             <h1>Customer Details</h1>
-            <button type="button" onClick={toggle}>Edit</button>
-            <button type="button" onClick={e => setConfirm(true)}>Delete</button>
+            <button type="button" className="form-button-edit" onClick={toggle}>Edit</button>
+            <button type="button" className="form-button-delete" onClick={e => setConfirm(true)}>Delete</button>
             {confirm && <div>
                 <h1>Are you sure about deleting this customer?</h1>
-                <button onClick={deleteCustomer}>Yes</button>
-                <button onClick={e => setConfirm(false)}>No</button>
-                </div>}
-            <CustomerForm _id={parameters['*'].split("/")[1]} _edit={edit} method="PUT" api="http://localhost:4000/customer/"/></>
+                <button className="form-button-delete" onClick={deleteCustomer}>Yes</button>
+                <button className="form-button-edit" onClick={e => setConfirm(false)}>No</button>
+            </div>}
+            <CustomerForm _id={parameters['*'].split("/")[1]} _edit={edit} method="PUT" api="http://localhost:4000/customer/" response={handleResponse}/></>
         }/>
     </Routes>
     )
