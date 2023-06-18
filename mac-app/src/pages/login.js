@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import getJWT from '../utility';
 import '../styles/form.css';
 
 function Login(){
     const [data, setData] = useState({})
     const [response, setResponse] = useState("");
+    const [token, setToken] = useState(false)
+    useEffect(() => {
+        setToken(getJWT())
+    }, [])
     const handleSubmit = (e) => {
         e.preventDefault();
         fetch("http://localhost:4000/login/",
@@ -21,12 +25,12 @@ function Login(){
     return (
         <>
             <p>{response}</p>
-            {!getJWT && <form className='form' onSubmit={handleSubmit}>
+            {!token && <form className='form' onSubmit={handleSubmit}>
                 <input name="username" required className='form-text-input' placeholder='Username' onChange={(e) => setData({...data, ["username"] : e.target.value})}/>
                 <input name="password" required className='form-text-input' placeholder='Password' type="password" onChange={(e) => setData({...data, ["password"] : e.target.value})}/>
                 <button type="submit" className='form-button-submit'>Submit</button>
             </form>}
-            {getJWT && <div>
+            {token && <div>
                     <h1>You are currently logged in!</h1>
                 </div>}
         </>
