@@ -3,9 +3,11 @@ import { Form, useParams, useNavigate } from 'react-router-dom';
 import '../styles/form.css';
 import CustomerSmall from '../models/searchViewSmallCustomer';
 import MyTableView from '../components/tableView';
+import jwt from '../utility';
 
 function RouterForm(props){
     const nav = useNavigate();
+    const token = jwt();
     const [data, setData] = useState({name: "", stops: []});
     const [search, setSearch] = useState([]);
     const [rep, setRep] = useState(null);
@@ -14,16 +16,6 @@ function RouterForm(props){
     const [selectedId, setSelectedId] = useState("");
     const [stops, setStops] = useState([]);
     const [loading, setLoading] = useState(false);
-    const token = window.localStorage.getItem("token");
-    
-    const _data = [
-        {"data": 1, yield: 2},
-        {"data": 1, yield: 2},
-        {"data": 1, yield: 2},
-        {"data": 1, yield: 2},
-    ];
-
-    
 
     async function updateData(){
         var link = "https://cit-490-ice.onrender.com/routes/";
@@ -60,17 +52,15 @@ function RouterForm(props){
             if(data.stops.length === 0 && props._edit){
                 getRoute();
             }
-            if(stops.length === 0 && props._edit){
+            else if(stops.length === 0 && props._edit){
                 getCustomers();
+            }else {
+                setLoading(true);
             }
             console.log(data.name)
         
     })
-    async function getApis(){
-        await getRoute();
-    }
     async function getRoute(){
-        console.log("running")
         await fetch("http://localhost:4000/routes/"+props._id)
             .then(response => response.json())
             .then(obj => {
@@ -85,7 +75,7 @@ function RouterForm(props){
                 setStops(filtered.map(cus => {return {'id': cus._id, 'name': cus.name, 'address': cus.address}}));
                                 setLoading(true);
                 }
-            }).catch(err => console.log(err));
+            }).catch(err => console.log("Error getting customers"));
             
     }
     function updateBox(e){

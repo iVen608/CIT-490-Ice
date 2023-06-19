@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 const checkEmpty = function(obj, optionalKeys){
     var ret = true;
     Object.keys(obj).forEach(key => {
@@ -41,4 +43,14 @@ const checkEmpty = function(obj, optionalKeys){
     })
   }
 
-module.exports = {checkEmpty, checkKeys, validateFloat}
+  const verifyToken = (token) => {
+    try{
+        console.log(token);
+        jwt.verify(token, process.env.SECRETKEY);
+        return true;
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
+module.exports = {checkEmpty, checkKeys, validateFloat, verifyToken}

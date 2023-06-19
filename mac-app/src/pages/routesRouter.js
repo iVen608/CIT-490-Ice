@@ -18,12 +18,12 @@ function RoutesRouter(){
     }
 
     async function deleteCustomer(){
-        await fetch("https://cit-490-ice.onrender.com/routes/" + parameters['*'].split("/")[1], {
+        await fetch("http://localhost:4000/routes/" + parameters['*'].split("/")[1], {
             method: 'DELETE'}
         ).then(response => {
             if(response.ok){
                 setConfirm(false);
-                nav("/callin/");
+                nav("/routes/");
             }else{
                 console.log("failed");
             }

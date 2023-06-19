@@ -6,6 +6,7 @@ import RoutesModel from '../models/tableViewRoutes';
 import RoutesSmall from '../models/tableViewRoutesEdit';
 import RoutesCheckModel from '../models/tableViewCheckRoute';
 import DeliveredRoute from '../models/tableViewDeliveredRoute';
+import jwt from '../utility';
 import "../styles/customerTable.css";
 import '../styles/searchBar.css';
 function MyTableView(props){
@@ -13,14 +14,12 @@ function MyTableView(props){
     const [search, setSearch] = useState('');
     const [parameters, setParameters] = useSearchParams()
     const query = parameters.get("search");
+    const token = jwt();
     const nav = useNavigate();
     useEffect(() => {
-        if(!props.data){
-            const token = window.localStorage.getItem("token");
+        //if(!props.data){
             fetch(query === null ? props.api : `${props.api}?search=${query}`, {method: 'GET', credentials: 'include', headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log("err"))
-            //fetch("http://localhost:4000/customer/", {credentials: 'include', headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(_data => {setData(_data); console.log(_data)}).catch(err => console.log(err))
-               
-        }
+        //}
     }, []);
     return (<>
         {!props.data && <div id="search-bar-container">

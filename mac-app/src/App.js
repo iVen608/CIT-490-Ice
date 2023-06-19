@@ -11,20 +11,25 @@ import CallInRouter from './pages/callInRouter';
 import HomeGrid from './pages/homeGrid';
 import MyTableView from './components/tableView';
 import Login from './pages/login';
+import jwt from './utility';
 function App() {
   return (
     <>
       <Header/>
       <div id="content">
         <Routes>
-          <Route path="/" element={<HomeGrid/>}/>
+          
           <Route path="/login" element={<Login/>}/>
-          <Route path="/grid" element={<MyTableView key="1234"/>}/>
-          <Route path="/calculator" element={<InvoiceCalculator/>}/>
-          <Route path="/customer/*" element={<CustomerRouter/>}/>
-          <Route path="/invoices/*" element={<InvoiceRouter/>}/>
-          <Route path="/callin/*" element={<CallInRouter/>}/>
-          <Route path="/routes/*" element={<RoutesRouter/>}/>
+          {jwt() && <><Route path="/grid" element={<MyTableView key="1234"/>}/>
+            <Route path="/" element={<HomeGrid/>}/>
+            <Route path="/calculator" element={<InvoiceCalculator/>}/>
+            <Route path="/customer/*" element={<CustomerRouter/>}/>
+            <Route path="/invoices/*" element={<InvoiceRouter/>}/>
+            <Route path="/callin/*" element={<CallInRouter/>}/>
+            <Route path="/routes/*" element={<RoutesRouter/>}/></>}
+          {!jwt() && <>
+            <Route path="/*" element={<Login/>}/>
+          </>}
         </Routes>
       </div>
       <Footer/>

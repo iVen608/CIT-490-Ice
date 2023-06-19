@@ -1,25 +1,18 @@
 const mongo = require("../connect");
 const mongodb = require("mongodb");
 const lib = require("../library/library");
-const jwt = require("jsonwebtoken");
-require('dotenv').config();
 
-const verifyToken = (token) => {
-    try{
-        console.log(token);
-        jwt.verify(token, process.env.SECRETKEY);
-        return true;
-    }catch(err){
-        console.log(err);
-        return false;
-    }
-}
+const { all } = require("axios");
+require('dotenv').config();
+const optional_parameters = ["ice2", "price2", "rami", "equipment", "job", "po"];
+const all_parameters = ["name","address", "city", "zip","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"];
+const float_parameters = ["ice1", "ice2", "price1", "price2"];
+
 
 async function getAllCustomers(req, res){
     try{
         const token = req.headers.authorization.split(' ')[1];
-        //const verification = verifyToken(req.cookies.Name);
-        const verification = verifyToken(token);
+        const verification = lib.verifyToken(token);
         if(!verification){
             throw Error("Verification failed");
         }
@@ -48,6 +41,11 @@ async function getAllCustomers(req, res){
 
 async function getSingleCustomer(req, res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const _db = await mongo.connect().db('ice').collection("customers").find();
         const result = await _db.toArray();
         const filtered = result.filter(customer => customer._id.toString() == req.params.id);
@@ -59,12 +57,17 @@ async function getSingleCustomer(req, res){
 
 async function postCustomer(req, res) {
     try{
-        const checkEmptyResponse = lib.checkEmpty(req.body, ["ice2", "price2", "rami", "equipment", "job", "po"]);
-        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"], 0);
-        const validateFloatResponse = lib.validateFloat(req.body, ["ice1", "ice2", "price1", "price2"]);
+        const token = req.headers.authorization.split(' ')[1];
+        console.log(req.headers)
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
+        const checkEmptyResponse = lib.checkEmpty(req.body, optional_parameters);
+        const checkKeysResponse = lib.checkKeys(req.body, all_parameters, 0);
+        const validateFloatResponse = lib.validateFloat(req.body, float_parameters);
         if(checkEmptyResponse === false){
             throw Error("Empty response");
-            
         }else if(checkKeysResponse === false){
             throw Error("Missing keys");
         }else if(validateFloatResponse === false){
@@ -80,10 +83,15 @@ async function postCustomer(req, res) {
 
 async function updateCustomer(req, res) {
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const object_id = new mongodb.ObjectId(req.params.id);
-        const checkEmptyResponse = lib.checkEmpty(req.body, ["ice2", "price2", "rami", "equipment", "job", "po"]);
-        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"], 1);
-        const validateFloatResponse = lib.validateFloat(req.body, ["ice1", "ice2", "price1", "price2"]);
+        const checkEmptyResponse = lib.checkEmpty(req.body, optional_parameters);
+        const checkKeysResponse = lib.checkKeys(req.body, all_parameters, 1);
+        const validateFloatResponse = lib.validateFloat(req.body, float_parameters);
         if(checkEmptyResponse === false){
             throw Error("Empty response");
             
@@ -96,6 +104,8 @@ async function updateCustomer(req, res) {
         _db.updateOne({_id: object_id}, {$set: {
             name: req.body.name,
             address: req.body.address,
+            city: req.body.city,
+            zip: req.body.zip,
             ice1: req.body.ice1,
             ice2: req.body.ice2,
             price1: req.body.price1,
@@ -115,13 +125,12 @@ async function updateCustomer(req, res) {
 
 async function deleteCustomer(req, res) {
     try{
-        const object_id = new mongodb.ObjectId(req.params.id);
-        const checkEmptyResponse = lib.checkEmpty(req.body, ["ice2", "price2", "rami", "equipment", "job", "po"]);
-        if(checkEmptyResponse === false){
-            console.log("err");
-            throw Error("Empty response");
-            
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
         }
+        const object_id = new mongodb.ObjectId(req.params.id);
         const _db = await mongo.connect().db('ice').collection("customers");
         _db.deleteOne({_id: object_id}).then(result => res.sendStatus(204)).catch(err => res.sendStatus(404));
     }catch(err){

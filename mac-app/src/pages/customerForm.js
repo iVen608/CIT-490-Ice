@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/form.css';
+import jwt from '../utility';
 
 function CustomerForm(props){
     const nav = useNavigate();
+    const token = jwt();
     const [data, setData] = useState({
         'name': '', 
         'address': '',
@@ -28,7 +30,8 @@ function CustomerForm(props){
         await fetch(link, {
             method: props.method,
             body: JSON.stringify(data),
-            headers: {'Content-type': "application/json"}
+            headers: {'Content-type': "application/json", 'Authorization': `Bearer ${token}`},
+            credentials: 'include'
         }).then(response => {
             if(response.ok){
                 setRep(true);
@@ -51,7 +54,7 @@ function CustomerForm(props){
     }
     useEffect(() => {
         if(props._id && data.name === ""){
-            fetch(props.api + props._id).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
+            fetch(props.api + props._id, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setData(obj[0]); console.log(obj)});
         } 
     }, []);
        
