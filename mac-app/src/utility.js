@@ -23,9 +23,9 @@ export function sortFunction(array, key, order){
         if(!parseFloat(x[key]) && x[key] !== ""){
             console.log("x")
             if(x[key] > y[key]){
-                return 1 * order;
+                return 1;
             }else if(x[key] < y[key]){
-                return -1 * order;
+                return -1;
             }
             return 0;
         }else{
