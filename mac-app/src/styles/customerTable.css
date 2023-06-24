@@ -4,12 +4,8 @@
     width: 80%;
 }
 .customer-table-header-cell {
-    background-color: var(--accent-light);
+    background-color: var(--accent-medium);
     font-size: 14px;
-}
-
-.customer-table-data-row {
-    border-bottom: 2px solid black;
 }
 
 .customer-table-data-cell {

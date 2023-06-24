@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './styles/App.css';
 import {Routes, Route} from 'react-router-dom';
 import Header from './components/header';
 import Footer from './components/footer';
@@ -11,7 +11,7 @@ import CallInRouter from './pages/callInRouter';
 import HomeGrid from './pages/homeGrid';
 import MyTableView from './components/tableView';
 import Login from './pages/login';
-import jwt from './utility';
+import {getJWT} from './utility';
 function App() {
   return (
     <>
@@ -20,14 +20,14 @@ function App() {
         <Routes>
           
           <Route path="/login" element={<Login/>}/>
-          {jwt() && <><Route path="/grid" element={<MyTableView key="1234"/>}/>
+          {getJWT() && <><Route path="/grid" element={<MyTableView key="1234"/>}/>
             <Route path="/" element={<HomeGrid/>}/>
             <Route path="/calculator" element={<InvoiceCalculator/>}/>
             <Route path="/customer/*" element={<CustomerRouter/>}/>
             <Route path="/invoices/*" element={<InvoiceRouter/>}/>
             <Route path="/callin/*" element={<CallInRouter/>}/>
             <Route path="/routes/*" element={<RoutesRouter/>}/></>}
-          {!jwt() && <>
+          {!getJWT() && <>
             <Route path="/*" element={<Login/>}/>
           </>}
         </Routes>

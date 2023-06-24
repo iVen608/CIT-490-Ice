@@ -11,8 +11,7 @@ function HomeGrid(){
             <Link class="nav-grid-link" to="/calculator/">
                 <span class="nav-grid-box">
                     <img class="nav-grid-icon" src={calculatorIcon}/>
-                    <br/>
-                    Calculator
+                    <p className="nav-grid-text">Calculator</p>
                     </span>
             </Link>
             <Link class="nav-grid-link" to="/customer/">
@@ -21,7 +20,8 @@ function HomeGrid(){
                     <circle class="nav-grid-customer-icon-circle" cx="35" cy="50" r="13"/>
                     <circle class="nav-grid-customer-icon-circle" cx="35" cy="75" r="20"/>
                 </svg>
-                    Customers</span>
+                <p className="nav-grid-text">Customers</p>
+                    </span>
             </Link>
             <Link class="nav-grid-link" to="/routes/">
                 <span class="nav-grid-box">
@@ -31,7 +31,8 @@ function HomeGrid(){
                     <polygon class="nav-grid-route-icon-polygon" points="49,30 35,60, 21,30, 49,30"/>
                     
                 </svg>
-                    Routes</span>
+                <p className="nav-grid-text">Routes</p>
+                    </span>
             </Link>
             <Link class="nav-grid-link" to="/callin/">
                 <span class="nav-grid-box">
@@ -41,10 +42,11 @@ function HomeGrid(){
                 <circle class="nav-grid-call-icon-rect" cx="15" cy="25" r="13"/>
                 <circle class="nav-grid-call-icon-rect" cx="60" cy="25" r="13"/>
                 </svg>
-                    Call Ins</span>
+                <p className="nav-grid-text">Call Ins</p>
+                    </span>
             </Link>
             <Link class="nav-grid-link" to="/routes/checkin/">
-                <span class="nav-grid-box">Check In</span>
+                <span class="nav-grid-box"><p className="nav-grid-text">Check In</p></span>
             </Link>
         </div>
     )

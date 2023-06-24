@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Gloock&family=Inter:wght@600&family=Roboto&display=swap');
+
+.root {
+  overflow: hidden;
+  width: 100vw;
+}
+
+#content {
+  min-height: calc(100vh - 75px - 68px);
+}
+.App {
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6, th, label {
+  font-family: 'Inter', serif;
+}
+
+p, input, td, Link, a, li, button {
+  font-family: 'Roboto', sans-serif;
+}
+
+

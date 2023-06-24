@@ -1,11 +1,11 @@
-
+@import "./root.css";
 
 .header {
-    background-color: darkblue;
+    background-color: var(--primary);
     display: grid;
     grid-template-columns: 6fr 2fr;
     height: 100px;
-    width: 100vw;
+    width: 100%;
     overflow: hidden;
 }
 
@@ -17,7 +17,7 @@
     right: 0px;
     top: -175px;
     overflow: hidden;
-    background-color: darkblue;
+    background-color: var(--primary);
 }
 /*edit2*/
 .header-path {
@@ -25,11 +25,11 @@
     font-size: 24px;
     padding: 10px;
     text-decoration: none;
-    color: white;
+    color: var(--accent-light);
 }
 
 .header-name {
-    color: white;
+    color: var(--accent-light);
     text-align: center;
     text-decoration: none;
     font-size: 32px;
@@ -40,10 +40,12 @@
     width: 100%;
     height: 100px;
     fill: none;
+    padding: 0;
 }
 
 .expand-icon-bar{
-    fill: white;
+    fill: var(--accent-light);
+
 }
 
 .header-expand-button {
@@ -51,6 +53,8 @@
     color: transparent;
     border: none;
     height: 100px;
+    max-width: 75px;
+    padding: 0;
 }
 
 .minimized-nav {
@@ -95,7 +99,7 @@
     
     .header-path {
         text-decoration: none;
-        color: white;
+        color: var(--accent-light);
         font-size: 16px;
         line-height: 80px;
         height: 100%;
@@ -105,7 +109,7 @@
     }
     
     .header-path:hover{
-        background-color: rgba(255,255,255,.5);
+        background-color: var(--accent-medium);
     }
     .expand-icon-bar{
         fill: transparent;

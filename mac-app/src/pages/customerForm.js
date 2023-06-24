@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/form.css';
-import jwt from '../utility';
+import {getJWT} from '../utility';
 
 function CustomerForm(props){
     const nav = useNavigate();
-    const token = jwt();
+    const token = getJWT();
     const [data, setData] = useState({
         'name': '', 
         'address': '',

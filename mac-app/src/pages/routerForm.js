@@ -1,23 +1,23 @@
 import React, {useState, useEffect} from 'react'
-import { Form, useParams, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import '../styles/form.css';
 import CustomerSmall from '../models/searchViewSmallCustomer';
 import MyTableView from '../components/tableView';
-import jwt from '../utility';
+import {getJWT} from '../utility';
 
 function RouterForm(props){
     const nav = useNavigate();
-    const token = jwt();
+    const token = getJWT();
     const [data, setData] = useState({name: "", stops: []});
     const [search, setSearch] = useState([]);
     const [rep, setRep] = useState(null);
     const [selected, setSelected] = useState("");
-    const [selectedAddress, setSelectedAddress] = useState("");
-    const [selectedId, setSelectedId] = useState("");
     const [stops, setStops] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [processing, setProcessing] = useState(false);
 
     async function updateData(){
+        setProcessing(true);
         var link = "https://cit-490-ice.onrender.com/routes/";
         if(props._id){
             link += props._id;
@@ -42,7 +42,7 @@ function RouterForm(props){
                 console.log(response);
                 setRep(false);
             }
-        }).catch(err => {console.log(err); setRep(false);});
+        }).catch(err => {console.log(err); setRep(false); setProcessing(false)});
     }
     function handleSubmit(e){
         e.preventDefault();  
@@ -57,7 +57,6 @@ function RouterForm(props){
             }else {
                 setLoading(true);
             }
-            console.log(data.name)
         
     })
     async function getRoute(){
@@ -108,7 +107,7 @@ function RouterForm(props){
                     })}
             </div></>}
             
-            {!props._edit && <button type="submit" className='form-button-submit'>Submit</button>}
+            {!props._edit && <button type="submit" disabled={processing} className='form-button-submit'>{!processing ? 'Submit' : 'Processing'}</button>}
         </form>}
         {loading === true && <><MyTableView 
             header_keys={["Name", "Address"]}

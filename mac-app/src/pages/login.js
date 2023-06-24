@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import getJWT from '../utility';
+import {getJWT} from '../utility';
 import '../styles/form.css';
 
 function Login(){
@@ -19,7 +19,7 @@ function Login(){
             }
         )
         .then(response => response.json())
-        .then(_data => {window.localStorage.setItem("token", _data); setResponse("Successfully logged in")})
+        .then(_data => {window.localStorage.setItem("token", _data); setResponse("Successfully logged in"); setTimeout(()=>{window.location.reload(true)}, 1500)})
         .catch(err => setResponse(`An error occured while attempting to login in: ${err}`));
     }
     return (
