@@ -17,6 +17,19 @@
     font-size: 14px;
 }
 
+.table-link-create {
+    background-color: var(--primary);
+    text-decoration: none;
+    color: var(--accent-light);
+    padding: 15px;
+    border-radius: 15px;
+    transition: background-color 2s;
+}
+
+.table-link-create:hover {
+    background-color: var(--accent-medium);
+}
+
 .customer-table-data-link {
     text-decoration: none;
     color: var(--secondary);

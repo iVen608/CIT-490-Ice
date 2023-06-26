@@ -19,12 +19,9 @@ function CustomerHistory(props){
             </ul>
             {history[0] && history.map(stop => {
                     if(stop.date){
-                        console.log(stop.date);
                         const _date = new Date(stop.date);
-                        console.log(_date);
                         const _year = _date.getFullYear();
                         const _month = _date.getMonth() + 1;
-                        console.log(_month);
                         const _day = _date.getDate();
                         const _formattedDate = `${_month}/${_day}/${_year}`;
                         return <li>{`${_formattedDate}: ${stop.delivered !== "" ? stop.delivered : ""}${stop.delivered2 !== "" ? ` | ${stop.delivered2}` : ""}`}</li>

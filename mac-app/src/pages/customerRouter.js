@@ -41,7 +41,7 @@ function CustomerRouter(){
         <Route path="/" element={
         <>
             <h1>Customer All View</h1>
-            <Link to="./add/">Add Customer</Link>
+            <Link className="table-link-create" to="./add/">Add Customer</Link>
             {response !== "" && <p className='form-status-message'>{response}</p>}
             <MyTableView 
                 header_keys={["Name", "Address", "Ice", "Price", "Tax", "Del", "PO/Job"]}
