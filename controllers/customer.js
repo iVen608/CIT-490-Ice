@@ -4,8 +4,8 @@ const lib = require("../library/library");
 
 const { all } = require("axios");
 require('dotenv').config();
-const optional_parameters = ["ice2", "price2", "rami", "equipment", "job", "po"];
-const all_parameters = ["name","address", "city", "zip","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment"];
+const optional_parameters = ["ice2", "price2", "rami", "equipment", "job", "po", "special"];
+const all_parameters = ["name","address", "city", "zip","ice1","ice2","price1","price2","tax","delivery","po","job","rami","equipment", "special"];
 const float_parameters = ["ice1", "ice2", "price1", "price2"];
 
 
@@ -50,6 +50,37 @@ async function getSingleCustomer(req, res){
         const result = await _db.toArray();
         const filtered = result.filter(customer => customer._id.toString() == req.params.id);
         res.status(200).json(filtered);
+    }catch(err){
+        res.sendStatus(404);
+    }
+}
+
+async function getCustomerHistory(req, res){
+    try{
+        const token = req.headers.authorization.split(' ')[1];
+        console.log("a")
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
+        console.log("b")
+        const count = req.query.count;
+        const customer_id = req.params.id;
+        const _db = await mongo.connect().db('ice').collection("deliveries").find( {"customer_id": customer_id}).toArray();
+        const sorted = _db.sort((a,b) => {
+            const date_a = new Date(a.d);
+            const date_b = new Date(b.d);
+            if(date_a > date_b){
+                return 1;
+            }else if(date_a < date_b){
+                return -1;
+            }
+            return 0;
+        });
+        console.log(count);
+        const requestedDeliveries = sorted.reverse().slice(0, count);
+        console.log(requestedDeliveries);
+        res.status(200).json(requestedDeliveries);
     }catch(err){
         res.sendStatus(404);
     }
@@ -139,4 +170,4 @@ async function deleteCustomer(req, res) {
     } 
 }
 
-module.exports = {getAllCustomers, getSingleCustomer, postCustomer, deleteCustomer, updateCustomer}
+module.exports = {getAllCustomers, getSingleCustomer, getCustomerHistory, postCustomer, deleteCustomer, updateCustomer}

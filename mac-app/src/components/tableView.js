@@ -35,7 +35,7 @@ function MyTableView(props){
             }
         }
         
-    }, [sortFilter])
+    }, [sortFilter, data])
     return (<>
         {!props.data && <div id="search-bar-container">
                 <input id="search-bar-input" type="text" placeholder={`Search for ${props.model}..`} onChange={e => setSearch(e.target.value)}/>

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Routes, Route, Link, useParams, useNavigate} from 'react-router-dom';
 import MyTableView from "../components/tableView";
 import CustomerForm from './customerForm';
+import CustomerHistory from "../components/customerHistory";
 
 function CustomerRouter(){
     const parameters = useParams();
@@ -59,7 +60,8 @@ function CustomerRouter(){
                 <button className="form-button-delete" onClick={deleteCustomer}>Yes</button>
                 <button className="form-button-edit" onClick={e => setConfirm(false)}>No</button>
             </div>}
-            <CustomerForm _id={parameters['*'].split("/")[1]} _edit={edit} method="PUT" api="http://localhost:4000/customer/" response={handleResponse}/></>
+            <CustomerForm _id={parameters['*'].split("/")[1]} _edit={edit} method="PUT" api="http://localhost:4000/customer/" response={handleResponse}/>
+            <CustomerHistory api="http://localhost:4000/customer/history/" _id={parameters['*'].split("/")[1]}/></>
         }/>
     </Routes>
     )

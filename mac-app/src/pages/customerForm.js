@@ -19,6 +19,7 @@ function CustomerForm(props){
         'job': '',
         'rami': '', 
         'equipment': '', 
+        'special': '',
     })
     const [rep, setRep] = useState(null);
     async function updateData(){
