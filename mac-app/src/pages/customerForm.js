@@ -72,8 +72,8 @@ function CustomerForm(props){
                 {(data.ice1 == 0 ? <option value="0" selected></option> : <option value="0"></option>)}
                 {(data.ice1 == 7 ? <option value="7" selected>7R</option> : <option value="7">7R</option>)}
                 {(data.ice1 == 10 ? <option value="10" selected>10lb block</option> : <option value="10">10lb block</option>)}
-                {(data.ice1 == 16 ? <option value="16" selected>16rR</option> : <option value="16">16R</option>)}
-                {(data.ice1 == 40 ? <option value="40" selected>40</option> : <option value="40">40R</option>)}
+                {(data.ice1 == 16 ? <option value="16" selected>16R</option> : <option value="16">16R</option>)}
+                {(data.ice1 == 40 ? <option value="40" selected>40R</option> : <option value="40">40R</option>)}
             </select>
             <input type="number" required className='form-text-input' name="price1" placeholder='Ice Price' step=".01" readOnly={props._edit} value={data.price1 || ""} onChange={e => setData({...data, ["price1"] : e.target.value})}/>
             <select name="ice2" className='form-select-input' disabled={props._edit} onChange={e => setData({...data, ["ice2"] : e.target.value})}>

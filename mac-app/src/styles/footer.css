@@ -1,4 +1,6 @@
+@import "./root.css";
+
 footer {
-    background-color: darkblue;
-    height: 50px;
+    background-color: var(--primary);
+    height: 52px;
 }

@@ -23,8 +23,9 @@ function CheckInForm(props){
         if(props._id){
             link += props._id;
         }
-        if(props.method === "PUT"){
-            setBody({...savedRoute, 
+        await fetch(link, {
+            method: props.method,
+            body: props.method === "PUT" ? JSON.stringify({...savedRoute, 
                 addedStops: [...addedSearch, ...customers].filter(stop => stop.completed).map(stop => {return  {
                     _id: stop._id,
                     delivered: stop.delivered || '',
@@ -38,32 +39,25 @@ function CheckInForm(props){
                         delivered: call.delivered || '',
                         delivered2: call.delivered2 || '' 
                     }
-                })})
-        }else {
-            setBody({
-                "name": data.name,
-                "route_id": props._id,
-                "delivered": [...customers, ...addedSearch]
-                .filter(customer => customer.completed)
-                .map(i => {return {
-                    _id: i._id,
-                    delivered: i.delivered || '',
-                    delivered2: i.delivered2 || ''
-                    }}),
-                "callins": callins.filter(call => call.completed)
-                .map(call => {
-                    return {
-                        _id: call._id,
-                        customer_id: call.customer_id,
-                        delivered: call.delivered || '',
-                        delivered2: call.delivered2 || '' 
-                    }
-                })})
-        }
-        console.log(body);
-        await fetch(link, {
-            method: props.method,
-            body: JSON.stringify(body),
+                })}) : JSON.stringify({
+                    "name": data.name,
+                    "route_id": props._id,
+                    "delivered": [...customers, ...addedSearch]
+                    .filter(customer => customer.completed)
+                    .map(i => {return {
+                        _id: i._id,
+                        delivered: i.delivered || '',
+                        delivered2: i.delivered2 || ''
+                        }}),
+                    "callins": callins.filter(call => call.completed)
+                    .map(call => {
+                        return {
+                            _id: call._id,
+                            customer_id: call.customer_id,
+                            delivered: call.delivered || '',
+                            delivered2: call.delivered2 || '' 
+                        }
+                    })}),
             headers: {'Content-type': "application/json"}
         }).then(response => {
             if(response.ok){
@@ -71,7 +65,7 @@ function CheckInForm(props){
                 if(props._id){//PUT
                     window.location.reload(true);
                 }else{//POST
-                    //nav("/routes/")
+                    //nav("/routes/delivered/");
                 }
                 
             }else{

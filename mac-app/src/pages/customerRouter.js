@@ -40,7 +40,7 @@ function CustomerRouter(){
         
         <Route path="/" element={
         <>
-            <h1>Customer All View</h1>
+            <h1 className="form-title">Customer All View</h1>
             <Link className="table-link-create" to="./add/">Add Customer</Link>
             {response !== "" && <p className='form-status-message'>{response}</p>}
             <MyTableView 
@@ -52,15 +52,19 @@ function CustomerRouter(){
         <Route path="/delete/:id" element={<h1>Customer Delete View: {parameters['*'].split("/")[1]}</h1>}/>
         <Route path="/edit/:id" element={
             <>
-            <h1>Customer Details</h1>
-            <button type="button" className="form-button-edit" onClick={toggle}>Edit</button>
-            <button type="button" className="form-button-delete" onClick={e => setConfirm(true)}>Delete</button>
-            {confirm && <div>
-                <h1>Are you sure about deleting this customer?</h1>
+            <div className="form-action-header">
+                <h1 className="form-title">Customer Details</h1>
+                <button type="button" className="form-button-edit" onClick={toggle}>Edit</button>
+                <button type="button" className="form-button-delete" onClick={e => setConfirm(true)}>Delete</button>
+                {confirm && <>
+                <h1 className="form-title">Are you sure about deleting this customer?</h1>
                 <button className="form-button-delete" onClick={deleteCustomer}>Yes</button>
                 <button className="form-button-edit" onClick={e => setConfirm(false)}>No</button>
-            </div>}
+            </>}
+            </div>
+            
             <CustomerForm _id={parameters['*'].split("/")[1]} _edit={edit} method="PUT" api="http://localhost:4000/customer/" response={handleResponse}/>
+
             <CustomerHistory api="http://localhost:4000/customer/history/" _id={parameters['*'].split("/")[1]}/></>
         }/>
     </Routes>

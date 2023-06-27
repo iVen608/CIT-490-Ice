@@ -12,24 +12,28 @@ function CustomerHistory(props){
     }, [count])
    
     return (
-        <>
-            <input type="number" className='form-text-input' name="count" value={count || 5} onChange={e => setCount(e.target.value)}/>
-            <ul>
-                
-            </ul>
-            {history[0] && history.map(stop => {
-                    if(stop.date){
-                        const _date = new Date(stop.date);
-                        const _year = _date.getFullYear();
-                        const _month = _date.getMonth() + 1;
-                        const _day = _date.getDate();
-                        const _formattedDate = `${_month}/${_day}/${_year}`;
-                        return <li>{`${_formattedDate}: ${stop.delivered !== "" ? stop.delivered : ""}${stop.delivered2 !== "" ? ` | ${stop.delivered2}` : ""}`}</li>
-                    }else{
-                        return <li>{`Unknown Date: ${stop.delivered !== "" ? stop.delivered : ""}${stop.delivered2 !== "" ? ` | ${stop.delivered2}` : ""}`}</li>
-                    }
-                })}
-        </>
+        <div className='history'>
+            <h1 className='form-title'>Past Deliveries</h1>
+            <input type="number" className='form-text-input delivery-count' name="count" value={count || 5} onChange={e => setCount(e.target.value)}/>
+            <div className='delivery-container'>
+                {history[0] && history.map(stop => {
+                        if(stop.date){
+                            const _date = new Date(stop.date);
+                            const _year = _date.getFullYear();
+                            const _month = _date.getMonth() + 1;
+                            const _day = _date.getDate();
+                            const _formattedDate = `${_month}/${_day}/${_year}`;
+                            return <p className='delivery'><span className='delivery-info'>{`${_formattedDate}`}</span><span className='delivery-info'>{`${stop.delivered !== "" ? `${stop.delivered} bags` : ""}${stop.delivered2 !== "" ? ` | ${stop.delivered2} bags` : ""}`}</span></p>
+                        }else{
+                            return <p className='delivery'><span className='delivery-info'>Unknown Date: </span><span className='delivery-info'>{`${stop.delivered !== "" ? `${stop.delivered} bags` : ""}${stop.delivered2 !== "" ? ` | ${stop.delivered2} bags` : ""}`}</span></p>
+                        }
+                    })}
+                {
+                    !history[0] &&  <p className='delivery'>No delivery histories are present</p>
+                }
+            </div>
+            
+        </div>
     )
 }
 
