@@ -6,6 +6,8 @@ import RoutesModel from '../models/tableViewRoutes';
 import RoutesSmall from '../models/tableViewRoutesEdit';
 import RoutesCheckModel from '../models/tableViewCheckRoute';
 import DeliveredRoute from '../models/tableViewDeliveredRoute';
+import SortCustomer from '../models/customerSort';
+import SortCallIn from '../models/callInSort';
 import {getJWT ,sortFunction, filterArrayFunction} from '../utility';
 import "../styles/customerTable.css";
 import '../styles/searchBar.css';
@@ -36,41 +38,15 @@ function MyTableView(props){
         }
         
     }, [sortFilter, data])
+
     return (<>
         {!props.data && <div id="search-bar-container">
                 <input id="search-bar-input" type="text" placeholder={`Search for ${props.model}..`} onChange={e => setSearch(e.target.value)}/>
                 <button id="search-bar-submit" type="button" onClick={e=>{nav(`?search=${search}`); window.location.reload(false)}}>S</button>
         </div>}
-        {!props.data && props.model === "customer" && <div>
-            <label>Sort by:</label>
-            <select value={sortFilter.sort || ""}  onChange={(e) => setSortFilter({...sortFilter, sort: e.target.value})}>
-                <option value="name">Name</option>
-                <option value="price1">Price</option>
-                <option value="price2">Second Price</option>
-                <option value="ice1">Ice Type</option>
-                <option value="ice2">Second Ice Type</option>
-            </select>
-            <label>Filter by:</label>
-            <select value={sortFilter.filterBy || ""} onChange={(e) => setSortFilter({...sortFilter, filterBy: e.target.value})}>
-                <option value="">None</option>
-                <option value="name">Name</option>
-                <option value="price1">Price</option>
-                <option value="price2">Second Price</option>
-                <option value="ice1">Ice Type</option>
-                <option value="ice2">Second Ice Type</option>
-            </select>
-            {sortFilter.filterBy && sortFilter.filterBy !== "" && <input placeholder={`${sortFilter.filterBy}`} onChange={(e) => setSortFilter({...sortFilter, filterValue: e.target.value})}/>}
-
-            <label>Order by:</label>
-            <select value={sortFilter.order || ""} onChange={(e) => setSortFilter({...sortFilter, order: e.target.value})}>
-                <option value="ascend">Ascending</option>
-                <option value="descend">Descending</option>
-            </select>
-            <button type="button" onClick={e => {setSortFilter({sort: 'name', filterBy: '', order: 'ascend'}); setSortedData([])}}>Reset</button>
-        </div>
-
-        }
-        {(data[0] || props.data) && <table key="customer-table" className='customer-table'>
+        {!props.data && props.model === "customer" && <SortCustomer sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
+        {!props.data && props.model === "callin" && <SortCallIn sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
+        {(data[0] || props.data) && <table key="customer-table" className={props.wide ? 'customer-table' : 'customer-table-small'}>
                 <tr key="header-table-row" className='customer-table-header-row'>
                     {props.header_keys.map(v => {
                         return <th key={`header-${v}`} className='customer-table-header-cell'>{v}</th>

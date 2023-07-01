@@ -46,6 +46,7 @@ function CustomerRouter(){
             <MyTableView 
                 header_keys={["Name", "Address", "Ice", "Price", "Tax", "Del", "PO/Job"]}
                 api={"http://localhost:4000/customer/"}
+                wide={true}
                 model="customer"/>
         </>}/>
         <Route path="/add/" element={<CustomerForm method={"POST"} edit={true} api="http://localhost:4000/customer/" response={handleResponse}/>}/>

@@ -37,25 +37,29 @@ function RoutesRouter(){
         <Link to="./add/">Create Route</Link>
         <MyTableView 
             header_keys={["Name"]}
+            wide={true}
             api={"http://localhost:4000/routes/"}
             model="routes"/>
     </>}/>
         <Route path="/add/" element={<RouterForm method={"POST"} edit={true}/>}/>
         <Route path="/edit/:id" element={<>
-            <h1>Route Details</h1>
-            <button type="button" className="form-button-edit" onClick={toggle}>Edit</button>
-            <button type="button" className="form-button-delete" onClick={e => setConfirm(true)}>Delete</button>
-            {confirm && <div>
-                <h1>Are you sure about deleting this customer?</h1>
+            <div className="form-action-header">
+                <h1 className="form-title">Route Details</h1>
+                <button type="button" className="form-button-edit" onClick={toggle}>Edit</button>
+                <button type="button" className="form-button-delete" onClick={e => setConfirm(true)}>Delete</button>
+                {confirm && <>
+                <h1 className="form-title">Are you sure about deleting this route?</h1>
                 <button className="form-button-delete" onClick={deleteCustomer}>Yes</button>
                 <button className="form-button-edit" onClick={e => setConfirm(false)}>No</button>
-                </div>}
+            </>}
+            </div>
             <RouterForm _id={parameters['*'].split("/")[1]} method={"PUT"} _edit={edit}/></>}/>
         <Route path="/checkin/" element={<>
             <h1>Check In Routes</h1>
             <MyTableView
                 header_keys={["Name"]}
                 api={"http://localhost:4000/routes/"}
+                wide={true}
                 model="routesCheck"
             />
         </>}/>
@@ -73,6 +77,7 @@ function RoutesRouter(){
             <h1>D</h1>
             <MyTableView
                 header_keys={["Name"]}
+                wide={true}
                 api={"http://localhost:4000/routes/delivered"}
                 model="deliveredRoute"
             />

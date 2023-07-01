@@ -3,6 +3,11 @@
 .customer-table {
     width: 80%;
 }
+
+.customer-table-small {
+    width: 50%;
+    margin-left: 25%;
+}
 .customer-table-header-cell {
     background-color: var(--accent-medium);
     font-size: 14px;
@@ -33,6 +38,27 @@
 .customer-table-data-link {
     text-decoration: none;
     color: var(--secondary);
+}
+
+.sortContainer{
+    width: 80%;
+    margin-left: 10%;
+    display: flex;
+    justify-content: space-around;
+}
+
+select {
+    border: none;
+    border-bottom: 2px solid var(--primary);
+}
+
+.sortContainer > * {
+    font-size: 20px;
+    border-radius: 5px;
+    animation: rise;
+    animation-duration: .5s;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
 }
 
 @media screen and (min-width: 600px){

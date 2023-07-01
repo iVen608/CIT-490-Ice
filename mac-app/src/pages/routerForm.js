@@ -113,6 +113,7 @@ function RouterForm(props){
             header_keys={["Name", "Address"]}
             data={stops}
             api=""
+            wide={false}
             funct={(arr) => {
                 setStops(arr);
             }}

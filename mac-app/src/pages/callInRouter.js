@@ -38,6 +38,7 @@ function CallInRouter(){
         <MyTableView 
             header_keys={["Name", "Address", "Call Date", "Service Date", "Delivered" , "Special Instructions"]}
             api={"http://localhost:4000/callin/"}
+            wide={true}
             model="callin"/>
     </>}/>
         <Route path="/add/" element={<CallInForm method={"POST"} edit={true}/>}/>
