@@ -31,7 +31,12 @@
 
 #invoice-calculator-container > h3, #invoice-calculator-container > h1 {
     grid-column: 1/3;
-    text-align: center;
+    text-align: left;
+}
+
+#invoice-calculator-container > h1 {
+    border-bottom: 5px solid var(--primary);
+    padding-bottom: 15px;
 }
 
 #submitButton {
