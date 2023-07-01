@@ -172,11 +172,13 @@ function CheckInForm(props){
             setCallIns(prev => prev.map(element => {
                 const index = customers.findIndex(customer => customer._id === element.customer_id);
                 if(index > -1){
+                    console.log(123)
                     element.ice1 = customers[index].ice1;
                     element.ice2 = customers[index].ice2;
                 }
                 return element;
             }))
+            
             if(savedCallins[0]){
                 setSavedCallins(prev => prev.map(element => {
                     const index = customers.findIndex(customer => customer._id === element.customer_id);
@@ -189,7 +191,15 @@ function CheckInForm(props){
                     return element;
                 }))
             }
-            setCustomers(filtered);
+            if(savedDeliveries[0]){
+                const filtered2 = savedDeliveries.filter(element => !data.stops.includes(element._id))
+                console.log("Filtering")
+                const filtered3 = customers.filter(i => filtered2.some(j => j._id === i._id));
+                console.log()
+                setCustomers([...filtered,...filtered3]);
+            }else{
+                setCustomers(filtered);
+            }
             setLoaded(true);
         }).catch(err => console.log(err));
     }
@@ -265,8 +275,14 @@ function CheckInForm(props){
         fetch("http://localhost:4000/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj); console.log(obj)})
     }
     return (<>
-        <h1>Check In Route: {data.name || ""}</h1>
-        <table key="customer-table" className='customer-table'>
+        <div className='form-action-header'>
+            <h1 className='form-title'>Check In Route: {data.name || ""}</h1>
+        </div>
+    
+        <div className='form'>
+        
+        <h3>Route</h3>
+        <table key="customer-table" className='small-customer-table span-two'>
                 <tr key="header-table-row" className='customer-table-header-row'>
                     {props.header_keys.map(v => {
                         return <th key={`header-${v}`} className='customer-table-header-cell'>{v}</th>
@@ -277,7 +293,8 @@ function CheckInForm(props){
                         if(savedRoute.delivered){
                             return <CheckInCustomer 
                                 _id={v._id} 
-                                _data={v} 
+                                _data={v}
+                                _edit = {props.edit}  
                                 checkbox={(e) => {updateSavedCustomers(e, v._id,"completed", "check")}} 
                                 inputBox={(e) => {updateSavedCustomers(e, v._id,"delivered", "value")}}
                                 inputBox2={(e) => {updateSavedCustomers(e, v._id,"delivered2", "value")}}
@@ -310,8 +327,8 @@ function CheckInForm(props){
                 })}
                 
             </table>
+            <h3>Add Customers</h3>
             <input type="text" className='form-text-input' name="customerName" placeholder='Add customer here' readOnly={props._edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
-            <h3>Customers:</h3>
             <div className='search-box-results'>
                 {Object.keys(search).map((v) => 
                         {
@@ -326,7 +343,8 @@ function CheckInForm(props){
                         }}/>
                     })}
             </div>
-            <table key="callin-table" className='customer-table'>
+            <h3>Call Ins</h3>
+            <table key="callin-table" className='small-customer-table span-two'>
                 <tr key="header-table-row" className='customer-table-header-row'>
                     {props.header_keys.map(v => {
                         return <th key={`header-${v}`} className='customer-table-header-cell'>{v}</th>
@@ -341,6 +359,7 @@ function CheckInForm(props){
                     return <CheckInCallIn 
                     _id={v._id} 
                     _data={v} 
+                    _edit = {props.edit} 
                     checkbox={(e) => {updateSavedCallIn(e, v._id,"completed", "check")}} 
                     inputBox={(e) => {updateSavedCallIn(e, v._id,"delivered", "value")}}
                     inputBox2={(e) => {updateSavedCallIn(e, v._id,"delivered2", "value")}}
@@ -356,7 +375,8 @@ function CheckInForm(props){
                     {
                         return <CheckInCallIn 
                         _id={v._id} 
-                        _data={v} 
+                        _data={v}
+                        _edit = {props.edit} 
                         checkbox={(e) => {updateCallIn(e, v._id,"completed", "check")}} 
                         inputBox={(e) => {updateCallIn(e, v._id,"delivered", "value")}}
                         inputBox2={(e) => {updateCallIn(e, v._id,"delivered2", "value")}}
@@ -364,9 +384,9 @@ function CheckInForm(props){
                         />
                 })}
             </table>
-            <button onClick={handleSubmit}>Click</button>
+            <button onClick={handleSubmit}>Submit</button>
         {(!data[0] && !props) && <h1>Failed to load route</h1>}
-    </>);
+    </div></>);
 }
 
 export default CheckInForm;
