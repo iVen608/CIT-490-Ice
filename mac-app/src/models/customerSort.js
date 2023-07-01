@@ -25,7 +25,7 @@ function SortCustomer(props){
                 <option value="ascend">Ascending</option>
                 <option value="descend">Descending</option>
             </select>
-            <button className="form-button-submit" type="button" onClick={e => {props.sortFunction({sort: 'name', filterBy: '', order: 'ascend'}); props.resetData([])}}>Reset</button>
+            <button className="form-button-submit reset-button" type="button" onClick={e => {props.sortFunction({sort: 'name', filterBy: '', order: 'ascend'}); props.resetData([])}}>Reset</button>
         </div>)
 }
 

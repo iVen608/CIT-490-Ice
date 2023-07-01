@@ -33,8 +33,10 @@ function CallInRouter(){
         <Route path="/:id" element={<h1>Call In ID View</h1>}/>
         <Route path="/" element={
         <>
-        <h1>Call In All View</h1>
-        <Link to="./add/">Add Customer</Link>
+        <div className="table-action-header">
+                <h1 className="form-title">Call Ins</h1>
+                <Link className="table-link-create" to="./add/">New</Link>
+            </div>
         <MyTableView 
             header_keys={["Name", "Address", "Call Date", "Service Date", "Delivered" , "Special Instructions"]}
             api={"http://localhost:4000/callin/"}

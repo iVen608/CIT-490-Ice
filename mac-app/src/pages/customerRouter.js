@@ -40,8 +40,10 @@ function CustomerRouter(){
         
         <Route path="/" element={
         <>
-            <h1 className="form-title">Customer All View</h1>
-            <Link className="table-link-create" to="./add/">Add Customer</Link>
+            <div className="table-action-header">
+                <h1 className="form-title">Customers</h1>
+                <Link className="table-link-create" to="./add/">New</Link>
+            </div>
             {response !== "" && <p className='form-status-message'>{response}</p>}
             <MyTableView 
                 header_keys={["Name", "Address", "Ice", "Price", "Tax", "Del", "PO/Job"]}
@@ -49,7 +51,12 @@ function CustomerRouter(){
                 wide={true}
                 model="customer"/>
         </>}/>
-        <Route path="/add/" element={<CustomerForm method={"POST"} edit={true} api="http://localhost:4000/customer/" response={handleResponse}/>}/>
+        <Route path="/add/" element={<>
+            <div className="form-action-header">
+                <h1 className="form-title">New Customer</h1>
+            </div>
+        <CustomerForm method={"POST"} edit={true} api="http://localhost:4000/customer/" response={handleResponse}/>
+        </>}/>
         <Route path="/delete/:id" element={<h1>Customer Delete View: {parameters['*'].split("/")[1]}</h1>}/>
         <Route path="/edit/:id" element={
             <>

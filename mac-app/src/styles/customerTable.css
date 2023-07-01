@@ -4,6 +4,21 @@
     width: 80%;
 }
 
+.table-action-header {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    width: 80%;
+    margin-left: 10%;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    border-bottom: 5px solid var(--primary);
+}
+
+.reset-button {
+    width: 100px;
+    height: 50px;
+}
+
 .customer-table-small {
     width: 50%;
     margin-left: 25%;
@@ -26,8 +41,12 @@
     background-color: var(--primary);
     text-decoration: none;
     color: var(--accent-light);
-    padding: 15px;
-    border-radius: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    height: 50px;
     transition: background-color 2s;
 }
 
@@ -44,7 +63,7 @@
     width: 80%;
     margin-left: 10%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 
 select {

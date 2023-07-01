@@ -33,8 +33,10 @@ function RoutesRouter(){
     <Routes>
         <Route path="/" element={
         <>
-        <h1>Routes</h1>
-        <Link to="./add/">Create Route</Link>
+        <div className="table-action-header">
+                <h1 className="form-title">Routes</h1>
+                <Link className="table-link-create" to="./add/">New</Link>
+        </div>
         <MyTableView 
             header_keys={["Name"]}
             wide={true}
@@ -55,7 +57,9 @@ function RoutesRouter(){
             </div>
             <RouterForm _id={parameters['*'].split("/")[1]} method={"PUT"} _edit={edit}/></>}/>
         <Route path="/checkin/" element={<>
-            <h1>Check In Routes</h1>
+            <div className="table-action-header">
+                <h1 className="form-title">Check In</h1>
+            </div>
             <MyTableView
                 header_keys={["Name"]}
                 api={"http://localhost:4000/routes/"}
@@ -74,7 +78,9 @@ function RoutesRouter(){
         />}/>
         <Route path="/delivered/" element={
             <>
-            <h1>D</h1>
+            <div className="table-action-header">
+                <h1 className="form-title">Delivered Check In</h1>
+            </div>
             <MyTableView
                 header_keys={["Name"]}
                 wide={true}

@@ -42,7 +42,7 @@ function MyTableView(props){
     return (<>
         {!props.data && <div id="search-bar-container">
                 <input id="search-bar-input" type="text" placeholder={`Search for ${props.model}..`} onChange={e => setSearch(e.target.value)}/>
-                <button id="search-bar-submit" type="button" onClick={e=>{nav(`?search=${search}`); window.location.reload(false)}}>S</button>
+                <button id="search-bar-submit" type="button" onClick={e=>{nav(`?search=${search}`); window.location.reload(false)}}>Search</button>
         </div>}
         {!props.data && props.model === "customer" && <SortCustomer sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
         {!props.data && props.model === "callin" && <SortCallIn sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}

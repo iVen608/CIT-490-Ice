@@ -8,14 +8,13 @@ function SortCallIn(props){
                 <option value="name">Name</option>
                 <option value="callDate">Call Date</option>
                 <option value="serviceDate">Service Date</option>
-                <option value="del">Delivered</option>
+                <option value="completed">Delivered</option>
             </select>
             <label className="blue-text">Filter by:</label>
             <select className='form-select-input' value={props.sortObject.filterBy || ""} onChange={(e) => props.sortFunction({...props.sortObject, filterBy: e.target.value})}>
                 <option value="">None</option>
                 <option value="callDate">Call Date</option>
                 <option value="serviceDate">Service Date</option>
-                <option value="del">Delivered</option>
             </select>
             {props.sortObject.filterBy && props.sortObject.filterBy !== "" && <input className="form-text-input" placeholder={`${props.sortObject.filterBy}`} onChange={(e) => props.sortFunction({...props.sortObject, filterValue: e.target.value})}/>}
             <label className="blue-text">Order by:</label>
@@ -23,7 +22,7 @@ function SortCallIn(props){
                 <option value="ascend">Ascending</option>
                 <option value="descend">Descending</option>
             </select>
-            <button className="form-button-submit" type="button" onClick={e => {props.sortFunction({sort: 'name', filterBy: '', order: 'ascend'}); props.resetData([])}}>Reset</button>
+            <button className="form-button-submit reset-button" type="button" onClick={e => {props.sortFunction({sort: 'name', filterBy: '', order: 'ascend'}); props.resetData([])}}>Reset</button>
         </div>)
 }
 

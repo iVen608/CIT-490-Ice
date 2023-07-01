@@ -53,7 +53,7 @@
 }
 
 .form > *, .history > * {
-    width: 95%;
+    width: 99%;
     height: 30px;
     font-size: 20px;
     border-radius: 5px;
@@ -154,7 +154,8 @@ input:read-only {
         text-align: left;
     }
     .form-action-header {
-        grid-template-columns: 3fr 1fr 1fr;
+        grid-template-columns: 3fr 100px 100px;
+        column-gap: 15px;
     }
     .form-button-delete:nth-child(5), .form-button-edit:nth-child(6)  {
         margin-top: 30px;
