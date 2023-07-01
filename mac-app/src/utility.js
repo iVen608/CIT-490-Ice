@@ -36,6 +36,10 @@ export function sortFunction(array, key, order){
             }else if(_x < _y){
                 return -1;
             }
+        }else if(Array.isArray(x[key])){
+            const _x = x[key].length
+            const _y = y[key].length
+            return _x - _y;
         }
         else{
             const _x = parseFloat(x[key]) || 0;
@@ -57,6 +61,9 @@ export function sortFunction(array, key, order){
 export function filterArrayFunction(array, key, value){
     const filtered = array.filter(element => {
         const _value = element[key];
+        if(Array.isArray(element[key])){
+            return element[key].length == value;
+        }
         if(!isNaN(_value) && !isNaN(value)){
             const floatValue = parseFloat(_value);
             const floatValueInput = parseFloat(value);

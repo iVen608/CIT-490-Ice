@@ -38,7 +38,7 @@ function RoutesRouter(){
                 <Link className="table-link-create" to="./add/">New</Link>
         </div>
         <MyTableView 
-            header_keys={["Name"]}
+            header_keys={["Name", "# of Stops"]}
             wide={true}
             api={"http://localhost:4000/routes/"}
             model="routes"/>
@@ -61,7 +61,7 @@ function RoutesRouter(){
                 <h1 className="form-title">Check In</h1>
             </div>
             <MyTableView
-                header_keys={["Name"]}
+                header_keys={["Name", "# of Stops"]}
                 api={"http://localhost:4000/routes/"}
                 wide={true}
                 model="routesCheck"
