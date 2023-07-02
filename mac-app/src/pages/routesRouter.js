@@ -82,7 +82,7 @@ function RoutesRouter(){
                 <h1 className="form-title">Delivered Check In</h1>
             </div>
             <MyTableView
-                header_keys={["Name"]}
+                header_keys={["Name", "Date Delivered", "Call Ins", "Delivered"]}
                 wide={true}
                 api={"http://localhost:4000/routes/delivered"}
                 model="deliveredRoute"

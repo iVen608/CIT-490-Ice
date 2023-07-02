@@ -9,6 +9,7 @@ import DeliveredRoute from '../models/tableViewDeliveredRoute';
 import SortCustomer from '../models/customerSort';
 import SortCallIn from '../models/callInSort';
 import SortRoute from '../models/routeSort';
+import SortDelivered from '../models/deliveredSort';
 import {getJWT ,sortFunction, filterArrayFunction} from '../utility';
 import "../styles/customerTable.css";
 import '../styles/searchBar.css';
@@ -47,6 +48,7 @@ function MyTableView(props){
         </div>}
         {!props.data && props.model === "customer" && <SortCustomer sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
         {!props.data && props.model === "callin" && <SortCallIn sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
+        {!props.data && props.model === "deliveredRoute" && <SortDelivered sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
         {!props.data && (props.model === "routes" || props.model === "routesCheck") && <SortRoute sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
         {(data[0] || props.data) && <table key="customer-table" className={props.wide ? 'customer-table' : 'customer-table-small'}>
                 <tr key="header-table-row" className='customer-table-header-row'>

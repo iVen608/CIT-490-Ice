@@ -165,7 +165,7 @@ async function updateCheckin(req, res){
             for (var call of req.body.addedCallIns){
                 const call_id = new mongodb.ObjectId(call._id);
                 await _callinDB.updateOne({_id: call_id}, {$set: {completed: true}});
-                const response = await _deliveries.insertOne({customer_id: call.customer_id, delivered: call.delivered, delivered2: call.delivered2});
+                const response = await _deliveries.insertOne({customer_id: call.customer_id, date: _date, delivered: call.delivered, delivered2: call.delivered2});
                 if(response.acknowledged){
                     call.invoice_id = response.insertedId.toString();
                 }
@@ -175,7 +175,7 @@ async function updateCheckin(req, res){
         for(var stop of checkIn.delivered){
             const _id = new mongodb.ObjectId(stop.invoice_id);
             if(stop.action && stop.action === "update"){
-                await _deliveries.updateOne({_id: _id}, {$set: {delivered: stop.delivered, delivered2: stop.delivered2}});
+                await _deliveries.updateOne({_id: _id}, {$set: {date: _date, delivered: stop.delivered, delivered2: stop.delivered2}});
             }else if(stop.action && stop.action === "delete"){
                 await _deliveries.deleteOne({_id: _id});
                 checkIn.delivered = checkIn.delivered.filter(i => i._id !== stop._id);
@@ -186,7 +186,7 @@ async function updateCheckin(req, res){
         for(var stop of checkIn.callins){
             const _id = new mongodb.ObjectId(stop.invoice_id);
             if(stop.action && stop.action === "update"){
-                await _deliveries.updateOne({_id: _id}, {$set: {delivered: stop.delivered, delivered2: stop.delivered2}});
+                await _deliveries.updateOne({_id: _id}, {$set: {date: _date, delivered: stop.delivered, delivered2: stop.delivered2}});
             }else if(stop.action && stop.action === "delete"){
                 await _deliveries.deleteOne({_id: _id});
                 const call_id = new mongodb.ObjectId(stop._id);

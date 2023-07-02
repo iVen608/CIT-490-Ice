@@ -44,8 +44,7 @@ export function sortFunction(array, key, order){
         else{
             const _x = parseFloat(x[key]) || 0;
             const _y = parseFloat(y[key]) || 0;
-            return _x - _y;
-            
+            return _x - _y;   
         }
         
         
