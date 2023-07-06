@@ -1,7 +1,10 @@
 import React, { useEffect, useState }  from 'react';
+import { useNavigate } from 'react-router-dom';
 import CheckInCustomer from '../models/checkInViewRoute';
 import CheckInCallIn from '../models/checkInViewCall';
 import CustomerSmall from '../models/searchViewSmallCustomer';
+import FormHeader from '../components/formHeader';
+import {getJWT} from '../utility';
 import "../styles/customerTable.css";
 import '../styles/searchBar.css';
 function CheckInForm(props){
@@ -16,8 +19,10 @@ function CheckInForm(props){
     const [savedDeliveries, setSavedDeliveries] = useState([]);
     const [savedCallins, setSavedCallins] = useState([]);
     const [loaded, setLoaded] = useState(false);
-    const [body, setBody] = useState({});
-    
+    const [edit, setEdit] = useState(props.method === "PUT" ? true : false);
+    const [response, setResponse] = useState({});
+    const nav = useNavigate();
+    const token = getJWT();
     async function updateData(){
         var link = "http://localhost:4000/routes/checkin/";
         if(props._id){
@@ -61,7 +66,8 @@ function CheckInForm(props){
             headers: {'Content-type': "application/json"}
         }).then(response => {
             if(response.ok){
-                //setRep(true);
+                console.log("ok")
+                console.log(props._id)
                 if(props._id){//PUT
                     window.location.reload(true);
                 }else{//POST
@@ -274,14 +280,42 @@ function CheckInForm(props){
         const token = window.localStorage.getItem("token");
         fetch("http://localhost:4000/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj); console.log(obj)})
     }
+    const toggle = () => {
+        if(edit){
+            setEdit(false);
+        }else{
+            setEdit(true);
+        }
+    }
+    async function deleteCheckIn(){
+        await fetch(props.api + props._id, {
+            method: 'DELETE',withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}
+        ).then(response => {
+            if(response.ok){
+                setResponse({text: `Customer successfully deleted.`, status: true});
+                setTimeout(() => {
+                    nav("/customer/")
+                }, 1500);
+            }else{
+                setResponse({text: `Unable to delete customer due to an error.`, status: false});
+            }
+        }).catch(err => {setResponse({text: `Unable to delete customer due to an error: ${err}.`, status: false});});
+    }
+    function handleDelete(e){
+        e.preventDefault();
+        deleteCheckIn()
+    }
     return (<>
-        <div className='form-action-header'>
-            <h1 className='form-title'>Check In Route: {data.name || ""}</h1>
-        </div>
+        <FormHeader 
+            title={props.method === 'POST' ? `Check In Route: ${data.name || ""}` : 'Update Deliveries'} 
+            response={response} 
+            toggle={toggle}
+            delete={handleDelete}
+            method={props.method}/>
     
         <div className='form'>
         
-        <h3>Route</h3>
+        <h3 className='blue-text'>Route</h3>
         <table key="customer-table" className='small-customer-table span-two'>
                 <tr key="header-table-row" className='customer-table-header-row'>
                     {props.header_keys.map(v => {
@@ -294,7 +328,7 @@ function CheckInForm(props){
                             return <CheckInCustomer 
                                 _id={v._id} 
                                 _data={v}
-                                _edit = {props.edit}  
+                                _edit = {edit}  
                                 checkbox={(e) => {updateSavedCustomers(e, v._id,"completed", "check")}} 
                                 inputBox={(e) => {updateSavedCustomers(e, v._id,"delivered", "value")}}
                                 inputBox2={(e) => {updateSavedCustomers(e, v._id,"delivered2", "value")}}
@@ -327,7 +361,8 @@ function CheckInForm(props){
                 })}
                 
             </table>
-            <h3>Add Customers</h3>
+            {!edit && <>
+            <h3 className='blue-text'>Add Customers</h3>
             <input type="text" className='form-text-input' name="customerName" placeholder='Add customer here' readOnly={props._edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
             <div className='search-box-results'>
                 {Object.keys(search).map((v) => 
@@ -342,8 +377,8 @@ function CheckInForm(props){
                             }
                         }}/>
                     })}
-            </div>
-            <h3>Call Ins</h3>
+            </div></>}
+            <h3 className='blue-text'>Call Ins</h3>
             <table key="callin-table" className='small-customer-table span-two'>
                 <tr key="header-table-row" className='customer-table-header-row'>
                     {props.header_keys.map(v => {
@@ -355,11 +390,11 @@ function CheckInForm(props){
                     Delivered Call In's
                     </td>
                 </tr>}
-                {loaded && callins[0] && savedCallins[0] && savedCallins.map(v => {
+                {loaded  && savedCallins[0] && savedCallins.map(v => {
                     return <CheckInCallIn 
                     _id={v._id} 
                     _data={v} 
-                    _edit = {props.edit} 
+                    _edit = {edit} 
                     checkbox={(e) => {updateSavedCallIn(e, v._id,"completed", "check")}} 
                     inputBox={(e) => {updateSavedCallIn(e, v._id,"delivered", "value")}}
                     inputBox2={(e) => {updateSavedCallIn(e, v._id,"delivered2", "value")}}
@@ -376,7 +411,7 @@ function CheckInForm(props){
                         return <CheckInCallIn 
                         _id={v._id} 
                         _data={v}
-                        _edit = {props.edit} 
+                        _edit = {edit} 
                         checkbox={(e) => {updateCallIn(e, v._id,"completed", "check")}} 
                         inputBox={(e) => {updateCallIn(e, v._id,"delivered", "value")}}
                         inputBox2={(e) => {updateCallIn(e, v._id,"delivered2", "value")}}
@@ -384,7 +419,7 @@ function CheckInForm(props){
                         />
                 })}
             </table>
-            <button onClick={handleSubmit}>Submit</button>
+            {!edit && <button className='form-button-submit' onClick={handleSubmit}>Submit</button>}
         {(!data[0] && !props) && <h1>Failed to load route</h1>}
     </div></>);
 }

@@ -14,7 +14,7 @@ function CheckInCallIn(props){
     }
     return (
         <tr key={props._data._id} className='customer-table-data-row'>
-            <td key={props._data._id+"checkbox"} className='customer-table-data-cell'><input type="checkbox" onChange={(e) => {props.checkbox(e); setDelivered(e.target.checked)}}/></td>
+            <td key={props._data._id+"checkbox"} className='customer-table-data-cell'><input type="checkbox" disabled={props._edit} onChange={(e) => {props.checkbox(e); setDelivered(e.target.checked)}}/></td>
             <td key={props._data._id+props._data.name} className='customer-table-data-cell'>{props._data.name}</td>
             <td key={props._data._id+"address"} className='customer-table-data-cell'>{props._data.address}</td>
             <td key={props._data._id+"calledIn"} className='customer-table-data-cell'>{props._data.callDate  || "-"}</td>
