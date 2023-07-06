@@ -5,7 +5,6 @@ import Header from './components/header';
 import Footer from './components/footer';
 import InvoiceCalculator from './pages/invoiceCalculator';
 import CustomerRouter from './pages/customerRouter';
-import InvoiceRouter from './pages/invoiceRouter';
 import RoutesRouter from './pages/routesRouter';
 import CallInRouter from './pages/callInRouter';
 import HomeGrid from './pages/homeGrid';
@@ -24,7 +23,6 @@ function App() {
             <Route path="/" element={<HomeGrid/>}/>
             <Route path="/calculator" element={<InvoiceCalculator/>}/>
             <Route path="/customer/*" element={<CustomerRouter/>}/>
-            <Route path="/invoices/*" element={<InvoiceRouter/>}/>
             <Route path="/callin/*" element={<CallInRouter/>}/>
             <Route path="/routes/*" element={<RoutesRouter/>}/></>}
           {!getJWT() && <>
