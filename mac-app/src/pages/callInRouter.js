@@ -30,7 +30,6 @@ function CallInRouter(){
     }
     return (
     <Routes>
-        <Route path="/:id" element={<h1>Call In ID View</h1>}/>
         <Route path="/" element={
         <>
         <div className="table-action-header">
@@ -43,18 +42,17 @@ function CallInRouter(){
             wide={true}
             model="callin"/>
     </>}/>
-        <Route path="/add/" element={<CallInForm method={"POST"} edit={true}/>}/>
-        <Route path="/delete/:id" element={<h1>Call In Delete View</h1>}/>
+        <Route path="/add/" element={
+        <CallInForm 
+            method={"POST"}
+            edit={true}
+            api={"http://localhost:4000/callin/"}/>}/>
         <Route path="/edit/:id" element={<>
-            <h1>Customer Details</h1>
-            <button type="button" onClick={toggle}>Edit</button>
-            <button type="button" onClick={e => setConfirm(true)}>Delete</button>
-            {confirm && <div>
-                <h1>Are you sure about deleting this customer?</h1>
-                <button onClick={deleteCustomer}>Yes</button>
-                <button onClick={e => setConfirm(false)}>No</button>
-                </div>}
-            <CallInForm _id={parameters['*'].split("/")[1]} method={"PUT"} _edit={edit}/></>}/>
+            <CallInForm 
+                _id={parameters['*'].split("/")[1]}
+                method={"PUT"} 
+                _edit={edit}
+                api={"http://localhost:4000/callin/"}/></>}/>
     </Routes>
     )
 }

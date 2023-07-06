@@ -1,17 +1,22 @@
 import React, {useState, useEffect} from 'react'
 import { Form, useParams, useNavigate } from 'react-router-dom';
+import FormHeader from '../components/formHeader';
 import '../styles/form.css';
+import {getJWT} from '../utility';
 import CallIn from '../models/searchViewSmallCustomer';
 
 function CallInForm(props){
     const parameters = useParams();
     const nav = useNavigate();
+    const token = getJWT();
     const [data, setData] = useState({})
     const [search, setSearch] = useState([]);
     const [rep, setRep] = useState(null);
     const [selected, setSelected] = useState("");
     const [selectedAddress, setSelectedAddress] = useState("");
     const [selectedId, setSelectedId] = useState("");
+    const [edit, setEdit] = useState(props.method === "PUT" ? true : false);
+    const [response, setResponse] = useState({});
     async function updateData(){
         var link = "http://localhost:4000/callin/";
         if(props._id){
@@ -34,19 +39,26 @@ function CallInForm(props){
                 setRep(true);
                 if(props._id){
                     window.location.reload(true);
+                    setResponse({text: `Call In successfully ${props.method === 'POST' ? 'added' : 'updated'}.`, status: true});
                 }else{
-                    nav("/callin/")
+                    setResponse({text: `Call In successfully ${props.method === 'POST' ? 'added' : 'updated'}.`, status: true});
+                    setTimeout(() => {
+                        nav("/callin/")
+                    }, 3000);
                 }
                 
             }else{
-                console.log(response);
-                setRep(false);
+                setResponse({text: `Unable to ${props.method === 'POST' ? 'add' : 'update'} call in due to an error.`, status: false});
             }
         }).catch(err => {console.log(err); setRep(false);});
     }
     function handleSubmit(e){
         e.preventDefault();  
         updateData();
+    }
+    function handleDelete(e){
+        e.preventDefault();
+        deleteCallIn()
     }
     useEffect(() => {
         if(props._id){
@@ -65,15 +77,40 @@ function CallInForm(props){
         const token = window.localStorage.getItem("token");
         fetch("http://localhost:4000/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj)})
     }
+    const toggle = () => {
+        if(edit){
+            setEdit(false);
+        }else{
+            setEdit(true);
+        }
+    }
+    async function deleteCallIn(){
+        await fetch(props.api + props._id, {
+            method: 'DELETE',withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}
+        ).then(response => {
+            if(response.ok){
+                setResponse({text: `Call In successfully deleted.`, status: true});
+                setTimeout(() => {
+                    nav("/callin/")
+                }, 1500);
+            }else{
+                setResponse({text: `Unable to delete call in due to an error.`, status: false});
+            }
+        }).catch(err => {setResponse({text: `Unable to delete call in due to an error: ${err}.`, status: false});});
+    }
     return (<>
-        {rep === true && <h1>Successfully updated call-in</h1>}
-        {rep === false && <h1>Failed to add call-in, please try again</h1>}
+        <FormHeader 
+            title={props.method === 'POST' ? 'New Call In' : 'Call In Details'} 
+            response={response} 
+            toggle={toggle}
+            delete={handleDelete}
+            method={props.method}/>
         <form className='form' onSubmit={handleSubmit}>
             <label htmlFor='name'>Customer name:</label>
-            <input type="text" required className='form-text-input' name="name" placeholder='name' readOnly={props._edit} value={selected || data.name || ""}  onChange={e => {updateBox(e); setSelected(""); setData({...data, ['name'] : e.target.value})}}/>
+            <input type="text" required className='form-text-input' name="name" placeholder='name' readOnly={edit} value={selected || data.name || ""}  onChange={e => {updateBox(e); setSelected(""); setData({...data, ['name'] : e.target.value})}}/>
             <label htmlFor='address'>Address:</label>
-            <input type="text" required className='form-text-input' name="address" placeholder='address' readOnly={props._edit} value={selectedAddress || data.address || ""}  onChange={e => {setSelected(""); setData({...data, ['address'] : e.target.value})}}/>
-            {selected === "" && !props._edit && <label htmlFor='autofill'>Customers:</label> && <div className='search-box-results'>
+            <input type="text" required className='form-text-input' name="address" placeholder='address' readOnly={edit} value={selectedAddress || data.address || ""}  onChange={e => {setSelected(""); setData({...data, ['address'] : e.target.value})}}/>
+            {selected === "" && !edit && <label htmlFor='autofill'>Customers:</label> && <div className='search-box-results'>
                 {Object.keys(search).map((v) => 
                         {
                         return <CallIn key={search._id} _data={search[v]} click={() => {
@@ -84,15 +121,15 @@ function CallInForm(props){
                         }}/>
                     })}
             </div>}
-            {props._id && <><label htmlFor='delCheck'>Delivered?</label><input type="checkbox" className='form-check-input' name="delCheck" checked={data.completed || false} disabled={props._edit} onChange={e => setData({...data, ["completed"] : e.target.checked})}/></>}
+            {props._id && <><label htmlFor='delCheck'>Delivered?</label><input type="checkbox" className='form-check-input' name="delCheck" checked={data.completed || false} disabled={edit} onChange={e => setData({...data, ["completed"] : e.target.checked})}/></>}
             <label htmlFor='callDate'>Called in:</label>
-            <input type="date" required className='form-text-input' name="callDate" placeholder='callDate' readOnly={props._edit} value={data.callDate || ""}  onChange={e => setData({...data, ["callDate"] : e.target.value})}/>
+            <input type="date" required className='form-text-input' name="callDate" placeholder='callDate' readOnly={edit} value={data.callDate || ""}  onChange={e => setData({...data, ["callDate"] : e.target.value})}/>
             <label htmlFor='serviceDate'>Estimated Delivery:</label>
-            <input type="date" required className='form-text-input' name="serviceDate" placeholder='serviceDate' readOnly={props._edit} value={data.serviceDate || ""}  onChange={e => setData({...data, ["serviceDate"] : e.target.value})}/>
+            <input type="date" required className='form-text-input' name="serviceDate" placeholder='serviceDate' readOnly={edit} value={data.serviceDate || ""}  onChange={e => setData({...data, ["serviceDate"] : e.target.value})}/>
             <label htmlFor='instructions'>Special Inustrictions:</label>
-            <input type="text" className='form-text-input' name="instructions" placeholder='instructions' readOnly={props._edit} value={data.instructions || ""}   onChange={e => setData({...data, ["instructions"] : e.target.value})}/>
+            <input type="text" className='form-text-input' name="instructions" placeholder='instructions' readOnly={edit} value={data.instructions || ""}   onChange={e => setData({...data, ["instructions"] : e.target.value})}/>
             <input type="hidden" value={selectedId || data.customer_id || ""} name="_id"/>
-            {!props._edit && <button type="submit" className='form-button-submit'>Submit</button>}
+            {!edit && <button type="submit" className='form-button-submit'>Submit</button>}
         </form>
         
     </>)
