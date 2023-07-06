@@ -4,6 +4,11 @@ const lib = require("../library/library");
 
 async function getAllCallIns(req, res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const searchQuery = req.query.search;
         const _db = await mongo.connect().db('ice').collection("callin").find();
         const result = await _db.toArray();
@@ -29,6 +34,11 @@ async function getAllCallIns(req, res){
 
 async function getSingleCallIn(req, res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const _db = await mongo.connect().db('ice').collection("callin").find();
         const result = await _db.toArray();
         const filtered = result.filter(customer => customer._id.toString() == req.params.id);
@@ -40,6 +50,11 @@ async function getSingleCallIn(req, res){
 
 async function postCallIn(req, res) {
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const callIn = {
             name: req.body.name,
             address: req.body.address,
@@ -69,6 +84,11 @@ async function postCallIn(req, res) {
 
 async function updateCallIn(req, res) {
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         console.log(req.body.instructions);
         const object_id = new mongodb.ObjectId(req.params.id);
         const checkEmptyResponse = lib.checkEmpty(req.body, ["instructions"]);
@@ -97,6 +117,11 @@ async function updateCallIn(req, res) {
 
 async function deleteCallIn(req, res) {
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const object_id = new mongodb.ObjectId(req.params.id);
         const _db = await mongo.connect().db('ice').collection("callin");
         _db.deleteOne({_id: object_id}).then(result => res.sendStatus(204)).catch(err => res.sendStatus(404));

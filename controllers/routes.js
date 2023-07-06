@@ -4,6 +4,11 @@ const lib = require("../library/library");
 
 async function getAllRoutes(req, res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const searchQuery = req.query.search;
         const _db = await mongo.connect().db('ice').collection("routes").find();
         const result = await _db.toArray();
@@ -29,6 +34,11 @@ async function getAllRoutes(req, res){
 
 async function getDeliveredRoutes(req, res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const searchQuery = req.query.search;
         const _db = await mongo.connect().db('ice').collection("route_deliveries").find();
         const result = await _db.toArray();
@@ -55,6 +65,11 @@ async function getDeliveredRoutes(req, res){
 
 async function getSingleRoutes(req, res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const _db = await mongo.connect().db('ice').collection("routes").find();
         const result = await _db.toArray();
         const filtered = result.filter(route => route._id.toString() == req.params.id);
@@ -66,6 +81,11 @@ async function getSingleRoutes(req, res){
 
 async function getSingleDeliveredRoutes(req, res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const _db = await mongo.connect().db('ice').collection("route_deliveries").find();
         const result = await _db.toArray();
         const filtered = result.filter(route => route._id.toString() == req.params.id);
@@ -77,6 +97,11 @@ async function getSingleDeliveredRoutes(req, res){
 
 async function postRoutes(req, res) {
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const callIn = {
             name: req.body.name,
             stops: req.body.stops
@@ -96,6 +121,11 @@ async function postRoutes(req, res) {
 
 async function postCheckin(req, res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const _date = new Date()
         var checkIn = {
             name: req.body.name,
@@ -134,6 +164,11 @@ async function postCheckin(req, res){
 
 async function updateCheckin(req, res){
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const _date = new Date()
         var checkIn = {
             name: req.body.name,
@@ -219,6 +254,11 @@ async function updateCheckin(req, res){
 
 async function updateRoutes(req, res) {
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         console.log(req.body);
         console.log(req.params.id);
         const object_id = new mongodb.ObjectId(req.params.id);
@@ -239,6 +279,11 @@ async function updateRoutes(req, res) {
 
 async function deleteRoutes(req, res) {
     try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
         const object_id = new mongodb.ObjectId(req.params.id);
         const _db = await mongo.connect().db('ice').collection("routes");
         _db.deleteOne({_id: object_id}).then(result => res.sendStatus(204)).catch(err => res.sendStatus(404));

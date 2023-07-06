@@ -66,7 +66,7 @@ function RouterForm(props){
         
     })
     async function getRoute(){
-        await fetch("http://localhost:4000/routes/"+props._id)
+        await fetch("http://localhost:4000/routes/"+props._id, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}})
             .then(response => response.json())
             .then(obj => {
                 setData(obj[0]);
