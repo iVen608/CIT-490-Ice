@@ -3,6 +3,7 @@ import {useNavigate } from 'react-router-dom';
 import '../styles/form.css';
 import CustomerSmall from '../models/searchViewSmallCustomer';
 import MyTableView from '../components/tableView';
+import FormHeader from '../components/formHeader';
 import {getJWT} from '../utility';
 
 function RouterForm(props){
@@ -15,6 +16,8 @@ function RouterForm(props){
     const [stops, setStops] = useState([]);
     const [loading, setLoading] = useState(false);
     const [processing, setProcessing] = useState(false);
+    const [edit, setEdit] = useState(props.method === "PUT" ? true : false);
+    const [response, setResponse] = useState({});
 
     async function updateData(){
         setProcessing(true);
@@ -34,13 +37,16 @@ function RouterForm(props){
                 setRep(true);
                 if(props._id){//PUT
                     window.location.reload(true);
+                    setResponse({text: `Customer successfully ${props.method === 'POST' ? 'added' : 'updated'}.`, status: true});
                 }else{//POST
-                    nav("/routes/")
+                    setResponse({text: `Customer successfully ${props.method === 'POST' ? 'added' : 'updated'}.`, status: true});
+                    setTimeout(() => {
+                        nav("/routes/")
+                    }, 3000);
                 }
                 
             }else{
-                console.log(response);
-                setRep(false);
+                setResponse({text: `Unable to ${props.method === 'POST' ? 'add' : 'update'} route due to an error.`, status: false});
             }
         }).catch(err => {console.log(err); setRep(false); setProcessing(false)});
     }
@@ -49,10 +55,10 @@ function RouterForm(props){
         updateData();
     }
     useEffect(() => {
-            if(data.stops.length === 0 && props._edit){
+            if(data.stops.length === 0 && edit){
                 getRoute();
             }
-            else if(stops.length === 0 && props._edit){
+            else if(stops.length === 0 && edit){
                 getCustomers();
             }else {
                 setLoading(true);
@@ -83,14 +89,46 @@ function RouterForm(props){
         }))
         fetch("http://localhost:4000/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj); console.log(obj)})
     }
+
+    function handleDelete(e){
+        e.preventDefault();
+        deleteRoute()
+    }
+
+    async function deleteRoute(){
+        await fetch(props.api + props._id, {
+            method: 'DELETE',withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}
+        ).then(response => {
+            if(response.ok){
+                setResponse({text: `Customer successfully deleted.`, status: true});
+                setTimeout(() => {
+                    nav("/routes/")
+                }, 3000);
+            }else{
+                setResponse({text: `Unable to delete route due to an error.`, status: false});
+            }
+        }).catch(err => {setResponse({text: `Unable to delete route due to an error: ${err}.`, status: false});});
+    }
+
+    const toggle = () => {
+        if(edit){
+            setEdit(false);
+        }else{
+            setEdit(true);
+        }
+    }
     return (<>
-        {rep === true && <h1>Successfully updated call-in</h1>}
-        {rep === false && <h1>Failed to add call-in, please try again</h1>}
+        <FormHeader 
+            title={props.method === 'POST' ? 'New Route' : 'Route Details'} 
+            response={response} 
+            toggle={toggle}
+            delete={handleDelete}
+            method={props.method}/>
         {loading && <form className='form' onSubmit={handleSubmit}>
             <label htmlFor='name'>Route name:</label>
-            <input type="text" required className='form-text-input' name="name" placeholder='Route Name' readOnly={props._edit} value={data.name || ""}  onChange={e => {setData({...data, ['name'] : e.target.value})}}/>
-            {!props._edit && <><label htmlFor='name'>Add Customer:</label>
-            <input type="text" className='form-text-input' name="customerName" placeholder='Add customer here' readOnly={props._edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
+            <input type="text" required className='form-text-input' name="name" placeholder='Route Name' readOnly={edit} value={data.name || ""}  onChange={e => {setData({...data, ['name'] : e.target.value})}}/>
+            {!edit && <><label htmlFor='name'>Add Customer:</label>
+            <input type="text" className='form-text-input' name="customerName" placeholder='Add customer here' readOnly={edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
             <h3>Customers:</h3>
             <div className='search-box-results'>
                 {Object.keys(search).map((v) => 
@@ -107,23 +145,24 @@ function RouterForm(props){
                     })}
             </div></>}
             
-            {!props._edit && <button type="submit" disabled={processing} className='form-button-submit'>{!processing ? 'Submit' : 'Processing'}</button>}
+            {!edit && <button type="submit" disabled={processing} className='form-button-submit'>{!processing ? 'Submit' : 'Processing'}</button>}
         </form>}
-        {loading === true && <><MyTableView 
-            header_keys={["Name", "Address"]}
-            data={stops}
-            api=""
-            wide={false}
-            funct={(arr) => {
-                setStops(arr);
-            }}
-            model="routes"/>
+        {loading === true && <>
+            <MyTableView 
+                header_keys={["Name", "Address"]}
+                data={stops}
+                api=""
+                wide={false}
+                funct={(arr) => {
+                    setStops(arr);
+                }}
+                model="routes"/>
             <button onClick={e => {
-                /*const formattedData = XLSX.utils.json_to_sheet(_data)//[{name: 1, data: 2}, {name: 1, data: 2}]);
-                const book = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(book, formattedData, "testing");
-                XLSX.writeFile(book, "Testing_in_progress.xlsx");*/
-                //fileSaver.saveAs(xlsx(_data, {fileName: 'Testing.xlsx'}), "test.xlsx")
+                    /*const formattedData = XLSX.utils.json_to_sheet(_data)//[{name: 1, data: 2}, {name: 1, data: 2}]);
+                    const book = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(book, formattedData, "testing");
+                    XLSX.writeFile(book, "Testing_in_progress.xlsx");*/
+                    //fileSaver.saveAs(xlsx(_data, {fileName: 'Testing.xlsx'}), "test.xlsx")
             }}>Download</button>
             
             </>}
