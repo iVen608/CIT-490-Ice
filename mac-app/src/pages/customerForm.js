@@ -24,7 +24,9 @@ function CustomerForm(props){
     })
     const [edit, setEdit] = useState(props.method === "PUT" ? true : false);
     const [response, setResponse] = useState({});
+    const [processing, setProcessing] = useState(false);
     async function updateData(){
+        setProcessing(true);
         var link = props.api;
         if(props._id){
             link += props._id;
@@ -48,13 +50,17 @@ function CustomerForm(props){
                 }
             }else{
                 setResponse({text: `Unable to ${props.method === 'POST' ? 'add' : 'update'} customer due to an error.`, status: false});
+                setProcessing(false);
             }
-        }).catch(err => {console.log("err")});
+        }).catch(err => {console.log("err"); setProcessing(false);});
         
     }
     function handleSubmit(e){
-        e.preventDefault();  
-        updateData();
+        e.preventDefault();
+        if(!processing){
+            updateData();
+        }  
+        
     }
     async function deleteCustomer(){
         await fetch(props.api + props._id, {
@@ -124,7 +130,7 @@ function CustomerForm(props){
             <input type="text" className='form-text-input' name="rami" placeholder='RAMI' readOnly={edit} value={data.rami || ""}  onChange={e => setData({...data, ["rami"] : e.target.value})}/>
             <input type="text" className='form-text-input' name="equipment" placeholder='Box Type' readOnly={edit} value={data.equipment || ""}   onChange={e => setData({...data, ["equipment"] : e.target.value})}/>
             <input type="text" className='form-text-input' name="special" placeholder='Special Instructions' readOnly={edit} onChange={e => setData({...data, ["special"] : e.target.value})}/>
-            {!edit && <button type="submit" className='form-button-submit'>Submit</button>}
+            {!edit && <button type="submit" disabled={processing} className='form-button-submit'>{!processing ? 'Submit' : 'Processing'}</button>}
         </form>
         
     </>)
