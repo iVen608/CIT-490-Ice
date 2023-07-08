@@ -19,6 +19,7 @@ function MyTableView(props){
     const [parameters, setParameters] = useSearchParams();
     const [sortFilter, setSortFilter] = useState({sort: 'name', filterBy: '', order: 'ascend'});
     const [sortedData, setSortedData] = useState([]);
+    const [loaded, setLoaded] = useState(false);
     const query = parameters.get("search");
     const token = getJWT();
     const nav = useNavigate();
@@ -40,6 +41,9 @@ function MyTableView(props){
         }
         
     }, [sortFilter, data])
+    useEffect(()=> {
+        setLoaded(true);
+    }, [data])
 
     return (<>
         {!props.data && <div id="search-bar-container">
@@ -50,7 +54,7 @@ function MyTableView(props){
         {!props.data && props.model === "callin" && <SortCallIn sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
         {!props.data && props.model === "deliveredRoute" && <SortDelivered sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
         {!props.data && (props.model === "routes" || props.model === "routesCheck") && <SortRoute sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
-        {(data[0] || props.data) && <table key="customer-table" className={props.wide ? 'customer-table' : 'customer-table-small'}>
+        {(data[0] || props.data) && loaded && <table key="customer-table" className={props.wide ? 'customer-table' : 'customer-table-small'}>
                 <tr key="header-table-row" className='customer-table-header-row'>
                     {props.header_keys.map(v => {
                         return <th key={`header-${v}`} className='customer-table-header-cell'>{v}</th>
@@ -65,6 +69,7 @@ function MyTableView(props){
                         }else if(props.model === "routes"){
                             return <RoutesModel key={data[v]._id} _data={data[v]}/>
                         }else if(props.model === "routesCheck"){
+                            console.log(data[v]);
                             return <RoutesCheckModel key={data[v]._id} _data={data[v]}/>
                         }else {
                             return <DeliveredRoute key={data[v]._id} _data={data[v]}/>
