@@ -31,6 +31,7 @@ router.put("/routes/checkin/:id", routesController.updateCheckin);
 router.get("/routes/:id", routesController.getSingleRoutes);
 router.post("/routes/", routesController.postRoutes);
 router.post("/routes/checkin/:id", routesController.postCheckin);
+router.delete("/routes/checkin/:id", routesController.deleteCheckin);
 router.put("/routes/:id", routesController.updateRoutes);
 router.delete("/routes/:id", routesController.deleteRoutes);
 
