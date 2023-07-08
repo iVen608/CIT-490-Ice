@@ -23,7 +23,7 @@ async function getAllRoutes(req, res){
             });
             res.status(200).json(filter);
         }else{
-            console.log(result);
+            //console.log(result);
             res.status(200).json(result);
         }
     }catch(err){
@@ -42,7 +42,7 @@ async function getDeliveredRoutes(req, res){
         const searchQuery = req.query.search;
         const _db = await mongo.connect().db('ice').collection("route_deliveries").find();
         const result = await _db.toArray();
-        console.log(result);
+        //console.log(result);
         console.log(searchQuery);
         if(searchQuery){
             const filter = result.filter(v =>  {
@@ -54,7 +54,7 @@ async function getDeliveredRoutes(req, res){
             });
             res.status(200).json(filter);
         }else{
-            console.log(result);
+            //console.log(result);
             res.status(200).json(result);
         }
     }catch(err){
@@ -257,6 +257,49 @@ async function updateCheckin(req, res){
     }  
 }
 
+async function deleteCheckin(req, res){
+    try{
+        const token = req.headers.authorization.split(' ')[1];
+        const verification = lib.verifyToken(token);
+        if(!verification){
+            throw Error("Verification failed");
+        }
+        const object_id = new mongodb.ObjectId(req.params.id);
+        const _db = await mongo.connect().db('ice');
+        const _routeDel = _db.collection("route_deliveries");
+        const _deliveries = _db.collection("deliveries");
+        const _callinDB = _db.collection("callin");
+        const query = _routeDel.find().toArray().filter(route => route._id.toString() == req.params.id);
+        /*
+        if(query.callins && query.callins[0]){
+            for(var stop of checkIn.delivered){
+                const _id = new mongodb.ObjectId(stop.invoice_id);
+                await _deliveries.deleteOne({_id: _id});
+            }
+        }
+        if(query.delivered && query.delivered[0]){
+            for (var call of checkIn.callins){
+                const _id = new mongodb.ObjectId(stop.invoice_id);
+                const call_id = new mongodb.ObjectId(call._id);
+                await _callinDB.updateOne({_id: call_id}, {$set: {completed: false}});
+                await _deliveries.deleteOne({_id: _id});
+            }
+        }
+        const _id = new mongodb.ObjectId(req.params.id);
+        await _routeDel.deleteOne({_id: _id});
+        */
+        
+        
+        
+        console.log(req.body);
+        res.sendStatus(201)
+    }catch(err){
+        console.log(err);
+        res.sendStatus(404);
+    }  
+}
+
+
 async function updateRoutes(req, res) {
     try{
         const token = req.headers.authorization.split(' ')[1];
@@ -298,4 +341,4 @@ async function deleteRoutes(req, res) {
     } 
 }
 
-module.exports = {getAllRoutes, getDeliveredRoutes, getSingleRoutes, getSingleDeliveredRoutes, postRoutes, updateRoutes, deleteRoutes, postCheckin, updateCheckin}
+module.exports = {getAllRoutes, getDeliveredRoutes, getSingleRoutes, getSingleDeliveredRoutes, postRoutes, updateRoutes, deleteRoutes, postCheckin, updateCheckin, deleteCheckin}
