@@ -4,6 +4,7 @@ import CheckInCustomer from '../models/checkInViewRoute';
 import CheckInCallIn from '../models/checkInViewCall';
 import CustomerSmall from '../models/searchViewSmallCustomer';
 import FormHeader from '../components/formHeader';
+import CheckInTable from '../models/checkInTableCallIn';
 import {getJWT} from '../utility';
 import "../styles/customerTable.css";
 import '../styles/searchBar.css';
@@ -21,9 +22,11 @@ function CheckInForm(props){
     const [loaded, setLoaded] = useState(false);
     const [edit, setEdit] = useState(props.method === "PUT" ? true : false);
     const [response, setResponse] = useState({});
+    const [processing, setProcessing] = useState(false);
     const nav = useNavigate();
     const token = getJWT();
     async function updateData(){
+        setProcessing(true)
         var link = "http://localhost:4000/routes/checkin/";
         if(props._id){
             link += props._id;
@@ -72,14 +75,14 @@ function CheckInForm(props){
                 if(props._id){//PUT
                     window.location.reload(true);
                 }else{//POST
-                    //nav("/routes/delivered/");
+                    nav("/routes/delivered/");
                 }
                 
             }else{
                 console.log(response);
-                //setRep(false);
+                setProcessing(false);
             }
-        }).catch(err => {console.log(err);}); //setRep(false);});
+        }).catch(err => {console.log(err); setProcessing(false);}); //setRep(false);});
     }
     function handleSubmit(e){
         e.preventDefault();  
@@ -289,13 +292,14 @@ function CheckInForm(props){
         }
     }
     async function deleteCheckIn(){
-        await fetch(props.api + props._id, {
+        console.log("http://localhost:4000/routes/checkin/" + props._id)
+        await fetch("http://localhost:4000/routes/checkin/" + props._id, {
             method: 'DELETE',withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}
         ).then(response => {
             if(response.ok){
-                setResponse({text: `Customer successfully deleted.`, status: true});
+                setResponse({text: `Delivery history successfully deleted.`, status: true});
                 setTimeout(() => {
-                    nav("/customer/")
+                    nav("/routes/delivered/")
                 }, 1500);
             }else{
                 setResponse({text: `Unable to delete customer due to an error.`, status: false});
@@ -348,79 +352,49 @@ function CheckInForm(props){
                             />
                         
                 })}
-                <br/>
-                {loaded && addedSearch.map((v) => 
-                    {
-                        return <CheckInCustomer 
-                        _id={v._id} 
-                        _data={v} 
-                        checkbox={(e) => {updateAddedSearch(e, v._id,"completed", "check")}} 
-                        inputBox={(e) => {updateAddedSearch(e, v._id,"delivered", "value")}}
-                        inputBox2={(e) => {updateAddedSearch(e, v._id,"delivered2", "value")}}
-                        delete={true}
-                        />
-                })}
-                
             </table>
+            {loaded && addedSearch[0] &&  <>
+                <h3 className='blue-text'>Added Stops</h3>
+                <CheckInTable 
+                    _data={addedSearch}
+                    _model="customer"
+                    _headers={["Selected", "Name", "Address", "Ice", "Price", "Delivered"]}
+                    _function={updateAddedSearch}
+                    _edit={edit}/>
+            </>}
             {!edit && <>
-            <h3 className='blue-text'>Add Customers</h3>
-            <input type="text" className='form-text-input' name="customerName" placeholder='Add customer here' readOnly={props._edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
-            <div className='search-box-results'>
-                {Object.keys(search).map((v) => 
+                <h3 className='blue-text'>Add Customers</h3>
+                <input type="text" className='form-text-input' name="customerName" placeholder='Add customer here' readOnly={props._edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
+                <div className='search-box-results'>
+                    {Object.keys(search).map((v) => 
                         {
                         return <CustomerSmall key={search._id} _data={search[v]} click={() => {
                             if(!addedSearch.some(element => element._id === search[v]._id) && !customers.some(element => element._id === search[v]._id)){
                                 setAddedSearch([...addedSearch, 
                                     search[v]
                                     ]);
-                            }else{
-                                console.log("customer is already on route sheet or added")
                             }
                         }}/>
-                    })}
+                })}
             </div></>}
-            <h3 className='blue-text'>Call Ins</h3>
-            <table key="callin-table" className='small-customer-table span-two'>
-                <tr key="header-table-row" className='customer-table-header-row'>
-                    {props.header_keys.map(v => {
-                        return <th key={`header-${v}`} className='customer-table-header-cell'>{v}</th>
-                    })}
-                </tr>
-                {savedCallins[0] && <tr>
-                    <td>
-                    Delivered Call In's
-                    </td>
-                </tr>}
-                {loaded  && savedCallins[0] && savedCallins.map(v => {
-                    return <CheckInCallIn 
-                    _id={v._id} 
-                    _data={v} 
-                    _edit = {edit} 
-                    checkbox={(e) => {updateSavedCallIn(e, v._id,"completed", "check")}} 
-                    inputBox={(e) => {updateSavedCallIn(e, v._id,"delivered", "value")}}
-                    inputBox2={(e) => {updateSavedCallIn(e, v._id,"delivered2", "value")}}
-                    delete={true}
-                    />
-                })}
-                {savedCallins[0] && <tr>
-                    <td>
-                    Call In's
-                    </td>
-                </tr>}
-                {loaded && callins[0] && callins.map((v) => 
-                    {
-                        return <CheckInCallIn 
-                        _id={v._id} 
-                        _data={v}
-                        _edit = {edit} 
-                        checkbox={(e) => {updateCallIn(e, v._id,"completed", "check")}} 
-                        inputBox={(e) => {updateCallIn(e, v._id,"delivered", "value")}}
-                        inputBox2={(e) => {updateCallIn(e, v._id,"delivered2", "value")}}
-                        delete={false}
-                        />
-                })}
-            </table>
-            {!edit && <button className='form-button-submit' onClick={handleSubmit}>Submit</button>}
+            {loaded && !edit && callins[0] && <>
+                <h3 className='blue-text'>Call Ins</h3>
+                <CheckInTable 
+                    _data={callins}
+                    _model="call"
+                    _headers={["Selected", "Name", "Address", "Call Date", "Service Date", "Delivered"]}
+                    _function={updateCallIn}
+                    _edit={edit}/></>}
+           
+            {loaded && savedCallins[0] && <> 
+                <h3 className='blue-text'>Delivered Call Ins</h3>
+                <CheckInTable 
+                    _data={savedCallins}
+                    _model="call"
+                    _headers={["Selected", "Name", "Address", "Call Date", "Service Date", "Delivered"]}
+                    _function={updateSavedCallIn}
+                    _edit={edit}/></>}
+            {!edit && <button type="submit" disabled={processing} onClick={handleSubmit} className='form-button-submit'>{!processing ? 'Submit' : 'Processing'}</button>}
         {(!data[0] && !props) && <h1>Failed to load route</h1>}
     </div></>);
 }
