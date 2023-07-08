@@ -47,12 +47,16 @@ function RouterForm(props){
                 
             }else{
                 setResponse({text: `Unable to ${props.method === 'POST' ? 'add' : 'update'} route due to an error.`, status: false});
+                setProcessing(false)
             }
         }).catch(err => {console.log(err); setRep(false); setProcessing(false)});
     }
     function handleSubmit(e){
-        e.preventDefault();  
-        updateData();
+        e.preventDefault();
+        if(!processing){
+            updateData();
+        }  
+        
     }
     useEffect(() => {
             if(data.stops.length === 0 && edit){
