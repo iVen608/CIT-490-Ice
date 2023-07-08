@@ -33,7 +33,8 @@ function CallInForm(props){
                 "instructions": data.instructions || "",
                 "completed": data.completed || false,
             }),
-            headers: {'Content-type': "application/json"}
+            headers: {'Content-type': "application/json", 'Authorization': `Bearer ${token}`},
+            credentials: 'include'
         }).then(response => {
             if(response.ok){
                 setRep(true);

@@ -63,7 +63,8 @@ function CheckInForm(props){
                             delivered2: call.delivered2 || '' 
                         }
                     })}),
-            headers: {'Content-type': "application/json"}
+                    headers: {'Content-type': "application/json", 'Authorization': `Bearer ${token}`},
+                    credentials: 'include'
         }).then(response => {
             if(response.ok){
                 console.log("ok")

@@ -176,6 +176,7 @@ async function updateCheckin(req, res){
             route_id: req.body.route_id,
             delivered: req.body.delivered,
             callins: req.body.callins
+
         }
         console.log("-----------------")
         console.log(checkIn);
@@ -206,34 +207,38 @@ async function updateCheckin(req, res){
                 }
             }
         }
+        if(checkIn.delivered[0]){
+            for(var stop of checkIn.delivered){
+                const _id = new mongodb.ObjectId(stop.invoice_id);
+                if(stop.action && stop.action === "update"){
+                    await _deliveries.updateOne({_id: _id}, {$set: {date: _date, delivered: stop.delivered, delivered2: stop.delivered2}});
+                }else if(stop.action && stop.action === "delete"){
+                    await _deliveries.deleteOne({_id: _id});
+                    checkIn.delivered = checkIn.delivered.filter(i => i._id !== stop._id);
+                    console.log(checkIn.delivered)
+                }
+            }
+        }
         
-        for(var stop of checkIn.delivered){
-            const _id = new mongodb.ObjectId(stop.invoice_id);
-            if(stop.action && stop.action === "update"){
-                await _deliveries.updateOne({_id: _id}, {$set: {date: _date, delivered: stop.delivered, delivered2: stop.delivered2}});
-            }else if(stop.action && stop.action === "delete"){
-                await _deliveries.deleteOne({_id: _id});
-                checkIn.delivered = checkIn.delivered.filter(i => i._id !== stop._id);
-                console.log(checkIn.delivered)
+        if(checkIn.callins[0]){
+            for(var stop of checkIn.callins){
+                const _id = new mongodb.ObjectId(stop.invoice_id);
+                if(stop.action && stop.action === "update"){
+                    await _deliveries.updateOne({_id: _id}, {$set: {date: _date, delivered: stop.delivered, delivered2: stop.delivered2}});
+                }else if(stop.action && stop.action === "delete"){
+                    await _deliveries.deleteOne({_id: _id});
+                    const call_id = new mongodb.ObjectId(stop._id);
+                    await _callinDB.updateOne({_id: call_id}, {$set: {completed: false}});
+                    checkIn.callins = checkIn.callins.filter(i => i._id !== stop._id);
+                }
             }
         }
-
-        for(var stop of checkIn.callins){
-            const _id = new mongodb.ObjectId(stop.invoice_id);
-            if(stop.action && stop.action === "update"){
-                await _deliveries.updateOne({_id: _id}, {$set: {date: _date, delivered: stop.delivered, delivered2: stop.delivered2}});
-            }else if(stop.action && stop.action === "delete"){
-                await _deliveries.deleteOne({_id: _id});
-                const call_id = new mongodb.ObjectId(stop._id);
-                await _callinDB.updateOne({_id: call_id}, {$set: {completed: false}});
-                checkIn.callins = checkIn.callins.filter(i => i._id !== stop._id);
-            }
-        }
+        
         if(req.body.addedStops && req.body.addedStops[0]){
             checkIn.delivered = [...checkIn.delivered, ...req.body.addedStops];
         }
         if(req.body.addedCallIns && req.body.addedCallIns[0]){
-            checkIn.callins = [...checkIn.callins, ...checkIn.addedCallIns];
+            checkIn.callins = [...checkIn.callins, ...req.body.addedCallIns];
         }
         console.log("Final checkin")
         console.log(checkIn);
