@@ -17,7 +17,7 @@ function CustomerRouter(){
                 <Link className="table-link-create" to="./add/">New</Link>
             </div>
             <MyTableView 
-                header_keys={["Name", "Address", "Ice", "Price", "Tax", "Del", "PO/Job"]}
+                header_keys={["Name", "Address", "Ice", "Price", "Tax", "Del"]}
                 api={"http://localhost:4000/customer/"}
                 wide={true}
                 model="customer"/>

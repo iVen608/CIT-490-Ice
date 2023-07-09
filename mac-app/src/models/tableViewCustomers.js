@@ -14,7 +14,6 @@ function Customer(props){
             <td key={props._data._id+"price"} className='customer-table-data-cell'>{props._data.price1}{props._data.price2 === 0 ? '' : ` | ${props._data.price2}`}</td>
             <td key={props._data._id+"tax"} className='customer-table-data-cell'>{props._data.tax === false ? '' : 'Y'}</td>
             <td key={props._data._id+"del"} className='customer-table-data-cell'>{props._data.delivery === false ? '' : 'Y'}</td>
-            <td key={props._data._id+"po/job"} className='customer-table-data-cell'>{props._data.po} {props._data.job !== " " ? ` | ${props._data.job}` : ""}</td>
         </tr>);
 }
 
