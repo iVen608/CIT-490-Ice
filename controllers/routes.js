@@ -282,9 +282,9 @@ async function deleteCheckin(req, res){
                 console.log(stop)
             }
         }
-        if(query.delivered && query.delivered[0]){
+        if(query.callins && query.callins[0]){
             for (var call of query.callins){
-                const _id = new mongodb.ObjectId(stop.invoice_id);
+                const _id = new mongodb.ObjectId(call.invoice_id);
                 const call_id = new mongodb.ObjectId(call._id);
                 await _callinDB.updateOne({_id: call_id}, {$set: {completed: false}});
                 await _deliveries.deleteOne({_id: _id});
