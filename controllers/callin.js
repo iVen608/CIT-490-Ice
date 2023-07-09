@@ -84,6 +84,7 @@ async function postCallIn(req, res) {
 
 async function updateCallIn(req, res) {
     try{
+        console.log(req.body)
         const token = req.headers.authorization.split(' ')[1];
         const verification = lib.verifyToken(token);
         if(!verification){

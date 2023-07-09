@@ -269,25 +269,31 @@ async function deleteCheckin(req, res){
         const _routeDel = _db.collection("route_deliveries");
         const _deliveries = _db.collection("deliveries");
         const _callinDB = _db.collection("callin");
-        const query = _routeDel.find().toArray().filter(route => route._id.toString() == req.params.id);
-        /*
-        if(query.callins && query.callins[0]){
-            for(var stop of checkIn.delivered){
+        const allRoutes = await _routeDel.find().toArray();
+        const query = allRoutes.filter(route => route._id.toString() == req.params.id)[0];
+        console.log("QUERY")
+        console.log(query)
+        console.log(query.delivered);
+        if(query.delivered && query.delivered[0]){
+            console.log(true)
+            for(var stop of query.delivered){
                 const _id = new mongodb.ObjectId(stop.invoice_id);
                 await _deliveries.deleteOne({_id: _id});
+                console.log(stop)
             }
         }
         if(query.delivered && query.delivered[0]){
-            for (var call of checkIn.callins){
+            for (var call of query.callins){
                 const _id = new mongodb.ObjectId(stop.invoice_id);
                 const call_id = new mongodb.ObjectId(call._id);
                 await _callinDB.updateOne({_id: call_id}, {$set: {completed: false}});
                 await _deliveries.deleteOne({_id: _id});
+                console.log(call)
             }
         }
         const _id = new mongodb.ObjectId(req.params.id);
         await _routeDel.deleteOne({_id: _id});
-        */
+        
         
         
         

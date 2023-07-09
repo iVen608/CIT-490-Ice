@@ -22,6 +22,7 @@ function CallInForm(props){
         if(props._id){
             link += props._id;
         }
+        console.log(selectedId)
         await fetch(link, {
             method: props.method,
             body: JSON.stringify({
@@ -31,7 +32,7 @@ function CallInForm(props){
                 "callDate": data.callDate,
                 "serviceDate": data.serviceDate,
                 "instructions": data.instructions || "",
-                "completed": data.completed || false,
+                "completed": data.completed || false
             }),
             headers: {'Content-type': "application/json", 'Authorization': `Bearer ${token}`},
             credentials: 'include'
@@ -62,6 +63,7 @@ function CallInForm(props){
         deleteCallIn()
     }
     useEffect(() => {
+        console.log(data)
         if(props._id){
             fetch("http://localhost:4000/callin/" + props._id, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}})
             .then(response => response.json())
@@ -69,9 +71,10 @@ function CallInForm(props){
                 setData(obj[0]); 
                 setSelected(obj[0].name)
                 setSelectedAddress(obj[0].address);
-                setSelectedId(props._id);
+                setSelectedId(obj[0].customer_id);
             });
         }
+        
     }, [])
 
     function updateBox(e){
