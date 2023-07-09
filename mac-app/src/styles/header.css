@@ -15,7 +15,7 @@
     width: 150px;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     right: 0px;
-    top: -175px;
+    top: -300px;
     overflow: hidden;
     background-color: var(--primary);
 }
@@ -63,7 +63,7 @@
     animation-direction: reverse;
     animation-fill-mode: backwards;
     animation-delay: .5s;*/
-    top: -250px;
+    top: -300px;
 }
 
 .expanded-nav {
@@ -94,7 +94,8 @@
         width: 100%;
         display: grid;
         position: inherit;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(6, 1fr);
+        column-gap: 10px;
     }
     
     .header-path {

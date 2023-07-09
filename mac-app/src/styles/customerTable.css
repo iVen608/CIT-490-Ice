@@ -2,6 +2,7 @@
 
 .customer-table, .small-customer-table {
     width: 80%;
+    
 }
 
 .table-action-header {
@@ -14,10 +15,7 @@
     border-bottom: 5px solid var(--primary);
 }
 
-.reset-button {
-    width: 100px;
-    height: 50px;
-}
+
 
 .customer-table-small {
     width: 50%;
@@ -48,6 +46,7 @@
     font-size: 20px;
     height: 50px;
     transition: background-color 2s;
+    grid-column: 1/3;
 }
 
 .table-link-create:hover {
@@ -63,12 +62,7 @@
     grid-column: 1/3;
 }
 
-.sortContainer{
-    width: 80%;
-    margin-left: 10%;
-    display: flex;
-    justify-content: space-between;
-}
+
 
 select {
     border: none;
@@ -84,12 +78,39 @@ select {
     animation-fill-mode: forwards;
 }
 
+.sortContainer{
+    width: 80%;
+    margin-left: 10%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 15px;
+    row-gap: 15px;
+}
+
+.reset-button {
+    grid-column: 1/3;
+    height: 50px;
+}
+
 @media screen and (min-width: 600px){
+    .sortContainer{
+        width: 80%;
+        margin-left: 10%;
+        display: flex;
+        justify-content: space-between;
+    }
     .customer-table{
         margin-left: 10%;
     }
 
     .customer-table-data-cell{
         font-size: 16px;
+    }
+    .table-link-create{
+        grid-column: 2/3;
+    }
+    .reset-button {
+        width: 100px;
+        height: 50px;
     }
 }

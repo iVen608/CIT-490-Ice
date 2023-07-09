@@ -21,7 +21,8 @@ function Header(){
                 <Link className='header-path' to="/customer/">Customers</Link>
                 <Link className='header-path' to="/routes/">Routes</Link>
                 <Link className='header-path' to="/callin/">Call Ins</Link> 
-                <Link className='header-path' to="/routes/checkin/">Check In</Link>      
+                <Link className='header-path' to="/routes/checkin/">Check In</Link> 
+                <Link className='header-path' to="/routes/checkin/">History</Link>      
             </nav>
             <button className='header-expand-button' onClick={() => setBool(bool !== null ? !bool : false )} href="/">
                 <svg className='header-expand-icon'>
