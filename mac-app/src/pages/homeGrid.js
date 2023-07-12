@@ -46,7 +46,25 @@ function HomeGrid(){
                     </span>
             </Link>
             <Link class="nav-grid-link" to="/routes/checkin/">
-                <span class="nav-grid-box"><p className="nav-grid-text">Check In</p></span>
+                <span class="nav-grid-box">
+                    <svg class="nav-grid-svg-icon">
+                    <rect class="nav-grid-call-icon-rect" rx="10" x="5" y="10" width="65" height="65"/>
+                        <line class="nav-grid-call-icon-polygon blue-fill" x1="10" x2="65" y1="20" y2="20"/>
+                        <line class="nav-grid-call-icon-polygon blue-fill" x1="10" x2="65" y1="35" y2="35"/>
+                        <line class="nav-grid-call-icon-polygon blue-fill" x1="10" x2="65" y1="50" y2="50"/>
+                        <line class="nav-grid-call-icon-polygon blue-fill" x1="10" x2="65" y1="65" y2="65"/>
+                    </svg>
+                    <p className="nav-grid-text">Check In</p></span>
+            </Link>
+            <Link class="nav-grid-link" to="/routes/delivered/">
+                <span class="nav-grid-box">
+                    <svg class="nav-grid-svg-icon">
+                        <polygon class="nav-grid-call-icon-polygon" points="5,20 15,30, 60,30 45,20"/>
+                        <polygon class="nav-grid-call-icon-polygon" points="5,32 15,42, 60,42 45,32"/>
+                        <polygon class="nav-grid-call-icon-polygon" points="5,46 15,56, 60,56 45,46"/>
+                        <polygon class="nav-grid-call-icon-polygon" points="5,60 15,70, 60,70 45,60"/>
+                    </svg>
+                    <p className="nav-grid-text">History</p></span>
             </Link>
         </div>
     )
