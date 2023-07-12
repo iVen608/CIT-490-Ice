@@ -84,6 +84,8 @@
     
 }
 
+
+
 @media screen and (min-width: 500px){
     .header{
         height: 75px;
@@ -101,7 +103,7 @@
     .header-path {
         text-decoration: none;
         color: var(--accent-light);
-        font-size: 20px;
+        font-size: 12px;
         line-height: 80px;
         height: 100%;
         padding: 0;
@@ -117,6 +119,22 @@
     }
     .header-name{
         line-height: 75px;
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    .header-name{
+        font-size: 32px;
+    }
+    .header-path{
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .header-path{
+        font-size: 20px;
     }
 }
 
