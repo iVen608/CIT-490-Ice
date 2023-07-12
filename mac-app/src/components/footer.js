@@ -4,7 +4,7 @@ import '../styles/footer.css';
 function Footer(){
     return(
         <footer>
-            <p>Copyright</p>
+            <p className='footer-text'>&copy;2023 by David Sword</p>
         </footer>
     )
 }
