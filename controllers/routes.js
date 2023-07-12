@@ -2,6 +2,13 @@ const mongo = require("../connect");
 const mongodb = require("mongodb");
 const lib = require("../library/library");
 
+const all_routes_parameters = ["name","stops"];
+
+const all_checkIn_parameters = ["name", "date", "route_id", "delivered", "callins"];
+
+const all_deliveredCheckIn_parameters = ["name", "date", "route_id", "delivered", "callins" ,"addedStops", "addedCallIns"];
+
+
 async function getAllRoutes(req, res){
     try{
         const token = req.headers.authorization.split(' ')[1];
@@ -102,17 +109,16 @@ async function postRoutes(req, res) {
         if(!verification){
             throw Error("Verification failed");
         }
-        const callIn = {
+        const route = {
             name: req.body.name,
             stops: req.body.stops
         }
-        console.log(callIn)
-        const checkKeysResponse = lib.checkKeys(callIn, ["name","stops"], 0);
+        const checkKeysResponse = lib.checkKeys(route, ["name","stops"], 0);
         if(checkKeysResponse === false){
             throw Error("Missing keys");
         }
         const _db = await mongo.connect().db('ice').collection("routes");
-        _db.insertOne(callIn).then(result => res.sendStatus(204)).catch(err => {res.sendStatus(404); console.log(err)});
+        _db.insertOne(route).then(result => res.sendStatus(204)).catch(err => {res.sendStatus(404); console.log(err)});
     }catch(err){
         console.log(err);
         res.sendStatus(404);
@@ -135,6 +141,15 @@ async function postCheckin(req, res){
             callins: req.body.callins
         }
         console.log(checkIn);
+        const checkEmptyResponse = lib.checkEmpty(checkIn, []);
+        const checkKeysResponse = lib.checkKeys(checkIn, all_checkIn_parameters, 0);
+
+        if(checkEmptyResponse === false){
+            throw Error("Empty response");
+            
+        }else if(checkKeysResponse === false){
+            throw Error("Missing keys");
+        }
         const object_id = new mongodb.ObjectId(req.params.id);
         const _db = await mongo.connect().db('ice');
         const _routeDel = _db.collection("route_deliveries");

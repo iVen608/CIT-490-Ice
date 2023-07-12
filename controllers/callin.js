@@ -2,6 +2,9 @@ const mongo = require("../connect");
 const mongodb = require("mongodb");
 const lib = require("../library/library");
 
+const optional_parameters = ["instructions"];
+const all_parameters = ["name","address","customer_id","callDate","serviceDate", "instructions", "completed"];
+
 async function getAllCallIns(req, res){
     try{
         const token = req.headers.authorization.split(' ')[1];
@@ -65,8 +68,8 @@ async function postCallIn(req, res) {
             completed: false,
         }
         console.log(callIn)
-        const checkEmptyResponse = lib.checkEmpty(callIn, ["instructions"]);
-        const checkKeysResponse = lib.checkKeys(callIn, ["name","address","customer_id","callDate","serviceDate", "instructions", "completed"], 0);
+        const checkEmptyResponse = lib.checkEmpty(callIn, optional_parameters);
+        const checkKeysResponse = lib.checkKeys(callIn, all_parameters, 0);
 
         if(checkEmptyResponse === false){
             throw Error("Empty response");
@@ -92,8 +95,8 @@ async function updateCallIn(req, res) {
         }
         console.log(req.body.instructions);
         const object_id = new mongodb.ObjectId(req.params.id);
-        const checkEmptyResponse = lib.checkEmpty(req.body, ["instructions"]);
-        const checkKeysResponse = lib.checkKeys(req.body, ["name","address","customer_id","callDate","serviceDate","instructions", "completed"], 0);
+        const checkEmptyResponse = lib.checkEmpty(callIn, optional_parameters);
+        const checkKeysResponse = lib.checkKeys(callIn, all_parameters, 0);
         if(checkEmptyResponse === false){
             throw Error("Empty response");
             

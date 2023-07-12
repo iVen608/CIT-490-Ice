@@ -23,7 +23,7 @@ async function getAllCustomers(req, res){
         if(searchQuery){
             const filter = result.filter(v =>  {
             if(v['name']){
-                return v['name'].toString().toLowerCase().includes(searchQuery);
+                return v['name'].toString().toLowerCase().includes(searchQuery.toLowerCase());
             }else{
                 return false;
             }
