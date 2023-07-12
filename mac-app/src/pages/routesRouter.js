@@ -39,7 +39,7 @@ function RoutesRouter(){
         </>}/>
         <Route path="/checkin/:id" element={
         <CheckInForm
-            header_keys={["Selected","Name", "Address", "Ice", "Price", "Delivered"]}
+            header_keys={["Selected","Name", "Address", "Delivered"]}
             method="POST"
             api={"http://localhost:4000/routes/"}
             api2={"http://localhost:4000/customer/"}
@@ -61,7 +61,7 @@ function RoutesRouter(){
         <Route path="/delivered/edit/:id" element={
             <>
             <CheckInForm
-                header_keys={["Selected","Name", "Address", "Ice", "Price", "Delivered"]}
+                header_keys={["Selected","Name", "Address", "Delivered"]}
                 method="PUT"
                 api={"http://localhost:4000/routes/"}
                 api2={"http://localhost:4000/customer/"}

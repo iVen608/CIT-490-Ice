@@ -45,6 +45,10 @@
     row-gap: 15px;
 }
 
+.form {
+    grid-template-columns: 1fr;
+}
+
 
 
 .form-text-input {
@@ -100,7 +104,6 @@ input:read-only {
 }
 
 .search-box-results {
-    grid-column: 1/3;
     height: 150px;
     overflow-y: scroll;
     display: grid;
@@ -166,6 +169,10 @@ background-color: red;
 }
 
 
+
+
+
+
 @keyframes rise {
     0%{
         margin-bottom: 0px;
@@ -191,6 +198,14 @@ background-color: red;
     .form-title {
         grid-column: 1/1;
         text-align: left;
+    }
+
+    .form {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .search-box-results {
+        grid-column: 1/3;
     }
 
     .status-message {

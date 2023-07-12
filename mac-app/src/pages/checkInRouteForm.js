@@ -358,7 +358,7 @@ function CheckInForm(props){
                 <CheckInTable 
                     _data={addedSearch}
                     _model="customer"
-                    _headers={["Selected", "Name", "Address", "Ice", "Price", "Delivered"]}
+                    _headers={["Selected", "Name", "Address", "Delivered"]}
                     _function={updateAddedSearch}
                     _edit={edit}/>
             </>}
@@ -382,7 +382,7 @@ function CheckInForm(props){
                 <CheckInTable 
                     _data={callins}
                     _model="call"
-                    _headers={["Selected", "Name", "Address", "Call Date", "Service Date", "Delivered"]}
+                    _headers={["Selected", "Name", "Address", "Delivered"]}
                     _function={updateCallIn}
                     _edit={edit}/></>}
            
@@ -391,7 +391,7 @@ function CheckInForm(props){
                 <CheckInTable 
                     _data={savedCallins}
                     _model="call"
-                    _headers={["Selected", "Name", "Address", "Call Date", "Service Date", "Delivered"]}
+                    _headers={["Selected", "Name", "Address", "Delivered"]}
                     _function={updateSavedCallIn}
                     _edit={edit}/></>}
             {!edit && <button type="submit" disabled={processing} onClick={handleSubmit} className='form-button-submit'>{!processing ? 'Submit' : 'Processing'}</button>}

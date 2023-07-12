@@ -129,9 +129,8 @@ function RouterForm(props){
             delete={handleDelete}
             method={props.method}/>
         {loading && <form className='form' onSubmit={handleSubmit}>
-            <label htmlFor='name'>Route name:</label>
             <input type="text" required className='form-text-input' name="name" placeholder='Route Name' readOnly={edit} value={data.name || ""}  onChange={e => {setData({...data, ['name'] : e.target.value})}}/>
-            {!edit && <><label htmlFor='name'>Add Customer:</label>
+            {!edit && <>
             <input type="text" className='form-text-input' name="customerName" placeholder='Add customer here' readOnly={edit} value={selected || ""}  onChange={e => {updateBox(e); setSelected(e.target.value)}}/>
             <h3>Customers:</h3>
             <div className='search-box-results'>

@@ -110,10 +110,8 @@ function CallInForm(props){
             delete={handleDelete}
             method={props.method}/>
         <form className='form' onSubmit={handleSubmit}>
-            <label htmlFor='name'>Customer name:</label>
-            <input type="text" required className='form-text-input' name="name" placeholder='name' readOnly={edit} value={selected || data.name || ""}  onChange={e => {updateBox(e); setSelected(""); setData({...data, ['name'] : e.target.value})}}/>
-            <label htmlFor='address'>Address:</label>
-            <input type="text" required className='form-text-input' name="address" placeholder='address' readOnly={edit} value={selectedAddress || data.address || ""}  onChange={e => {setSelected(""); setData({...data, ['address'] : e.target.value})}}/>
+            <input type="text" required className='form-text-input' name="name" placeholder='Customer Name' readOnly={edit} value={selected || data.name || ""}  onChange={e => {updateBox(e); setSelected(""); setData({...data, ['name'] : e.target.value})}}/>
+            <input type="text" required className='form-text-input' name="address" placeholder='Address' readOnly={true} value={selectedAddress || data.address || ""}  onChange={e => {setSelected(""); setData({...data, ['address'] : e.target.value})}}/>
             {selected === "" && !edit && <label htmlFor='autofill'>Customers:</label> && <div className='search-box-results'>
                 {Object.keys(search).map((v) => 
                         {

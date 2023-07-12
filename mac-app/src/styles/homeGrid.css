@@ -80,7 +80,7 @@
     .nav-grid {
         grid-template-columns: repeat(3, 1fr);
         padding-top: calc(18vh);
-        margin-left: 10vw;
+        margin-left: 7vw;
     }  
 }
 
