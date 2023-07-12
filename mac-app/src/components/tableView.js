@@ -62,34 +62,46 @@ function MyTableView(props){
                     })}
                 </tr>
                 {!props.data && !sortedData[0] && Object.keys(data).map((v) => 
-                    {
-                        const callin_length = data[v].callins.length;
+                    {try{
                         if(props.model === "customer"){
                             return <Customer key={data[v]._id} _data={data[v]}/>
                         }else if(props.model === "callin"){
                             return <CallIn key={data[v]._id} _data={data[v]}/>
                         }else if(props.model === "routes"){
-                            return <RoutesModel key={data[v]._id} _data={data[v]}/>
+                            const stops_length = data[v].stops.length;
+                            return <RoutesModel key={data[v]._id} _data={data[v]} stops_length={stops_length}/>
                         }else if(props.model === "routesCheck"){
-                            console.log(data[v]);
-                            return <RoutesCheckModel key={data[v]._id} _data={data[v]}/>
+                            const stops_length = data[v].stops.length;
+                            return <RoutesCheckModel key={data[v]._id} _data={data[v]} stops_length={stops_length}/>
                         }else {
-                            return <DeliveredRoute key={data[v]._id} _data={data[v]} callins_length={callin_length}/>
+                            const callin_length = data[v].callins.length;
+                            return <DeliveredRoute key={data[v]._id} _data={data[v]} callins_length={callin_length} delivered_length={data[v].delivered.length}/>
                         }
+                    }catch(err){
+                        return <tr><td>err</td></tr>
+                    }
+                        
                 })}
                 {!props.data && sortedData[0] && Object.keys(sortedData).map((v) => 
-                    {
+                    {try{
                         if(props.model === "customer"){
                             return <Customer key={sortedData[v]._id} _data={sortedData[v]}/>
                         }else if(props.model === "callin"){
                             return <CallIn key={sortedData[v]._id} _data={sortedData[v]}/>
                         }else if(props.model === "routes"){
-                            return <RoutesModel key={sortedData[v]._id} _data={sortedData[v]}/>
+                            return <RoutesModel key={sortedData[v]._id} _data={sortedData[v]} stops_length={sortedData[v].stops.length}/>
                         }else if(props.model === "routesCheck"){
-                            return <RoutesCheckModel key={sortedData[v]._id} _data={sortedData[v]}/>
+                            return <RoutesCheckModel key={sortedData[v]._id} _data={sortedData[v]} stops_length={sortedData[v].stops.length}/>
                         }else {
-                            return <DeliveredRoute key={sortedData[v]._id} _data={sortedData[v]}  callins_length={sortedData[v].callins.length}/>
+                            return <DeliveredRoute 
+                                        key={sortedData[v]._id} 
+                                        _data={sortedData[v]}  
+                                        callins_length={sortedData[v].callins.length}
+                                        delivered_length={sortedData[v].delivered.length}/>
                         }
+                    }catch(err){
+                        window.location.reload(true);
+                    }
                 })
 
                 }
