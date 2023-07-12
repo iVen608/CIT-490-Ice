@@ -42,6 +42,7 @@ function MyTableView(props){
         
     }, [sortFilter, data])
     useEffect(()=> {
+        console.log(data)
         setLoaded(true);
     }, [data])
 
@@ -62,6 +63,7 @@ function MyTableView(props){
                 </tr>
                 {!props.data && !sortedData[0] && Object.keys(data).map((v) => 
                     {
+                        const callin_length = data[v].callins.length;
                         if(props.model === "customer"){
                             return <Customer key={data[v]._id} _data={data[v]}/>
                         }else if(props.model === "callin"){
@@ -72,7 +74,7 @@ function MyTableView(props){
                             console.log(data[v]);
                             return <RoutesCheckModel key={data[v]._id} _data={data[v]}/>
                         }else {
-                            return <DeliveredRoute key={data[v]._id} _data={data[v]}/>
+                            return <DeliveredRoute key={data[v]._id} _data={data[v]} callins_length={callin_length}/>
                         }
                 })}
                 {!props.data && sortedData[0] && Object.keys(sortedData).map((v) => 
@@ -86,7 +88,7 @@ function MyTableView(props){
                         }else if(props.model === "routesCheck"){
                             return <RoutesCheckModel key={sortedData[v]._id} _data={sortedData[v]}/>
                         }else {
-                            return <DeliveredRoute key={sortedData[v]._id} _data={sortedData[v]}/>
+                            return <DeliveredRoute key={sortedData[v]._id} _data={sortedData[v]}  callins_length={sortedData[v].callins.length}/>
                         }
                 })
 
