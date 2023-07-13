@@ -1,6 +1,6 @@
 const mongo = require("../connect");
 const mongodb = require("mongodb");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const lib = require("../library/library");
 const jwt = require("jsonwebtoken");
 
