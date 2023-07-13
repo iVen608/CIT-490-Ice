@@ -147,10 +147,7 @@ function RouterForm(props){
                         }}/>
                     })}
             </div></>}
-            
-            {!edit && <button type="submit" disabled={processing} className='form-button-submit'>{!processing ? 'Submit' : 'Processing'}</button>}
-        </form>}
-        {loading === true && <>
+            {loading === true && 
             <MyTableView 
                 header_keys={["Name", "Address"]}
                 data={stops}
@@ -160,15 +157,10 @@ function RouterForm(props){
                     setStops(arr);
                 }}
                 model="routes"/>
-            <button onClick={e => {
-                    /*const formattedData = XLSX.utils.json_to_sheet(_data)//[{name: 1, data: 2}, {name: 1, data: 2}]);
-                    const book = XLSX.utils.book_new();
-                    XLSX.utils.book_append_sheet(book, formattedData, "testing");
-                    XLSX.writeFile(book, "Testing_in_progress.xlsx");*/
-                    //fileSaver.saveAs(xlsx(_data, {fileName: 'Testing.xlsx'}), "test.xlsx")
-            }}>Download</button>
-            
-            </>}
+            }
+            {!edit && <button type="submit" disabled={processing} className='form-button-submit'>{!processing ? 'Submit' : 'Processing'}</button>}
+        </form>}
+        
             
     </>)
 }
