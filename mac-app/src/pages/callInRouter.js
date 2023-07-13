@@ -15,19 +15,19 @@ function CallInRouter(){
             </div>
         <MyTableView 
             header_keys={["Name", "Address", "Call Date", "Service Date", "Delivered" , "Special Instructions"]}
-            api={"http://localhost:4000/callin/"}
+            api={"https://cit-490-ice.onrender.com/callin/"}
             wide={true}
             model="callin"/>
     </>}/>
         <Route path="/add/" element={
         <CallInForm 
             method={"POST"}
-            api={"http://localhost:4000/callin/"}/>}/>
+            api={"https://cit-490-ice.onrender.com/callin/"}/>}/>
         <Route path="/edit/:id" element={<>
             <CallInForm 
                 _id={parameters['*'].split("/")[1]}
                 method={"PUT"} 
-                api={"http://localhost:4000/callin/"}/></>}/>
+                api={"https://cit-490-ice.onrender.com/callin/"}/></>}/>
     </Routes>
     )
 }

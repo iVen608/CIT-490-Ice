@@ -12,7 +12,7 @@ function Login(){
     }, [])
     const handleSubmit = (e) => {
         e.preventDefault();
-        fetch("http://localhost:4000/login/",
+        fetch("https://cit-490-ice.onrender.com/login/",
         {method: 'POST',
             body: JSON.stringify(data),
             headers: {'Content-type': "application/json"},

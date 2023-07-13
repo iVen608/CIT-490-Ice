@@ -27,7 +27,7 @@ function CheckInForm(props){
     const token = getJWT();
     async function updateData(){
         setProcessing(true)
-        var link = "http://localhost:4000/routes/checkin/";
+        var link = "https://cit-490-ice.onrender.com/routes/checkin/";
         if(props._id){
             link += props._id;
         }
@@ -282,7 +282,7 @@ function CheckInForm(props){
     
     function updateBox(e){
         const token = window.localStorage.getItem("token");
-        fetch("http://localhost:4000/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj); console.log(obj)})
+        fetch("https://cit-490-ice.onrender.com/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj); console.log(obj)})
     }
     const toggle = () => {
         if(edit){
@@ -292,8 +292,8 @@ function CheckInForm(props){
         }
     }
     async function deleteCheckIn(){
-        console.log("http://localhost:4000/routes/checkin/" + props._id)
-        await fetch("http://localhost:4000/routes/checkin/" + props._id, {
+        console.log("https://cit-490-ice.onrender.com/routes/checkin/" + props._id)
+        await fetch("https://cit-490-ice.onrender.com/routes/checkin/" + props._id, {
             method: 'DELETE',withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}
         ).then(response => {
             if(response.ok){

@@ -18,7 +18,7 @@ function CallInForm(props){
     const [edit, setEdit] = useState(props.method === "PUT" ? true : false);
     const [response, setResponse] = useState({});
     async function updateData(){
-        var link = "http://localhost:4000/callin/";
+        var link = "https://cit-490-ice.onrender.com/callin/";
         if(props._id){
             link += props._id;
         }
@@ -65,7 +65,7 @@ function CallInForm(props){
     useEffect(() => {
         console.log(data)
         if(props._id){
-            fetch("http://localhost:4000/callin/" + props._id, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}})
+            fetch("https://cit-490-ice.onrender.com/callin/" + props._id, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}})
             .then(response => response.json())
             .then(obj => {
                 setData(obj[0]); 
@@ -79,7 +79,7 @@ function CallInForm(props){
 
     function updateBox(e){
         const token = window.localStorage.getItem("token");
-        fetch("http://localhost:4000/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj)})
+        fetch("https://cit-490-ice.onrender.com/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj)})
     }
     const toggle = () => {
         if(edit){

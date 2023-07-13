@@ -70,7 +70,7 @@ function RouterForm(props){
         
     })
     async function getRoute(){
-        await fetch("http://localhost:4000/routes/"+props._id, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}})
+        await fetch("https://cit-490-ice.onrender.com/routes/"+props._id, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}})
             .then(response => response.json())
             .then(obj => {
                 setData(obj[0]);
@@ -78,7 +78,7 @@ function RouterForm(props){
             }).catch(err => console.log(err));
     }
     async function getCustomers(){
-        await fetch("http://localhost:4000/customer/", {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(customers => {
+        await fetch("https://cit-490-ice.onrender.com/customer/", {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(customers => {
             if(data.stops){
                 const filtered = customers.filter(i => data.stops.includes(i._id))
                 setStops(filtered.map(cus => {return {'id': cus._id, 'name': cus.name, 'address': cus.address}}));
@@ -91,7 +91,7 @@ function RouterForm(props){
         console.log(stops.map(i => {
             return i.id
         }))
-        fetch("http://localhost:4000/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj); console.log(obj)})
+        fetch("https://cit-490-ice.onrender.com/customer/?search=" + e.target.value, {withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}).then(response => response.json()).then(obj => {setSearch(obj); console.log(obj)})
     }
 
     function handleDelete(e){

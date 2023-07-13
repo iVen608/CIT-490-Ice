@@ -17,7 +17,7 @@ function RoutesRouter(){
         <MyTableView 
             header_keys={["Name", "# of Stops"]}
             wide={true}
-            api={"http://localhost:4000/routes/"}
+            api={"https://cit-490-ice.onrender.com/routes/"}
             model="routes"/>
     </>}/>
         <Route path="/add/" element={<RouterForm method={"POST"}/>}/>
@@ -25,14 +25,14 @@ function RoutesRouter(){
             <RouterForm 
                 _id={parameters['*'].split("/")[1]} 
                 method={"PUT"}
-                api={"http://localhost:4000/routes/"}/></>}/>
+                api={"https://cit-490-ice.onrender.com/routes/"}/></>}/>
         <Route path="/checkin/" element={<>
             <div className="table-action-header">
                 <h1 className="form-title">Check In</h1>
             </div>
             <MyTableView
                 header_keys={["Name", "# of Stops"]}
-                api={"http://localhost:4000/routes/"}
+                api={"https://cit-490-ice.onrender.com/routes/"}
                 wide={true}
                 model="routesCheck"
             />
@@ -41,9 +41,9 @@ function RoutesRouter(){
         <CheckInForm
             header_keys={["Selected","Name", "Address", "Delivered"]}
             method="POST"
-            api={"http://localhost:4000/routes/"}
-            api2={"http://localhost:4000/customer/"}
-            api3={"http://localhost:4000/callin/"}
+            api={"https://cit-490-ice.onrender.com/routes/"}
+            api2={"https://cit-490-ice.onrender.com/customer/"}
+            api3={"https://cit-490-ice.onrender.com/callin/"}
             _id = {parameters['*'].split("/")[1]}
         />}/>
         <Route path="/delivered/" element={
@@ -54,7 +54,7 @@ function RoutesRouter(){
             <MyTableView
                 header_keys={["Name", "Date Delivered", "Call Ins", "Delivered"]}
                 wide={true}
-                api={"http://localhost:4000/routes/delivered"}
+                api={"https://cit-490-ice.onrender.com/routes/delivered"}
                 model="deliveredRoute"
             />
         </>}/>
@@ -63,10 +63,10 @@ function RoutesRouter(){
             <CheckInForm
                 header_keys={["Selected","Name", "Address", "Delivered"]}
                 method="PUT"
-                api={"http://localhost:4000/routes/"}
-                api2={"http://localhost:4000/customer/"}
-                api3={"http://localhost:4000/callin/"}
-                api4={"http://localhost:4000/routes/delivered/"}
+                api={"https://cit-490-ice.onrender.com/routes/"}
+                api2={"https://cit-490-ice.onrender.com/customer/"}
+                api3={"https://cit-490-ice.onrender.com/callin/"}
+                api4={"https://cit-490-ice.onrender.com/routes/delivered/"}
                 _id = {parameters['*'].split("/")[2]}
             />
         </>}/>
