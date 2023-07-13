@@ -5,7 +5,6 @@ const callinController = require("../controllers/callin");
 const routesController = require("../controllers/routes");
 const userController = require("../controllers/user");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 require('dotenv').config();
 
 //Customer Routes
