@@ -99,7 +99,7 @@ select {
     width: 30px;
     font-size: 10px;
     margin-left: 5%;
-    color: var(--secondary);
+    color: var(--accent-dark);
     border: none;
     border-bottom: 2px solid var(--accent-dark);
     margin-top: 5px;

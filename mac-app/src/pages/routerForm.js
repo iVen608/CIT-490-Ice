@@ -31,7 +31,8 @@ function RouterForm(props){
                 "name": data.name,
                 "stops": stops.map(i => i.id)
             }),
-            headers: {'Content-type': "application/json"}
+            headers: {'Content-type': "application/json", 'Authorization': `Bearer ${token}`},
+            credentials: 'include'
         }).then(response => {
             if(response.ok){
                 setRep(true);
