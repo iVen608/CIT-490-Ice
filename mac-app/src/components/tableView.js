@@ -1,11 +1,11 @@
 import React, { useEffect, useState }  from 'react';
 import {useParams, searchParams, useSearchParams, useNavigate} from 'react-router-dom';
-import Customer from '../models/tableViewCustomers';
-import CallIn from '../models/tableViewCallTwo';
-import RoutesModel from '../models/tableViewRoutes';
-import RoutesSmall from '../models/tableViewRoutesEdit';
-import RoutesCheckModel from '../models/tableViewCheckRoute';
-import DeliveredRoute from '../models/tableViewDeliveredRoute';
+import Customer from './tableElements/tableViewCustomers';
+import CallIn from './tableElements/tableViewCallIn';
+import RoutesModel from './tableElements/tableViewRoutes';
+import RoutesSmall from './tableElements/tableViewRoutesEdit';
+import RoutesCheckModel from './tableElements/tableViewCheckRoute';
+import DeliveredRoute from './tableElements/tableViewDeliveredRoute';
 import SortCustomer from '../models/customerSort';
 import SortCallIn from '../models/callInSort';
 import SortRoute from '../models/routeSort';

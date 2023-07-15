@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {Routes, Route, Link, useParams, useNavigate} from 'react-router-dom';
-import MyTableView from "../components/tableView";
+import MyTableView from "../components/TableView";
 import CustomerForm from './customerForm';
-import CustomerHistory from "../components/customerHistory";
+import CustomerHistory from "../components/CustomerHistory";
 
 function CustomerRouter(){
     const parameters = useParams();

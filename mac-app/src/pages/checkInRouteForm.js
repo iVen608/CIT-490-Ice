@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import CheckInCustomer from '../models/checkInViewRoute';
 import CheckInCallIn from '../models/checkInViewCall';
 import CustomerSmall from '../models/searchViewSmallCustomer';
-import FormHeader from '../components/formHeader';
+import FormHeader from '../components/FormHeader';
 import CheckInTable from '../models/checkInTableCallIn';
 import {getJWT} from '../utility';
 import "../styles/customerTable.css";

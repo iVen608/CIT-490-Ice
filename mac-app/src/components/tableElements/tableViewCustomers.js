@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { formatAddress, formatDollar } from '../utility';
+import { formatAddress, formatDollar } from '../../utility';
 
 function Customer(props){
     if(typeof(props._data._id) == "object"){

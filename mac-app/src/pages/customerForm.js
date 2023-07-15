@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/form.css';
 import {getJWT} from '../utility';
-import FormHeader from '../components/formHeader';
+import FormHeader from '../components/FormHeader';
 
 function CustomerForm(props){
     const nav = useNavigate();

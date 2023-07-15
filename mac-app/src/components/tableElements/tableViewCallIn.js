@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function CallInTwo(props){
+function CallIn(props){
     if(typeof(props._data._id) == "object"){
         return <></>
     }
@@ -17,4 +17,4 @@ function CallInTwo(props){
         </tr>);
 }
 
-export default CallInTwo;
+export default CallIn;

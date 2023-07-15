@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Form, useParams, useNavigate } from 'react-router-dom';
-import FormHeader from '../components/formHeader';
+import FormHeader from '../components/FormHeader';
 import '../styles/form.css';
 import {getJWT} from '../utility';
 import CallIn from '../models/searchViewSmallCustomer';

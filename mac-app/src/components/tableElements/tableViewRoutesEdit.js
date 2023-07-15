@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { formatAddress } from '../utility';
+import { formatAddress } from '../../utility';
 
 function Routes(props){
     if(typeof(props._data._id) == "object"){
