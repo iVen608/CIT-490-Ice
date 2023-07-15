@@ -194,6 +194,15 @@ async function updateCheckin(req, res){
             callins: req.body.callins
 
         }
+        const checkEmptyResponse = lib.checkEmpty(checkIn, []);
+        const checkKeysResponse = lib.checkKeys(checkIn, all_checkIn_parameters, 0);
+
+        if(checkEmptyResponse === false){
+            throw Error("Empty response");
+            
+        }else if(checkKeysResponse === false){
+            throw Error("Missing keys");
+        }
         console.log("-----------------")
         console.log(checkIn);
         console.log("Req Body")
