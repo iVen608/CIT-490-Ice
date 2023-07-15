@@ -8,7 +8,7 @@ function Routes(props){
     }
     return (<tr key={props._data._id} className='customer-table-data-row'>
             <button type="button" key={props._data._id+props._data.name} className='search-box-result-button' onClick={props.click}>{props._data.name}</button>
-            <td key={props._data._id+props._data.address} className='customer-table-data-cell'>{formatAddress(props._data.address, props._data.city, props._data.zip)}</td>
+            <td key={props._data._id+props._data.address} className='customer-table-data-cell'>{props._data.address}</td>
         </tr>);
 }
 
