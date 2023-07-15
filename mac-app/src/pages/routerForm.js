@@ -42,9 +42,9 @@ function RouterForm(props){
                 setRep(true);
                 if(props._id){//PUT
                     window.location.reload(true);
-                    setResponse({text: `Customer successfully ${props.method === 'POST' ? 'added' : 'updated'}.`, status: true});
+                    setResponse({text: `Route successfully ${props.method === 'POST' ? 'added' : 'updated'}.`, status: true});
                 }else{//POST
-                    setResponse({text: `Customer successfully ${props.method === 'POST' ? 'added' : 'updated'}.`, status: true});
+                    setResponse({text: `Route successfully ${props.method === 'POST' ? 'added' : 'updated'}.`, status: true});
                     setTimeout(() => {
                         nav("/routes/")
                     }, 3000);
@@ -109,7 +109,7 @@ function RouterForm(props){
             method: 'DELETE',withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}
         ).then(response => {
             if(response.ok){
-                setResponse({text: `Customer successfully deleted.`, status: true});
+                setResponse({text: `Route successfully deleted.`, status: true});
                 setTimeout(() => {
                     nav("/routes/")
                 }, 3000);
