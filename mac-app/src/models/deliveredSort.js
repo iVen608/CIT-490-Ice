@@ -6,13 +6,16 @@ function SortDelivered(props){
             <label className="blue-text">Sort by:</label>
             <select value={props.sortObject.sort|| ""}  onChange={(e) => props.sortFunction({...props.sortObject, sort: e.target.value})}>
                 <option value="name">Name</option>
-                <option value="stops">Stops</option>
+                <option value="delivered">Delivered Stops</option>
+                <option value="callins">Delivered Call Ins</option>
                 <option value="date">Date Delivered</option>
             </select>
             <label className="blue-text">Filter by:</label>
             <select className='form-select-input' value={props.sortObject.filterBy || ""} onChange={(e) => props.sortFunction({...props.sortObject, filterBy: e.target.value})}>
                 <option value="">None</option>
-                <option value="stops">Stops</option>
+                <option value="delivered">Delivered Stops</option>
+                <option value="callins">Delivered Call Ins</option>
+                <option value="date">Date Delivered</option>
             </select>
             {props.sortObject.filterBy && props.sortObject.filterBy !== "" && <input className="form-text-input" placeholder={`${props.sortObject.filterBy}`} onChange={(e) => props.sortFunction({...props.sortObject, filterValue: e.target.value})}/>}
             <label className="blue-text">Order by:</label>
