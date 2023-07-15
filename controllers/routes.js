@@ -171,6 +171,7 @@ async function postCheckin(req, res){
             }
         }
         await _routeDel.insertOne(checkIn);
+        res.sendStatus(201);
     }catch(err){
         console.log(err);
         res.sendStatus(404);
