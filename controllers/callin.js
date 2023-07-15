@@ -95,8 +95,8 @@ async function updateCallIn(req, res) {
         }
         console.log(req.body.instructions);
         const object_id = new mongodb.ObjectId(req.params.id);
-        const checkEmptyResponse = lib.checkEmpty(callIn, optional_parameters);
-        const checkKeysResponse = lib.checkKeys(callIn, all_parameters, 0);
+        const checkEmptyResponse = lib.checkEmpty(req.body, optional_parameters);
+        const checkKeysResponse = lib.checkKeys(req.body, all_parameters, 0);
         if(checkEmptyResponse === false){
             throw Error("Empty response");
             
