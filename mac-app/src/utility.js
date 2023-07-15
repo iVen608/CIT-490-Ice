@@ -76,3 +76,14 @@ export function filterArrayFunction(array, key, value){
 export function formatAddress(street, city, zip){
     return `${street}, ${city} ${zip}`
 }
+
+export function formatDollar(x){
+    try{
+        let i = parseFloat(x);
+        i = i.toFixed(2);
+        return `$${i}`;
+    }catch(err){
+        console.log(err);
+        return x;
+    }
+}

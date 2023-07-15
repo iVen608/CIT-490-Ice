@@ -142,7 +142,9 @@ function RouterForm(props){
                                 setStops([...stops, {
                                     'id': search[v]._id,
                                     'name': search[v].name,
-                                    'address': search[v].address
+                                    'address': search[v].address,
+                                    'city': search[v].city,
+                                    'zip': search[v].zip,
                                     }]);
                             }
                         }}/>

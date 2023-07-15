@@ -2,16 +2,7 @@ import React, { useState} from 'react';
 
 function CheckInCallIn(props){
     const [delivered, setDelivered] = useState(false);
-    function formatDollar(x){
-        try{
-            let i = parseFloat(x);
-            i = i.toFixed(2);
-            return `$${i}`;
-        }catch(err){
-            console.log(err);
-            return x;
-        }
-    }
+    
     return (
         <tr key={props._data._id} className='customer-table-data-row'>
             <td key={props._data._id+"checkbox"} className='customer-table-data-cell'><input type="checkbox" disabled={props._edit} onChange={(e) => {props.checkbox(e); setDelivered(e.target.checked)}}/></td>
