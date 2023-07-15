@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react'
 import {useNavigate } from 'react-router-dom';
 import '../styles/form.css';
 import CustomerSmall from '../models/searchViewSmallCustomer';
-import MyTableView from '../components/TableView';
-import FormHeader from '../components/FormHeader';
+import MyTableView from '../components/tableView';
+import FormHeader from '../components/formHeader';
 import {getJWT} from '../utility';
 
 function RouterForm(props){

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Routes, Route, Link, useParams, useNavigate} from 'react-router-dom';
 import RouterForm from "./routerForm";
-import MyTableView from "../components/TableView";
+import MyTableView from "../components/tableView";
 import CheckInForm from "./checkInRouteForm";
 
 function RoutesRouter(){

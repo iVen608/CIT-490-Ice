@@ -2,13 +2,13 @@ import React from 'react';
 import './styles/App.css';
 import {Routes, Route} from 'react-router-dom';
 import Header from './components/header';
-import Footer from './components/Footer';
+import Footer from './components/footer';
 import InvoiceCalculator from './pages/invoiceCalculator';
 import CustomerRouter from './pages/customerRouter';
 import RoutesRouter from './pages/routesRouter';
 import CallInRouter from './pages/callInRouter';
 import HomeGrid from './pages/homeGrid';
-import MyTableView from './components/TableView';
+import MyTableView from './components/tableView';
 import Login from './pages/login';
 import {getJWT} from './utility';
 function App() {
