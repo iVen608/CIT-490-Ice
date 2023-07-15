@@ -9,7 +9,7 @@ function FormHeader(props){
                 <button type="button" className="form-button-edit" onClick={props.toggle}>Edit</button>
                 <button type="button" className="form-button-delete" onClick={e => setConfirm(true)}>Delete</button>
                 {confirm && <>
-                <h1 className="form-title">Are you sure about deleting this customer?</h1>
+                <h1 className="form-title">{`Are you sure about deleting this ${props.element || ""}?`}</h1>
                 <button className="form-button-delete" onClick={props.delete}>Yes</button>
                 <button className="form-button-edit" onClick={e => setConfirm(false)}>No</button>
             </>}

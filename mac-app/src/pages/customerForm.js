@@ -95,6 +95,7 @@ function CustomerForm(props){
     return (<>
         <FormHeader 
             title={props.method === 'POST' ? 'New Customer' : 'Customer Details'} 
+            element="customer"
             response={response} 
             toggle={toggle}
             delete={handleDelete}

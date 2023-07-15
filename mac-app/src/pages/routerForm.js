@@ -124,7 +124,8 @@ function RouterForm(props){
     }
     return (<>
         <FormHeader 
-            title={props.method === 'POST' ? 'New Route' : 'Route Details'} 
+            title={props.method === 'POST' ? 'New Route' : 'Route Details'}
+            element = "route"
             response={response} 
             toggle={toggle}
             delete={handleDelete}

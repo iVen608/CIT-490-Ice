@@ -72,7 +72,7 @@ function CheckInForm(props){
             if(response.ok){
                 console.log("ok")
                 console.log(props._id)
-                if(props._id){//PUT
+                if(props.method === "PUT"){//PUT
                     window.location.reload(true);
                 }else{//POST
                     nav("/routes/delivered/");
@@ -292,7 +292,6 @@ function CheckInForm(props){
         }
     }
     async function deleteCheckIn(){
-        console.log("https://cit-490-ice.onrender.com/routes/checkin/" + props._id)
         await fetch("https://cit-490-ice.onrender.com/routes/checkin/" + props._id, {
             method: 'DELETE',withCredentials: true, headers: {'Authorization': `Bearer ${token}`}}
         ).then(response => {
@@ -302,9 +301,9 @@ function CheckInForm(props){
                     nav("/routes/delivered/")
                 }, 1500);
             }else{
-                setResponse({text: `Unable to delete customer due to an error.`, status: false});
+                setResponse({text: `Unable to delete history due to an error.`, status: false});
             }
-        }).catch(err => {setResponse({text: `Unable to delete customer due to an error: ${err}.`, status: false});});
+        }).catch(err => {setResponse({text: `Unable to delete history due to an error: ${err}.`, status: false});});
     }
     function handleDelete(e){
         e.preventDefault();
@@ -312,7 +311,8 @@ function CheckInForm(props){
     }
     return (<>
         <FormHeader 
-            title={props.method === 'POST' ? `Check In Route: ${data.name || ""}` : 'Update Deliveries'} 
+            title={props.method === 'POST' ? `Check In Route: ${data.name || ""}` : 'Update Deliveries'}
+            element = "delivery history" 
             response={response} 
             toggle={toggle}
             delete={handleDelete}
