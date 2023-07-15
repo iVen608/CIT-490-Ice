@@ -67,6 +67,12 @@ export function filterArrayFunction(array, key, value){
             const floatValue = parseFloat(_value);
             const floatValueInput = parseFloat(value);
             return floatValue == floatValueInput;
+        }else if(!isNaN(Date.parse(value))){
+            const date_1 = new Date(_value);
+            const date_2 = new Date(value);
+            if(date_1.getFullYear() === date_2.getFullYear() && date_1.getMonth() === date_2.getMonth() && date_1.getDate() === date_2.getDate()){
+                return true;    
+            }
         }
         return _value === value
     })
