@@ -55,7 +55,7 @@ function MyTableView(props){
         {!props.data && props.model === "callin" && <SortCallIn sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
         {!props.data && props.model === "deliveredRoute" && <SortDelivered sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
         {!props.data && (props.model === "routes" || props.model === "routesCheck") && <SortRoute sortFunction={setSortFilter} sortObject={sortFilter} resetData={setSortedData}/>}
-        {(data[0] || props.data) && loaded && <table key="customer-table" className={props.wide ? 'customer-table margin-left-ten span-two' : 'customer-table-small margin-left-ten span-two'}>
+        {(data[0] || props.data) && loaded && <table key="customer-table" className={`${props.wide ? 'customer-table span-two' : 'customer-table-small span-two'} ${props.inForm ? 'margin-left-zero' : 'margin-left-ten'}`}>
                 <tr key="header-table-row" className='customer-table-header-row'>
                     {props.header_keys.map(v => {
                         return <th key={`header-${v}`} className='customer-table-header-cell'>{v}</th>

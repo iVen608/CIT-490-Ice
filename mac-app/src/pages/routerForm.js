@@ -25,6 +25,10 @@ function RouterForm(props){
         if(props._id){
             link += props._id;
         }
+        console.log(JSON.stringify({
+            "name": data.name,
+            "stops": stops.map(i => i.id)
+        }))
         await fetch(link, {
             method: props.method,
             body: JSON.stringify({
@@ -157,6 +161,7 @@ function RouterForm(props){
                 data={stops}
                 api=""
                 wide={false}
+                inForm={true}
                 funct={(arr) => {
                     setStops(arr);
                 }}

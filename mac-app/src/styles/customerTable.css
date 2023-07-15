@@ -95,6 +95,10 @@ select {
     margin-left: 10%;
 }
 
+.margin-left-zero {
+    margin-left: 0%;
+}
+
 .table-input {
     width: 30px;
     font-size: 10px;
